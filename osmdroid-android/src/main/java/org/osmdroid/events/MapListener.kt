@@ -1,4 +1,4 @@
-package org.osmdroid.events;
+package org.osmdroid.events
 
 /*
  * The listener interface for receiving map movement events. To process a map event, either implement
@@ -7,14 +7,14 @@ package org.osmdroid.events;
  *
  * @author Theodore Hong
  */
-public interface MapListener {
+interface MapListener {
     /*
      * Called when a map is scrolled.
      */
-    public boolean onScroll(ScrollEvent event);
+    fun onScroll(event: ScrollEvent): Boolean
 
     /*
      * Called when a map is zoomed.
      */
-    public boolean onZoom(ZoomEvent event);
+    fun onZoom(event: ZoomEvent): Boolean
 }

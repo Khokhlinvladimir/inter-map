@@ -1,7 +1,6 @@
-package org.osmdroid.events;
+package org.osmdroid.events
 
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.util.GeoPoint
 
 /**
  * Interface for objects that need to handle map events thrown by a MapEventsOverlay.
@@ -9,17 +8,16 @@ import org.osmdroid.views.overlay.MapEventsOverlay;
  * @author M.Kergall
  * @see MapEventsOverlay
  */
-public interface MapEventsReceiver {
+interface MapEventsReceiver {
+    /**
+     * @param p the position where the event occurred.
+     * @return true if the event has been "consumed" and should not be handled by other objects.
+     */
+    fun singleTapConfirmedHelper(p: GeoPoint?): Boolean
 
     /**
      * @param p the position where the event occurred.
      * @return true if the event has been "consumed" and should not be handled by other objects.
      */
-    boolean singleTapConfirmedHelper(GeoPoint p);
-
-    /**
-     * @param p the position where the event occurred.
-     * @return true if the event has been "consumed" and should not be handled by other objects.
-     */
-    boolean longPressHelper(GeoPoint p);
+    fun longPressHelper(p: GeoPoint?): Boolean
 }
