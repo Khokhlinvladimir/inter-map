@@ -8,7 +8,7 @@ import org.osmdroid.views.MapView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MapActivity extends  android.app.Activity {
+public class MapActivity extends  AppCompatActivity {
     private MapView mapView = null;
 
     @Override
