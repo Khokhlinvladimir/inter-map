@@ -1,4 +1,3 @@
-// Created by plusminus on 22:01:11 - 29.09.2008
 package org.osmdroid.views.overlay.mylocation;
 
 import android.content.Context;
@@ -17,17 +16,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.Overlay;
 
-/**
- * @author Nicolas Gramlich
- */
 public class DirectedLocationOverlay extends Overlay {
-    // ===========================================================
-    // Constants
-    // ===========================================================
-
-    // ===========================================================
-    // Fields
-    // ===========================================================
 
     protected Paint mPaint = new Paint();
     protected Paint mAccuracyPaint = new Paint();
@@ -48,10 +37,6 @@ public class DirectedLocationOverlay extends Overlay {
     private int mAccuracy = 0;
     private boolean mShowAccuracy = true;
 
-    // ===========================================================
-    // Constructors
-    // ===========================================================
-
     public DirectedLocationOverlay(final Context ctx) {
         super();
 
@@ -64,16 +49,7 @@ public class DirectedLocationOverlay extends Overlay {
         this.mAccuracyPaint.setAntiAlias(true);
     }
 
-    // ===========================================================
-    // Getter & Setter
-    // ===========================================================
-
-    /**
-     * fix for https://github.com/osmdroid/osmdroid/issues/249
-     *
-     * @param image
-     */
-    public void setDirectionArrow(final Bitmap image) {
+     public void setDirectionArrow(final Bitmap image) {
         this.DIRECTION_ARROW = image;
         this.DIRECTION_ARROW_CENTER_X = this.DIRECTION_ARROW.getWidth() / 2f - 0.5f;
         this.DIRECTION_ARROW_CENTER_Y = this.DIRECTION_ARROW.getHeight() / 2f - 0.5f;
@@ -151,12 +127,4 @@ public class DirectedLocationOverlay extends Overlay {
                     screenCoords.y - rotatedDirection.getHeight() / 2, this.mPaint);
         }
     }
-
-    // ===========================================================
-    // Methods
-    // ===========================================================
-
-    // ===========================================================
-    // Inner and Anonymous Classes
-    // ===========================================================
 }

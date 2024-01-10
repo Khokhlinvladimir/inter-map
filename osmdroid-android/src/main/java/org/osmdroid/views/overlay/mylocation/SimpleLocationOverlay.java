@@ -18,13 +18,6 @@ import org.osmdroid.views.overlay.Overlay;
  * @author Nicolas Gramlich
  */
 public class SimpleLocationOverlay extends Overlay {
-    // ===========================================================
-    // Constants
-    // ===========================================================
-
-    // ===========================================================
-    // Fields
-    // ===========================================================
 
     protected final Paint mPaint = new Paint();
 
@@ -36,10 +29,6 @@ public class SimpleLocationOverlay extends Overlay {
 
     protected GeoPoint mLocation;
     private final Point screenCoords = new Point();
-
-    // ===========================================================
-    // Constructors
-    // ===========================================================
 
     /**
      * Use {@link #SimpleLocationOverlay(Bitmap) SimpleLocationOverlay}(((BitmapDrawable)ctx.getResources().getDrawable(R.drawable.person)).getBitmap()) instead.
@@ -54,10 +43,6 @@ public class SimpleLocationOverlay extends Overlay {
         this.PERSON_ICON = theIcon;
     }
 
-    // ===========================================================
-    // Getter & Setter
-    // ===========================================================
-
     public void setLocation(final GeoPoint mp) {
         this.mLocation = mp;
     }
@@ -65,10 +50,6 @@ public class SimpleLocationOverlay extends Overlay {
     public GeoPoint getMyLocation() {
         return this.mLocation;
     }
-
-    // ===========================================================
-    // Methods from SuperClass/Interfaces
-    // ===========================================================
 
     @Override
     public void onDetach(MapView mapView) {
@@ -87,10 +68,6 @@ public class SimpleLocationOverlay extends Overlay {
         }
     }
 
-    // ===========================================================
-    // Methods
-    // ===========================================================
-
     /**
      * Coordinates the feet of the person are located.
      */
@@ -98,7 +75,4 @@ public class SimpleLocationOverlay extends Overlay {
         this.PERSON_ICON = bmp;
         this.PERSON_HOTSPOT = hotspot;
     }
-    // ===========================================================
-    // Inner and Anonymous Classes
-    // ===========================================================
 }

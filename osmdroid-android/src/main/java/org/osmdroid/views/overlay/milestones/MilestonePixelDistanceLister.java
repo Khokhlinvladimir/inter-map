@@ -3,13 +3,6 @@ package org.osmdroid.views.overlay.milestones;
 import org.osmdroid.util.Distance;
 import org.osmdroid.views.util.constants.MathConstants;
 
-/**
- * Listing every x pixels of the `Path`, with an initial value
- * Created by Fabrice on 23/12/2017.
- *
- * @since 6.0.0
- */
-
 public class MilestonePixelDistanceLister extends MilestoneLister {
 
     private final double mNbPixelsInit;

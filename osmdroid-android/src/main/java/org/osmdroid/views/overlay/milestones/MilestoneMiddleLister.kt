@@ -1,6 +1,6 @@
-package org.osmdroid.views.overlay.milestones;
+package org.osmdroid.views.overlay.milestones
 
-import org.osmdroid.util.Distance;
+import org.osmdroid.util.Distance
 
 /**
  * Listing all the vertices' middle, provided that there are enough pixels between them
@@ -8,24 +8,20 @@ import org.osmdroid.util.Distance;
  *
  * @since 6.0.0
  */
+class MilestoneMiddleLister(pMinimumPixelDistance: Double) : MilestoneLister() {
+    private val mMinimumSquaredPixelDistance: Double
 
-public class MilestoneMiddleLister extends MilestoneLister {
-
-    private final double mMinimumSquaredPixelDistance;
-
-    public MilestoneMiddleLister(final double pMinimumPixelDistance) {
-        mMinimumSquaredPixelDistance = pMinimumPixelDistance * pMinimumPixelDistance;
+    init {
+        mMinimumSquaredPixelDistance = pMinimumPixelDistance * pMinimumPixelDistance
     }
 
-    @Override
-    protected void add(final long x0, final long y0, final long x1, final long y1) {
-        if (Distance.getSquaredDistanceToPoint(x0, y0, x1, y1) <= mMinimumSquaredPixelDistance) {
-            return;
+    override fun add(x0: Long, y0: Long, x1: Long, y1: Long) {
+        if (Distance.getSquaredDistanceToPoint(x0.toDouble(), y0.toDouble(), x1.toDouble(), y1.toDouble()) <= mMinimumSquaredPixelDistance) {
+            return
         }
-
-        final long centerX = (x0 + x1) / 2;
-        final long centerY = (y0 + y1) / 2;
-        final double orientation = getOrientation(x0, y0, x1, y1);
-        add(new MilestoneStep(centerX, centerY, orientation));
+        val centerX = (x0 + x1) / 2
+        val centerY = (y0 + y1) / 2
+        val orientation = getOrientation(x0, y0, x1, y1)
+        add(MilestoneStep(centerX, centerY, orientation))
     }
 }

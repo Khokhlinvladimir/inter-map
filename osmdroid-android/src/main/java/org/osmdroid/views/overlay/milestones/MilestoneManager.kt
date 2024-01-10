@@ -1,49 +1,30 @@
-package org.osmdroid.views.overlay.milestones;
+package org.osmdroid.views.overlay.milestones
 
-import android.graphics.Canvas;
+import android.graphics.Canvas
+import org.osmdroid.util.PointAccepter
 
-import org.osmdroid.util.PointAccepter;
-
-/**
- * Created by Fabrice on 24/12/2017.
- *
- * @since 6.0.0
- */
-
-public class MilestoneManager implements PointAccepter {
-
-    private final MilestoneLister mLister;
-    private final MilestoneDisplayer mDisplayer;
-
-    public MilestoneManager(final MilestoneLister pLister, final MilestoneDisplayer pDisplayer) {
-        mLister = pLister;
-        mDisplayer = pDisplayer;
-    }
-
-    public void draw(final Canvas pCanvas) {
-        mDisplayer.drawBegin(pCanvas);
-        for (final MilestoneStep step : mLister.getMilestones()) {
-            mDisplayer.draw(pCanvas, step);
+class MilestoneManager(private val mLister: MilestoneLister, private val mDisplayer: MilestoneDisplayer) : PointAccepter {
+    fun draw(pCanvas: Canvas?) {
+        mDisplayer.drawBegin(pCanvas)
+        for (step in mLister.milestones) {
+            mDisplayer.draw(pCanvas, step)
         }
-        mDisplayer.drawEnd(pCanvas);
+        mDisplayer.drawEnd(pCanvas)
     }
 
-    @Override
-    public void init() {
-        mLister.init();
+    override fun init() {
+        mLister.init()
     }
 
-    @Override
-    public void add(final long pX, final long pY) {
-        mLister.add(pX, pY);
+    override fun add(pX: Long, pY: Long) {
+        mLister.add(pX, pY)
     }
 
-    @Override
-    public void end() {
-        mLister.end();
+    override fun end() {
+        mLister.end()
     }
 
-    public void setDistances(final double[] pDistances) {
-        mLister.setDistances(pDistances);
+    fun setDistances(pDistances: DoubleArray?) {
+        mLister.setDistances(pDistances)
     }
 }

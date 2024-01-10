@@ -1,13 +1,10 @@
-package org.osmdroid.views.overlay.mylocation;
+package org.osmdroid.views.overlay.mylocation
 
-import android.location.Location;
+import android.location.Location
 
-public interface IMyLocationProvider {
-    boolean startLocationProvider(IMyLocationConsumer myLocationConsumer);
-
-    void stopLocationProvider();
-
-    Location getLastKnownLocation();
-
-    void destroy();
+interface IMyLocationProvider {
+    fun startLocationProvider(myLocationConsumer: IMyLocationConsumer?): Boolean
+    fun stopLocationProvider()
+    val lastKnownLocation: Location?
+    fun destroy()
 }
