@@ -1,4 +1,3 @@
-// Created by plusminus on 21:37:08 - 27.09.2008
 package org.osmdroid.views;
 
 import android.animation.Animator;
@@ -25,20 +24,7 @@ import org.osmdroid.views.MapView.OnFirstLayoutListener;
 
 import java.util.LinkedList;
 
-
-/**
- * @author Nicolas Gramlich
- * @author Marc Kurtz
- */
 public class MapController implements IMapController, OnFirstLayoutListener {
-
-    // ===========================================================
-    // Constants
-    // ===========================================================
-
-    // ===========================================================
-    // Fields
-    // ===========================================================
 
     protected final MapView mMapView;
 
@@ -51,10 +37,6 @@ public class MapController implements IMapController, OnFirstLayoutListener {
 
     // Keep track of calls before initial layout
     private ReplayController mReplayController;
-
-    // ===========================================================
-    // Constructors
-    // ===========================================================
 
     public MapController(MapView mapView) {
         mMapView = mapView;

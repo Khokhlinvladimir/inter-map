@@ -6,10 +6,6 @@ import android.os.Build;
 import android.view.MotionEvent;
 import android.view.animation.LinearInterpolator;
 
-/**
- * @author Fabrice Fontaine
- * @since 6.1.0
- */
 public class CustomZoomButtonsController {
 
     public enum Visibility {ALWAYS, NEVER, SHOW_AND_FADEOUT}

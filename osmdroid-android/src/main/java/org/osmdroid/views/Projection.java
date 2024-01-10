@@ -52,8 +52,8 @@ public class Projection implements IProjection {
     private final Rect mScreenRectProjection = new Rect();
     private final Rect mIntrinsicScreenRectProjection;
 
-    private boolean horizontalWrapEnabled;
-    private boolean verticalWrapEnabled;
+    private final boolean horizontalWrapEnabled;
+    private final boolean verticalWrapEnabled;
 
     private final double mMercatorMapSize;
     private final double mTileSize;
@@ -420,9 +420,6 @@ public class Projection implements IProjection {
         return out;
     }
 
-    /**
-     * @since 6.0.0
-     */
     public long getMercatorFromTile(final int pTile) {
         return TileSystem.getMercatorFromTile(pTile, mTileSize);
     }
@@ -435,15 +432,11 @@ public class Projection implements IProjection {
         return mRotateAndScaleMatrix;
     }
 
-    /**
-     * @since 6.0.0
-     */
     public double getProjectedPowerDifference() {
         return mProjectedMapSize / getWorldMapSize();
     }
 
     /**
-     * @since 6.0.0
      * @deprecated Use {@link #getLongPixelsFromProjected(PointL, double, boolean, PointL)} instead
      */
     @Deprecated
@@ -461,7 +454,6 @@ public class Projection implements IProjection {
      * @param powerDifference Factor between the large "projected" map and the wanted projection zoom level
      * @param pCloser         "Should we move the resulting point - modulo the map size - so that it's
      *                        as close to the screen limits as possible?"
-     * @since 6.0.0
      */
     public PointL getLongPixelsFromProjected(final PointL in, final double powerDifference, final boolean pCloser, final PointL reuse) {
         final PointL out = reuse != null ? reuse : new PointL();
@@ -471,7 +463,6 @@ public class Projection implements IProjection {
     }
 
     /**
-     * @since 6.0.0
      * Correction of pixel value.
      * Pixel values are identical, modulo mapSize.
      * What we explicitly want is either:
@@ -508,23 +499,14 @@ public class Projection implements IProjection {
         return previous;
     }
 
-    /**
-     * @since 6.0.0
-     */
     private long getLongPixelXFromMercator(final long pMercatorX, final boolean pCloser) {
         return getLongPixelFromMercator(pMercatorX, pCloser, mOffsetX, mIntrinsicScreenRectProjection.left, mIntrinsicScreenRectProjection.right);
     }
 
-    /**
-     * @since 6.0.0
-     */
     private long getLongPixelYFromMercator(final long pMercatorY, final boolean pCloser) {
         return getLongPixelFromMercator(pMercatorY, pCloser, mOffsetY, mIntrinsicScreenRectProjection.top, mIntrinsicScreenRectProjection.bottom);
     }
 
-    /**
-     * @since 6.0.0
-     */
     private long getLongPixelFromMercator(final long pMercator, final boolean pCloser, final long pOffset, final int pScreenLimitFirst, final int pScreenLimitLast) {
         long result = pMercator + pOffset;
         if (pCloser) {
@@ -533,16 +515,11 @@ public class Projection implements IProjection {
         return result;
     }
 
-    /**
-     * @since 6.0.0
-     */
+
     public int getTileFromMercator(final long pMercator) {
         return TileSystem.getTileFromMercator(pMercator, mTileSize);
     }
 
-    /**
-     * @since 6.0.0
-     */
     public RectL getMercatorViewPort(final RectL pReuse) {
         final RectL out = pReuse != null ? pReuse : new RectL();
 
@@ -588,16 +565,11 @@ public class Projection implements IProjection {
         return out;
     }
 
-    /**
-     * @since 6.0.0
-     */
+
     public int getScreenCenterX() {
         return (mIntrinsicScreenRectProjection.right + mIntrinsicScreenRectProjection.left) / 2 + mMapCenterOffsetX;
     }
 
-    /**
-     * @since 6.0.0
-     */
     public int getScreenCenterY() {
         return (mIntrinsicScreenRectProjection.bottom + mIntrinsicScreenRectProjection.top) / 2 + mMapCenterOffsetY;
     }

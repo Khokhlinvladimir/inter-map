@@ -14,10 +14,8 @@ import java.util.Set;
 /**
  * Repository for a MapView
  * Designed for "singleton-like" objects that need a clean detach
- *
- * @author Fabrice Fontaine
- * @since 6.0.3
  */
+
 public class MapViewRepository {
 
     private MapView mMapView;

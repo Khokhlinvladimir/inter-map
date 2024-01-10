@@ -10,10 +10,6 @@ import android.view.MotionEvent;
 
 import org.osmdroid.library.R;
 
-/**
- * @author Fabrice Fontaine
- * @since 6.1.0
- */
 public class CustomZoomButtonsDisplay {
 
     public enum HorizontalPosition {LEFT, CENTER, RIGHT}
@@ -68,8 +64,6 @@ public class CustomZoomButtonsDisplay {
 
     /**
      * sets additional margin in pixels
-     *
-     * @since 6.1.3
      */
     public void setAdditionalPixelMargins(final float pLeft, final float pTop, final float pRight, final float pBottom) {
         mAdditionalPixelMarginLeft = pLeft;
@@ -81,8 +75,6 @@ public class CustomZoomButtonsDisplay {
 
     /**
      * calculate overall margins in pixels
-     *
-     * @since 6.1.3
      */
     private void refreshPixelMargins() {
         final float bitmapFractionMarginInPixels = mMargin * mBitmapSize;
@@ -224,9 +216,6 @@ public class CustomZoomButtonsDisplay {
         return isTouched(mUnrotatedPoint.x, mUnrotatedPoint.y, pInOrOut);
     }
 
-    /**
-     * @since 6.1.3
-     */
     public boolean isTouched(final MotionEvent pMotionEvent, final boolean pInOrOut) {
         if (pMotionEvent.getAction() == MotionEvent.ACTION_UP) {
             return isTouched((int) pMotionEvent.getX(), (int) pMotionEvent.getY(), pInOrOut);
