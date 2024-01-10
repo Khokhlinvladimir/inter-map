@@ -251,7 +251,7 @@ public class MapTileProviderArray extends MapTileProviderBase implements MapTile
 
     @Override
     public int getMaximumZoomLevel() {
-        int result = OpenStreetMapTileProviderConstants.MINIMUM_ZOOMLEVEL;
+        int result = OpenStreetMapTileProviderConstants.MINIMUM_ZOOM_LEVEL;
         synchronized (mTileProviderList) {
             for (final MapTileModuleProviderBase tileProvider : mTileProviderList) {
                 if (tileProvider.getMaximumZoomLevel() > result) {

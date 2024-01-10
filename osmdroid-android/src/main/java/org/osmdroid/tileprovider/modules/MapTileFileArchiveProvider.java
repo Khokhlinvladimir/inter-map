@@ -123,7 +123,7 @@ public class MapTileFileArchiveProvider extends MapTileFileStorageProviderBase {
     @Override
     public int getMinimumZoomLevel() {
         ITileSource tileSource = mTileSource.get();
-        return tileSource != null ? tileSource.getMinimumZoomLevel() : OpenStreetMapTileProviderConstants.MINIMUM_ZOOMLEVEL;
+        return tileSource != null ? tileSource.getMinimumZoomLevel() : OpenStreetMapTileProviderConstants.MINIMUM_ZOOM_LEVEL;
     }
 
     @Override

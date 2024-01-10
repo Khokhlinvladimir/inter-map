@@ -58,7 +58,7 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
 
     private void computeZoomLevels() {
         boolean first = true;
-        minZoomLevel = OpenStreetMapTileProviderConstants.MINIMUM_ZOOMLEVEL;
+        minZoomLevel = OpenStreetMapTileProviderConstants.MINIMUM_ZOOM_LEVEL;
         for (final MapTileModuleProviderBase provider : mProviders) {
             final int otherMin = provider.getMinimumZoomLevel();
             ;
@@ -129,7 +129,7 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
      * @since 6.0.0
      */
     public Bitmap approximateTileFromLowerZoom(final long pMapTileIndex) {
-        for (int zoomDiff = 1; MapTileIndex.getZoom(pMapTileIndex) - zoomDiff >= OpenStreetMapTileProviderConstants.MINIMUM_ZOOMLEVEL; zoomDiff++) {
+        for (int zoomDiff = 1; MapTileIndex.getZoom(pMapTileIndex) - zoomDiff >= OpenStreetMapTileProviderConstants.MINIMUM_ZOOM_LEVEL; zoomDiff++) {
             final Bitmap bitmap = approximateTileFromLowerZoom(pMapTileIndex, zoomDiff);
             if (bitmap != null) {
                 return bitmap;

@@ -165,7 +165,7 @@ public class TileSourcePolicy {
      */
     public long computeExpirationTime(final HttpURLConnection pHttpURLConnection, final long pNow) {
         final String expires = pHttpURLConnection.getHeaderField(OpenStreetMapTileProviderConstants.HTTP_EXPIRES_HEADER);
-        final String cacheControl = pHttpURLConnection.getHeaderField(OpenStreetMapTileProviderConstants.HTTP_CACHECONTROL_HEADER);
+        final String cacheControl = pHttpURLConnection.getHeaderField(OpenStreetMapTileProviderConstants.HTTP_CACHE_CONTROL_HEADER);
         final long result = computeExpirationTime(expires, cacheControl, pNow);
         if (Configuration.getInstance().isDebugMapTileDownloader()) {
             Log.d(IMapView.LOGTAG, "computeExpirationTime('" + expires + "','" + cacheControl + "'," + pNow + "=" + result);
