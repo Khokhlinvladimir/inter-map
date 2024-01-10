@@ -45,7 +45,7 @@ public class SampleMarker extends BaseSampleFragment {
 
         final DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
 
-        final ScaleDiskOverlay scaleDiskOverlayWhiteHouse = new ScaleDiskOverlay(getContext(), whiteHouse, 2000, GeoConstants.UnitOfMeasure.foot);
+        final ScaleDiskOverlay scaleDiskOverlayWhiteHouse = new ScaleDiskOverlay(getContext(), whiteHouse, 2000, GeoConstants.UnitOfMeasure.Foot);
         final Paint circlePaint = new Paint();
         circlePaint.setColor(Color.rgb(128, 128, 128));
         circlePaint.setStyle(Paint.Style.STROKE);
@@ -68,7 +68,7 @@ public class SampleMarker extends BaseSampleFragment {
         scaleDiskOverlayWhiteHouse.setDisplaySizeMax(800);
         mMapView.getOverlays().add(scaleDiskOverlayWhiteHouse);
 
-        final ScaleDiskOverlay scaleDiskOverlayPentagon = new ScaleDiskOverlay(getContext(), pentagon, 1, GeoConstants.UnitOfMeasure.statuteMile);
+        final ScaleDiskOverlay scaleDiskOverlayPentagon = new ScaleDiskOverlay(getContext(), pentagon, 1, GeoConstants.UnitOfMeasure.StatuteMile);
         final Paint diskPaint2 = new Paint();
         diskPaint2.setColor(Color.argb(32, 255, 0, 0));
         diskPaint2.setStyle(Paint.Style.FILL);
@@ -83,7 +83,7 @@ public class SampleMarker extends BaseSampleFragment {
         scaleDiskOverlayPentagon.setDisplaySizeMax(800);
         mMapView.getOverlays().add(scaleDiskOverlayPentagon);
 
-        final ScaleDiskOverlay scaleDiskOverlayWashington = new ScaleDiskOverlay(getContext(), washington, 2000, GeoConstants.UnitOfMeasure.foot);
+        final ScaleDiskOverlay scaleDiskOverlayWashington = new ScaleDiskOverlay(getContext(), washington, 2000, GeoConstants.UnitOfMeasure.Foot);
         final Paint circlePaint2 = new Paint();
         circlePaint2.setColor(Color.CYAN);
         circlePaint2.setStyle(Paint.Style.STROKE);

@@ -657,30 +657,30 @@ public class ScaleBarOverlay extends Overlay implements GeoConstants {
             default:
             case metric:
                 if (meters >= 1000 * 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.kilometer, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Kilometer, "%.0f");
                 } else if (meters >= 1000 / 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.kilometer, "%.1f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Kilometer, "%.1f");
                 } else if (meters >= 20) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.meter, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Meter, "%.0f");
                 } else {
-                    return getConvertedScaleString(meters, UnitOfMeasure.meter, "%.2f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Meter, "%.2f");
                 }
             case imperial:
                 if (meters >= METERS_PER_STATUTE_MILE * 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.statuteMile, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.StatuteMile, "%.0f");
 
                 } else if (meters >= METERS_PER_STATUTE_MILE / 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.statuteMile, "%.1f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.StatuteMile, "%.1f");
                 } else {
-                    return getConvertedScaleString(meters, UnitOfMeasure.foot, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Foot, "%.0f");
                 }
             case nautical:
                 if (meters >= METERS_PER_NAUTICAL_MILE * 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.nauticalMile, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.NauticalMile, "%.0f");
                 } else if (meters >= METERS_PER_NAUTICAL_MILE / 5) {
-                    return getConvertedScaleString(meters, UnitOfMeasure.nauticalMile, "%.1f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.NauticalMile, "%.1f");
                 } else {
-                    return getConvertedScaleString(meters, UnitOfMeasure.foot, "%.0f");
+                    return getConvertedScaleString(meters, UnitOfMeasure.Foot, "%.0f");
                 }
         }
     }
