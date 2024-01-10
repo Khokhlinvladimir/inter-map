@@ -17,15 +17,15 @@ android {
 
         applicationId "org.osmdroid"
 
-        minSdkVersion 21
+        minSdkVersion 24
         multiDexEnabled = true
 
         compileSdkVersion(project.hasProperty('android.compileSdkVersion')
-                ? Integer.parseInt(project.property('android.compileSdkVersion')) : 34)
+                ? Integer.parseInt(project.property('android.compileSdkVersion')) : 33)
 
         // default targetSdkVersion to API 23, if not provided
         targetSdkVersion(project.hasProperty('android.targetSdkVersion')
-                ? Integer.parseInt(project.property('android.targetSdkVersion')) : 34)
+                ? Integer.parseInt(project.property('android.targetSdkVersion')) : 33)
 
         // default versionCode o 1 if not provided
         versionCode(project.hasProperty('android.versionCode')
@@ -85,12 +85,12 @@ dependencies {
     implementation group: 'com.opencsv', name: 'opencsv', version: '4.4'
 
     //usual android stuff
-    implementation "com.google.android.material:material:1.6.1" //needed for UI menuing
+    implementation "com.google.android.material:material:1.11.0" //needed for UI menuing
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "androidx.recyclerview:recyclerview:1.3.2"
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.appcompat:appcompat:1.6.1"
     //crash logging
     implementation 'ch.acra:acra:4.7.0'
 
