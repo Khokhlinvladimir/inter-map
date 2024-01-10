@@ -1,18 +1,17 @@
-package org.osmdroid.config;
+package org.osmdroid.config
 
 /**
  * Singleton class to get/set a configuration provider for osmdroid
- * <a href="https://github.com/osmdroid/osmdroid/issues/481">Issue 481</a>
+ * [Issue 481](https://github.com/osmdroid/osmdroid/issues/481)
  * Created on 11/29/2016.
  *
  * @author Alex O'Ree
  * @see org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants
+ *
  * @since 5.6
  */
-
-public class Configuration {
-    private static IConfigurationProvider ref;
-
+object Configuration {
+    private var ref: IConfigurationProvider? = null
 
     /**
      * gets the current reference to the config provider.
@@ -20,11 +19,13 @@ public class Configuration {
      *
      * @return
      */
-    public static synchronized IConfigurationProvider getInstance() {
-        if (ref == null)
-            ref = new DefaultConfigurationProvider();
-        return ref;
-    }
+    @JvmStatic
+    @get:Synchronized // TODO проверить не нужно ли синхронизировать сеттер?
+    val instance: IConfigurationProvider?
+        get() {
+            if (ref == null) ref = DefaultConfigurationProvider()
+            return ref
+        }
 
     /**
      * Note, this should be called before any instances of MapView are created (either programmatically
@@ -33,7 +34,8 @@ public class Configuration {
      * @param instance
      * @see android.view.LayoutInflater
      */
-    public static void setConfigurationProvider(IConfigurationProvider instance) {
-        ref = instance;
+    @JvmStatic
+    fun setConfigurationProvider(instance: IConfigurationProvider?) {
+        ref = instance
     }
 }
