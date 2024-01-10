@@ -1,5 +1,5 @@
-package org.osmdroid.util;
+package org.osmdroid.util
 
-public interface IterableWithSize<T> extends Iterable<T> {
-    int size();
+interface IterableWithSize<T> : Iterable<T> {
+    fun size(): Int
 }

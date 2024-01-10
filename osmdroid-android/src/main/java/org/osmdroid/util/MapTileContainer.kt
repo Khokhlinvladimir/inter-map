@@ -1,10 +1,9 @@
-package org.osmdroid.util;
+package org.osmdroid.util
 
 /**
  * @author Fabrice Fontaine
  * @since 6.0.2
  */
-public interface MapTileContainer {
-
-    boolean contains(final long pTileIndex);
+interface MapTileContainer {
+    operator fun contains(pTileIndex: Long): Boolean
 }

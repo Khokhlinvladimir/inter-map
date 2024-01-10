@@ -1,28 +1,24 @@
-package org.osmdroid.tileprovider.tilesource;
+package org.osmdroid.tileprovider.tilesource
 
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Drawable
+import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase.LowMemoryException
+import java.io.InputStream
 
-import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase.LowMemoryException;
-
-import java.io.InputStream;
-
-public interface ITileSource {
-
+interface ITileSource {
     /**
      * An ordinal identifier for this tile source
      *
      * @return the ordinal value
      */
-    @Deprecated
-    int ordinal();
+    @Deprecated("")
+    fun ordinal(): Int
 
     /**
      * A human-friendly name for this tile source
      *
      * @return the tile source name
      */
-    String name();
-
+    fun name(): String?
 
     /**
      * Get a unique file path for the tile. This file path may be used to store the tile on a file
@@ -32,7 +28,7 @@ public interface ITileSource {
      * @param pMapTileIndex the tile
      * @return the unique file path
      */
-    String getTileRelativeFilenameString(final long pMapTileIndex);
+    fun getTileRelativeFilenameString(pMapTileIndex: Long): String?
 
     /**
      * Get a rendered Drawable from the specified file path.
@@ -40,7 +36,8 @@ public interface ITileSource {
      * @param aFilePath a file path
      * @return the rendered Drawable
      */
-    Drawable getDrawable(String aFilePath) throws LowMemoryException;
+    @Throws(LowMemoryException::class)
+    fun getDrawable(aFilePath: String?): Drawable?
 
     /**
      * Get a rendered Drawable from the specified InputStream.
@@ -48,28 +45,29 @@ public interface ITileSource {
      * @param aTileInputStream an InputStream
      * @return the rendered Drawable
      */
-    Drawable getDrawable(InputStream aTileInputStream) throws LowMemoryException;
+    @Throws(LowMemoryException::class)
+    fun getDrawable(aTileInputStream: InputStream?): Drawable?
 
     /**
      * Get the minimum zoom level this tile source can provide.
      *
      * @return the minimum zoom level
      */
-    public int getMinimumZoomLevel();
+    val minimumZoomLevel: Int
 
     /**
      * Get the maximum zoom level this tile source can provide.
      *
      * @return the maximum zoom level
      */
-    public int getMaximumZoomLevel();
+    val maximumZoomLevel: Int
 
     /**
      * Get the tile size in pixels this tile source provides.
      *
      * @return the tile size in pixels
      */
-    public int getTileSizePixels();
+    val tileSizePixels: Int
 
     /**
      * Returns an I18N sensitive string representing the copy right notice (if any) of the tile source
@@ -77,5 +75,5 @@ public interface ITileSource {
      * @return a string or null
      * @since 5.6.1
      */
-    String getCopyrightNotice();
+    val copyrightNotice: String?
 }

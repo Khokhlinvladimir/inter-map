@@ -1,14 +1,11 @@
-package org.osmdroid.views.util.constants;
+package org.osmdroid.views.util.constants
 
 /**
  * This class contains constants used by the overlays.
  */
-public interface OverlayConstants {
-    // ===========================================================
-    // Final Fields
-    // ===========================================================
-
-    public static final int NOT_SET = Integer.MIN_VALUE;
-
-    public static final int DEFAULT_ZOOMLEVEL_MINIMAP_DIFFERENCE = 3;
+interface OverlayConstants {
+    companion object {
+        const val NOT_SET = Int.MIN_VALUE
+        const val DEFAULT_ZOOMLEVEL_MINIMAP_DIFFERENCE = 3
+    }
 }
