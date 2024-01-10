@@ -1,12 +1,9 @@
-package org.osmdroid.tileprovider.modules;
+package org.osmdroid.tileprovider.modules
 
-public interface INetworkAvailablityCheck {
-
-    boolean getNetworkAvailable();
-
-    boolean getWiFiNetworkAvailable();
-
-    boolean getCellularDataNetworkAvailable();
+interface INetworkAvailablityCheck {
+    val networkAvailable: Boolean
+    val wiFiNetworkAvailable: Boolean
+    val cellularDataNetworkAvailable: Boolean
 
     /**
      * this method calls a method that was removed API26
@@ -16,6 +13,6 @@ public interface INetworkAvailablityCheck {
      * @param hostAddress
      * @return
      */
-    @Deprecated
-    boolean getRouteToPathExists(int hostAddress);
+    @Deprecated("")
+    fun getRouteToPathExists(hostAddress: Int): Boolean
 }

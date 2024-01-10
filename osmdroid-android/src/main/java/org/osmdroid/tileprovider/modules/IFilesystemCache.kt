@@ -1,17 +1,15 @@
-package org.osmdroid.tileprovider.modules;
+package org.osmdroid.tileprovider.modules
 
-import android.graphics.drawable.Drawable;
-
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-
-import java.io.InputStream;
+import android.graphics.drawable.Drawable
+import org.osmdroid.tileprovider.tilesource.ITileSource
+import java.io.InputStream
 
 /**
  * Represents a write-only interface into a file system cache.
  *
  * @author Marc Kurtz
  */
-public interface IFilesystemCache {
+interface IFilesystemCache {
     /**
      * Save an InputStream as the specified tile in the file system cache for the specified tile
      * source.
@@ -21,15 +19,15 @@ public interface IFilesystemCache {
      * @param pStream         an InputStream
      * @return
      */
-    boolean saveFile(final ITileSource pTileSourceInfo, final long pMapTileIndex,
-                     final InputStream pStream, final Long pExpirationTime);
+    fun saveFile(pTileSourceInfo: ITileSource?, pMapTileIndex: Long,
+                 pStream: InputStream?, pExpirationTime: Long?): Boolean
 
     /**
      * return true if the map file for download already exists
      *
      * @return
      */
-    boolean exists(final ITileSource pTileSourceInfo, final long pMapTileIndex);
+    fun exists(pTileSourceInfo: ITileSource?, pMapTileIndex: Long): Boolean
 
     /**
      * Used when the map engine is shutdown, use it to perform any clean up activities and to terminate
@@ -37,7 +35,7 @@ public interface IFilesystemCache {
      *
      * @since 5.3
      */
-    void onDetach();
+    fun onDetach()
 
     /**
      * Removes a tile from the cache, see issue
@@ -46,7 +44,7 @@ public interface IFilesystemCache {
      * @return true if it was removed, false otherwise
      * @since 5.4.2
      */
-    boolean remove(ITileSource tileSource, final long pMapTileIndex);
+    fun remove(tileSource: ITileSource?, pMapTileIndex: Long): Boolean
 
     /**
      * Gets the cache expiration timestamp of a tile
@@ -55,12 +53,13 @@ public interface IFilesystemCache {
      * or null if expiration timestamp is not supported or if the tile is not cached
      * @since 5.6.5
      */
-    Long getExpirationTimestamp(final ITileSource pTileSource, final long pMapTileIndex);
+    fun getExpirationTimestamp(pTileSource: ITileSource?, pMapTileIndex: Long): Long?
 
     /**
      * Gets the tile drawable
      *
      * @since 6.0.0
      */
-    Drawable loadTile(final ITileSource pTileSource, final long pMapTileIndex) throws Exception;
+    @Throws(Exception::class)
+    fun loadTile(pTileSource: ITileSource?, pMapTileIndex: Long): Drawable?
 }
