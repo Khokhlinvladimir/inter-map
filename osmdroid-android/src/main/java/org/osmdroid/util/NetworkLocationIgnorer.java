@@ -8,8 +8,6 @@ import org.osmdroid.config.Configuration;
  * A class to check whether we want to use a location. If there are multiple location providers,
  * i.e. network and GPS, then you want to ignore network locations shortly after a GPS location
  * because you will get another GPS location soon.
- *
- * @author Neil Boyd
  */
 public class NetworkLocationIgnorer {
 

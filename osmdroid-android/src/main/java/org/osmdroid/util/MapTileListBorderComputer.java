@@ -2,9 +2,6 @@ package org.osmdroid.util;
 
 /**
  * Compute a map tile list from a map tile list source: its border
- *
- * @author Fabrice Fontaine
- * @since 6.0.2
  * @deprecated Use {@link MapTileAreaBorderComputer} instead
  */
 

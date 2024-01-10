@@ -1,9 +1,5 @@
 package org.osmdroid.util;
 
-/**
- * @author Fabrice Fontaine
- * @since 6.0.2
- */
 public class TileSystemWebMercator extends TileSystem {
 
     public static final double MinLatitude = -85.05112877980658;

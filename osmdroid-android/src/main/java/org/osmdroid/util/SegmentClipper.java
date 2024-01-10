@@ -2,9 +2,6 @@ package org.osmdroid.util;
 
 /**
  * A tool to clip segments
- *
- * @author Fabrice Fontaine
- * @since 6.0.0
  */
 
 public class SegmentClipper implements PointAccepter {
@@ -226,8 +223,6 @@ public class SegmentClipper implements PointAccepter {
 
     /**
      * Gets the clip area corner which is the closest to the given segment
-     *
-     * @since 6.0.0
      * We have a clip area and we have a segment with no intersection with this clip area.
      * The question is: how do we clip this segment?
      * If we only clip both segment ends, we may end up with a (min,min) x (max,max)
@@ -258,8 +253,6 @@ public class SegmentClipper implements PointAccepter {
      * Optimization for lines (as opposed to Path)
      * If both points are outside of the clip area and "on the same side of the outside" (sic)
      * we don't need to compute anything anymore as it won't draw a line in the end
-     *
-     * @since 6.0.0
      */
     private boolean isOnTheSameSideOut(final long pX0, final long pY0, final long pX1, final long pY1) {
         return (pX0 < mXMin && pX1 < mXMin)

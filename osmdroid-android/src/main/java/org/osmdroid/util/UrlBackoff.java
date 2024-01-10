@@ -3,10 +3,6 @@ package org.osmdroid.util;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Fabrice Fontaine
- * @since 6.0.2
- */
 public class UrlBackoff {
 
     private static final long[] mExponentialBackoffDurationInMillisDefault = new long[]{

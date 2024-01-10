@@ -5,9 +5,6 @@ import android.graphics.Rect;
 
 /**
  * A {@link android.graphics.Rect} with corners in long type instead of int
- *
- * @author Fabrice Fontaine
- * @since 6.0.0
  */
 
 public class RectL {
@@ -62,16 +59,11 @@ public class RectL {
     /**
      * Returns true if (x,y) is inside the rectangle. Left and top coordinates are considered
      * inside the bounds, while right and bottom are not.
-     *
-     * @since 6.0.0
      */
     public boolean contains(long x, long y) {
         return left < right && top < bottom && x >= left && x < right && y >= top && y < bottom;
     }
 
-    /**
-     * @since 6.0.0
-     */
     public void inset(long dx, long dy) {
         left += dx;
         top += dy;
@@ -114,9 +106,8 @@ public class RectL {
      * Rough computation of the smaller {@link RectL} that contains a rotated {@link RectL}
      * Emulating {@link Canvas#getClipBounds(Rect)} after a canvas rotation
      * The code is supposed to be exactly the same as the Rect version, except for int/long
-     *
-     * @since 6.0.2
      */
+
     public static RectL getBounds(final RectL pIn,
                                   final long pCenterX, final long pCenterY, final double pDegrees,
                                   final RectL pReuse) {
@@ -197,8 +188,6 @@ public class RectL {
      * Emulating {@link Canvas#getClipBounds(Rect)} after a canvas rotation
      * The code is supposed to be exactly the same as the RectL version, except for int/long
      * The code is written to run as fast as possible because it's constantly used when drawing markers
-     *
-     * @since 6.0.2
      */
     public static Rect getBounds(final Rect pIn,
                                  final int pCenterX, final int pCenterY, final double pDegrees,
@@ -277,8 +266,6 @@ public class RectL {
 
     /**
      * Apply a rotation on a point and get the resulting X
-     *
-     * @since 6.0.2
      */
     public static long getRotatedX(final long pX, final long pY,
                                    final double pDegrees, final long pCenterX, final long pCenterY) {
@@ -291,8 +278,6 @@ public class RectL {
 
     /**
      * Apply a rotation on a point and get the resulting Y
-     *
-     * @since 6.0.2
      */
     public static long getRotatedY(final long pX, final long pY,
                                    final double pDegrees, final long pCenterX, final long pCenterY) {
@@ -305,8 +290,6 @@ public class RectL {
 
     /**
      * Apply a rotation on a point and get the resulting X
-     *
-     * @since 6.0.2
      */
     public static long getRotatedX(final long pX, final long pY,
                                    final long pCenterX, final long pCenterY,
@@ -316,8 +299,6 @@ public class RectL {
 
     /**
      * Apply a rotation on a point and get the resulting Y
-     *
-     * @since 6.0.2
      */
     public static long getRotatedY(final long pX, final long pY,
                                    final long pCenterX, final long pCenterY,
@@ -325,9 +306,6 @@ public class RectL {
         return pCenterY + Math.round((pX - pCenterX) * pSin + (pY - pCenterY) * pCos);
     }
 
-    /**
-     * @since 6.0.2
-     */
     public void offset(final long pDx, final long pDy) {
         left += pDx;
         top += pDy;
@@ -335,9 +313,6 @@ public class RectL {
         bottom += pDy;
     }
 
-    /**
-     * @since 6.0.2
-     */
     public void union(final long pLeft, final long pTop, final long pRight, final long pBottom) {
         if ((pLeft < pRight) && (pTop < pBottom)) {
             if ((left < right) && (top < bottom)) {
@@ -354,23 +329,14 @@ public class RectL {
         }
     }
 
-    /**
-     * @since 6.0.2
-     */
     public void union(final RectL pRect) {
         union(pRect.left, pRect.top, pRect.right, pRect.bottom);
     }
 
-    /**
-     * @since 6.1.1
-     */
     public long centerX() {
         return (left + right) / 2;
     }
 
-    /**
-     * @since 6.1.1
-     */
     public long centerY() {
         return (top + bottom) / 2;
     }

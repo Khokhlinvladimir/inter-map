@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Optimized version of List&lt;PointL&gt;
- * Created by Fabrice on 31/12/2017.
- *
- * @since 6.0.0
- */
-
 public class ListPointL implements Iterable<PointL> {
 
     private final List<PointL> mList = new ArrayList<>();

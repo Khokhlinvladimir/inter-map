@@ -2,9 +2,6 @@ package org.osmdroid.util;
 
 /**
  * A class dedicated to the computation of 2D segments intersection points
- *
- * @author Fabrice Fontaine
- * @since 6.0.0
  */
 
 public class SegmentIntersection {

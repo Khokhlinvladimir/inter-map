@@ -2,9 +2,6 @@ package org.osmdroid.util;
 
 /**
  * Compute a map tile area from a map tile area source: the source on another zoom level
- *
- * @author Fabrice Fontaine
- * @since 6.0.3
  */
 
 public class MapTileAreaZoomComputer implements MapTileAreaComputer {

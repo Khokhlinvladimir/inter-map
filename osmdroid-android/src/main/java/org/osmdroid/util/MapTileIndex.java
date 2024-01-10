@@ -5,9 +5,6 @@ package org.osmdroid.util;
  * Algorithm unfortunately different from SqlTileWriter.getIndex for historical reasons.
  * This version is better, because it's easy to get zoom, X and Y back from the index.
  * This version is limited to zooms between 0 and 29, which should be enough.
- *
- * @author Fabrice Fontaine
- * @since 6.0.0
  */
 
 public class MapTileIndex {

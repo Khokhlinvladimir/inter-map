@@ -8,9 +8,6 @@ package org.osmdroid.util;
  * of the clip rectangle (e.g. same X or same Y). Do we need to render all those segments? No.
  * We can simplify this list of consecutive segments into a tiny list of maximum 3 segments.
  * And that makes the Path rendering much faster.
- *
- * @author Fabrice Fontaine
- * @since 6.2.0
  */
 
 public class SideOptimizationPointAccepter implements PointAccepter {

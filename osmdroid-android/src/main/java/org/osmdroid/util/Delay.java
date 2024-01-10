@@ -1,9 +1,6 @@
 package org.osmdroid.util;
 
-/**
- * @author Fabrice Fontaine
- * @since 6.0.2
- */
+
 public class Delay {
 
     private final long[] mDurations;

@@ -5,9 +5,6 @@ import org.osmdroid.views.overlay.SpeechBalloonOverlay;
 /**
  * Helper class for {@link SpeechBalloonOverlay}
  * whose main interest is method {@link #compute(RectL, PointL, double, PointL, PointL)}
- *
- * @author Fabrice Fontaine
- * @since 6.1.1
  */
 public class SpeechBalloonHelper {
 

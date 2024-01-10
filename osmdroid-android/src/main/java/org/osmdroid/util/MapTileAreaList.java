@@ -6,9 +6,6 @@ import java.util.List;
 
 /**
  * A list of areas of map tiles
- *
- * @author Fabrice Fontaine
- * @since 6.0.3
  */
 
 public class MapTileAreaList implements MapTileContainer, IterableWithSize<Long> {

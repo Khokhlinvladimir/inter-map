@@ -50,15 +50,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * This is the primary view for osmdroid. <br><br>
- * As of version 6.0.0, please respect the android view lifecycle by calling
- * {@link MapView#onPause()} and {@link MapView#onResume()} respectively
- *
- * @author plusminus on 17:45:56 - 25.09.2008
- * @author and many other contributors
- * @since the begining
- */
 public class MapView extends ViewGroup implements IMapView,
         MultiTouchObjectCanvas<Object> {
 
@@ -138,7 +129,7 @@ public class MapView extends ViewGroup implements IMapView,
     private final Point mLayoutPoint = new Point();
 
     // Keep a set of listeners for when the maps have a layout
-    private final LinkedList<OnFirstLayoutListener> mOnFirstLayoutListeners = new LinkedList<MapView.OnFirstLayoutListener>();
+    private final LinkedList<OnFirstLayoutListener> mOnFirstLayoutListeners = new LinkedList<>();
 
     /* becomes true once onLayout has been called for the first time i.e. map is ready to go. */
     private boolean mLayoutOccurred = false;
@@ -156,19 +147,6 @@ public class MapView extends ViewGroup implements IMapView,
     private boolean mZoomRounding;
 
     private final MapViewRepository mRepository = new MapViewRepository(this);
-
-    public interface OnFirstLayoutListener {
-        /**
-         * this generally means that the map is ready to go
-         *
-         * @param v
-         * @param left
-         * @param top
-         * @param right
-         * @param bottom
-         */
-        void onFirstLayout(View v, int left, int top, int right, int bottom);
-    }
 
     private static TileSystem mTileSystem = new TileSystemWebMercator();
 
@@ -224,9 +202,7 @@ public class MapView extends ViewGroup implements IMapView,
             tileProvider = new MapTileProviderBasic(context.getApplicationContext(), tileSource);
         }
 
-        mTileRequestCompleteHandler = tileRequestCompleteHandler == null
-                ? new SimpleInvalidationHandler(this)
-                : tileRequestCompleteHandler;
+        mTileRequestCompleteHandler = tileRequestCompleteHandler == null ? new SimpleInvalidationHandler(this) : tileRequestCompleteHandler;
         mTileProvider = tileProvider;
         mTileProvider.getTileRequestCompleteHandlers().add(mTileRequestCompleteHandler);
         updateTileSizeForDensity(mTileProvider.getTileSource());
@@ -537,7 +513,6 @@ public class MapView extends ViewGroup implements IMapView,
         nextZoom = Math.min(getMaxZoomLevel(), Math.max(nextZoom, getMinZoomLevel()));
         final GeoPoint center = pBoundingBox.getCenterWithDateLine();
 
-        // fine-tuning the latitude, cf. https://github.com/osmdroid/osmdroid/issues/1239
         final Projection projection = new Projection(
                 nextZoom, getWidth(), getHeight(),
                 center,
@@ -1352,9 +1327,6 @@ public class MapView extends ViewGroup implements IMapView,
         mMultiTouchController = on ? new MultiTouchController<Object>(this, false) : null;
     }
 
-    /**
-     * @return
-     */
     public boolean isHorizontalMapRepetitionEnabled() {
         return horizontalMapRepetitionEnabled;
     }
@@ -1372,9 +1344,7 @@ public class MapView extends ViewGroup implements IMapView,
         this.invalidate();
     }
 
-    /**
-     * @return
-     */
+
     public boolean isVerticalMapRepetitionEnabled() {
         return verticalMapRepetitionEnabled;
     }
@@ -1708,7 +1678,6 @@ public class MapView extends ViewGroup implements IMapView,
     /**
      * Sets the initial center point of the map. This can be set before the map view is 'ready'
      * meaning that it can be set and honored with the onFirstLayoutListener
-     *
      */
     @Deprecated
     public void setInitCenter(final IGeoPoint geoPoint) {
@@ -1735,9 +1704,6 @@ public class MapView extends ViewGroup implements IMapView,
      * <p>
      * This method gives to the Projection the desired map center, typically set by
      * MapView.setExpectedCenter when you want to center a map on a particular point.
-     * <a href="https://github.com/osmdroid/osmdroid/issues/868">see issue 868</a>
-     *
-     * @see #getMapCenter()
      */
     GeoPoint getExpectedCenter() {
         return mCenter;

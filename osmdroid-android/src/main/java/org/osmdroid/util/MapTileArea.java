@@ -6,9 +6,6 @@ import java.util.Iterator;
 
 /**
  * An area of map tiles.
- *
- * @author Fabrice Fontaine
- * @since 6.0.3
  */
 
 public class MapTileArea implements MapTileContainer, IterableWithSize<Long> {

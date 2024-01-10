@@ -2,12 +2,6 @@ package org.osmdroid.util;
 
 import android.graphics.Path;
 
-/**
- * Created by Fabrice on 24/12/2017.
- *
- * @since 6.0.0
- */
-
 public class PathBuilder implements PointAccepter {
 
     private final Path mPath;

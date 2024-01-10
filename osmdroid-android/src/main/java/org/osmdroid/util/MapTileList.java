@@ -2,9 +2,6 @@ package org.osmdroid.util;
 
 /**
  * An optimized list of map tile indices
- *
- * @author Fabrice Fontaine
- * @since 6.0.0
  */
 
 public class MapTileList implements MapTileContainer {
