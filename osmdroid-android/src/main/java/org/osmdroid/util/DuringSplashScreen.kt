@@ -1,6 +1,6 @@
-package org.osmdroid.util;
+package org.osmdroid.util
 
-import org.osmdroid.tileprovider.modules.SqlTileWriter;
+import org.osmdroid.tileprovider.modules.SqlTileWriter
 
 /**
  * Put there everything that could be done during a splash screen
@@ -8,11 +8,9 @@ import org.osmdroid.tileprovider.modules.SqlTileWriter;
  * @author Fabrice Fontaine
  * @since 6.0.2
  */
-public class DuringSplashScreen implements SplashScreenable {
-
-    @Override
-    public void runDuringSplashScreen() {
-        final SqlTileWriter sqlTileWriter = new SqlTileWriter();
-        sqlTileWriter.runDuringSplashScreen();
+class DuringSplashScreen : SplashScreenable {
+    override fun runDuringSplashScreen() {
+        val sqlTileWriter = SqlTileWriter()
+        sqlTileWriter.runDuringSplashScreen()
     }
 }

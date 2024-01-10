@@ -1,4 +1,4 @@
-package org.osmdroid.util;
+package org.osmdroid.util
 
 /**
  * A repository for integers
@@ -6,31 +6,28 @@ package org.osmdroid.util;
  * @author Fabrice Fontaine
  * @since 6.2.0
  */
-public class IntegerAccepter {
+class IntegerAccepter(pSize: Int) {
+    private val mValues: IntArray
+    private var mIndex = 0
 
-    private final int[] mValues;
-    private int mIndex;
-
-    public IntegerAccepter(final int pSize) {
-        mValues = new int[pSize];
+    init {
+        mValues = IntArray(pSize)
     }
 
-    public void init() {
-        mIndex = 0;
+    fun init() {
+        mIndex = 0
     }
 
-    public void add(final int pInteger) {
-        mValues[mIndex++] = pInteger;
+    fun add(pInteger: Int) {
+        mValues[mIndex++] = pInteger
     }
 
-    public int getValue(final int pIndex) {
-        return mValues[pIndex];
+    fun getValue(pIndex: Int): Int {
+        return mValues[pIndex]
     }
 
-    public void end() {
-    }
-
-    public void flush() {
-        mIndex = 0;
+    fun end() {}
+    fun flush() {
+        mIndex = 0
     }
 }
