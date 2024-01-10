@@ -30,7 +30,7 @@ android {
 
         // default versionCode o 1 if not provided
         versionCode(project.hasProperty('android.versionCode')
-                ? Integer.parseInt(project.property('android.versionCode')) : 1)
+                ? Integer.parseInt(project.property('android.versionCode')) : 33)
 
         versionName project.version
     }
