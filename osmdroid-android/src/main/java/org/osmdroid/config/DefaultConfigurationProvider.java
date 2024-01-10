@@ -262,8 +262,12 @@ public class DefaultConfigurationProvider implements IConfigurationProvider {
                     osmdroidBasePath = new File(pathToStorage, "osmdroid");
                     osmdroidBasePath.mkdirs();
                 } else {
-                    File osmdroidBasePath = new File(context.getExternalFilesDir(
-                            Environment.DIRECTORY_PICTURES), "osmdroid");
+                    File osmdroidBasePath = null;
+                    // FIXME NOT SUPPORTED VERSION FROYO
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                        osmdroidBasePath = new File(context.getExternalFilesDir(
+                                Environment.DIRECTORY_PICTURES), "osmdroid");
+                    }
                     if (!osmdroidBasePath.mkdirs()) {
                         Log.e(IMapView.LOGTAG, "Directory not created");
                     }
