@@ -1,16 +1,14 @@
-package org.osmdroid.api;
+package org.osmdroid.api
 
 /**
  * An interface that resembles the Google Maps API GeoPoint class.
  */
-public interface IGeoPoint {
-    @Deprecated
-    int getLatitudeE6();
+interface IGeoPoint {
+    @get:Deprecated("")
+    val latitudeE6: Int
 
-    @Deprecated
-    int getLongitudeE6();
-
-    double getLatitude();
-
-    double getLongitude();
+    @get:Deprecated("")
+    val longitudeE6: Int
+    val latitude: Double
+    val longitude: Double
 }

@@ -1,37 +1,32 @@
-package org.osmdroid.api;
-
+package org.osmdroid.api
 
 /**
  * An interface that resembles the Google Maps API MapView class
- * and is implemented by the osmdroid {@link org.osmdroid.views.MapView} class.
+ * and is implemented by the osmdroid [org.osmdroid.views.MapView] class.
  *
  * @author Neil Boyd
  */
-public interface IMapView {
-    public final static String LOGTAG = "OsmDroid";
+interface IMapView {
+    val controller: IMapController?
+    val projection: IProjection?
 
-    IMapController getController();
-
-    IProjection getProjection();
-
-    @Deprecated
-    int getZoomLevel();
+    @get:Deprecated("")
+    val zoomLevel: Int
 
     /**
      * @since 6.0
      */
-    double getZoomLevelDouble();
-
-    double getMaxZoomLevel();
-
-    double getLatitudeSpanDouble();
-
-    double getLongitudeSpanDouble();
-
-    IGeoPoint getMapCenter();
+    val zoomLevelDouble: Double
+    val maxZoomLevel: Double
+    val latitudeSpanDouble: Double
+    val longitudeSpanDouble: Double
+    val mapCenter: IGeoPoint?
 
     // some methods from View
     // (well, just one for now)
-    void setBackgroundColor(int color);
+    fun setBackgroundColor(color: Int)
 
+    companion object {
+        const val LOGTAG = "OsmDroid"
+    }
 }

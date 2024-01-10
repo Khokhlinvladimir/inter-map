@@ -1,38 +1,33 @@
-package org.osmdroid.api;
+package org.osmdroid.api
 
 /**
  * An interface that resembles the Google Maps API MapController class and is implemented by the
- * osmdroid {@link org.osmdroid.views.MapController} class.
+ * osmdroid [org.osmdroid.views.MapController] class.
  *
  * @author Neil Boyd
  */
-public interface IMapController {
-    void animateTo(IGeoPoint geoPoint);
+interface IMapController {
+    fun animateTo(geoPoint: IGeoPoint?)
+    fun animateTo(x: Int, y: Int)
+    fun scrollBy(x: Int, y: Int)
+    fun setCenter(point: IGeoPoint?)
 
-    void animateTo(int x, int y);
-
-    void scrollBy(int x, int y);
-
-    void setCenter(IGeoPoint point);
-
-    @Deprecated
-    int setZoom(int zoomLevel);
+    @Deprecated("")
+    fun setZoom(zoomLevel: Int): Int
 
     /**
      * @since 6.0
      */
-    double setZoom(final double pZoomLevel);
-
-    void stopAnimation(boolean jumpToFinish);
-
-    void stopPanning();
+    fun setZoom(pZoomLevel: Double): Double
+    fun stopAnimation(jumpToFinish: Boolean)
+    fun stopPanning()
 
     /**
      * zooms in 1 whole map zoom level
      *
      * @return
      */
-    boolean zoomIn();
+    fun zoomIn(): Boolean
 
     /**
      * zooms in 1 whole map zoom level with an adjustable zoom in animation speed
@@ -41,9 +36,8 @@ public interface IMapController {
      * @return
      * @since 6.0
      */
-    boolean zoomIn(Long animationSpeed);
-
-    boolean zoomInFixing(int xPixel, int yPixel, Long zoomAnimation);
+    fun zoomIn(animationSpeed: Long?): Boolean
+    fun zoomInFixing(xPixel: Int, yPixel: Int, zoomAnimation: Long?): Boolean
 
     /**
      * zooms in and centers the map to the given canvas coordinates
@@ -52,7 +46,7 @@ public interface IMapController {
      * @param yPixel
      * @return
      */
-    boolean zoomInFixing(int xPixel, int yPixel);
+    fun zoomInFixing(xPixel: Int, yPixel: Int): Boolean
 
     /**
      * zooms out 1 whole  map zoom level with adjustable zoom speed
@@ -61,14 +55,14 @@ public interface IMapController {
      * @return
      * @since 6.0
      */
-    boolean zoomOut(Long animationSpeed);
+    fun zoomOut(animationSpeed: Long?): Boolean
 
     /**
      * zooms out 1 whole map zoom level
      *
      * @return
      */
-    boolean zoomOut();
+    fun zoomOut(): Boolean
 
     /**
      * zooms out while centering the map canvas coordinates
@@ -77,7 +71,7 @@ public interface IMapController {
      * @param yPixel
      * @return
      */
-    boolean zoomOutFixing(int xPixel, int yPixel);
+    fun zoomOutFixing(xPixel: Int, yPixel: Int): Boolean
 
     /**
      * zooms to the given zoom level (whole number) and animates the zoom motion
@@ -85,8 +79,8 @@ public interface IMapController {
      * @param zoomLevel 0-Max zoom of the current map tile source, typically 22 or less
      * @return
      */
-    @Deprecated
-    boolean zoomTo(int zoomLevel);
+    @Deprecated("")
+    fun zoomTo(zoomLevel: Int): Boolean
 
     /**
      * zooms to the given zoom level (whole number) and animates the zoom motion with adjustable zoom speed
@@ -96,11 +90,9 @@ public interface IMapController {
      * @return
      * @since 6.0
      */
-    boolean zoomTo(int zoomLevel, Long animationSpeed);
-
-    boolean zoomToFixing(int zoomLevel, int xPixel, int yPixel, Long zoomAnimationSpeed);
-
-    boolean zoomTo(double pZoomLevel, Long animationSpeed);
+    fun zoomTo(zoomLevel: Int, animationSpeed: Long?): Boolean
+    fun zoomToFixing(zoomLevel: Int, xPixel: Int, yPixel: Int, zoomAnimationSpeed: Long?): Boolean
+    fun zoomTo(pZoomLevel: Double, animationSpeed: Long?): Boolean
 
     /**
      * zooms to the given zoom level
@@ -108,22 +100,20 @@ public interface IMapController {
      * @param pZoomLevel any real number between 0 and max zoom of the current tile source, typically 22 or less
      * @return
      */
-    boolean zoomTo(final double pZoomLevel);
+    fun zoomTo(pZoomLevel: Double): Boolean
 
-    @Deprecated
-    boolean zoomToFixing(int zoomLevel, int xPixel, int yPixel);
-
-    boolean zoomToFixing(double zoomLevel, int xPixel, int yPixel, Long zoomAnimationSpeed);
+    @Deprecated("")
+    fun zoomToFixing(zoomLevel: Int, xPixel: Int, yPixel: Int): Boolean
+    fun zoomToFixing(zoomLevel: Double, xPixel: Int, yPixel: Int, zoomAnimationSpeed: Long?): Boolean
 
     /**
      * @since 6.0
      */
-    boolean zoomToFixing(final double pZoomLevel, final int pXPixel, final int pYPixel);
+    fun zoomToFixing(pZoomLevel: Double, pXPixel: Int, pYPixel: Int): Boolean
 
-    @Deprecated
-    void zoomToSpan(int latSpanE6, int lonSpanE6);
-
-    void zoomToSpan(double latSpan, double lonSpan);
+    @Deprecated("")
+    fun zoomToSpan(latSpanE6: Int, lonSpanE6: Int)
+    fun zoomToSpan(latSpan: Double, lonSpan: Double)
 
     /**
      * @param point
@@ -131,15 +121,15 @@ public interface IMapController {
      * @param pSpeed
      * @since 6.0.2
      */
-    void animateTo(final IGeoPoint point, final Double pZoom, final Long pSpeed);
+    fun animateTo(point: IGeoPoint?, pZoom: Double?, pSpeed: Long?)
 
     /**
      * @since 6.0.3
      */
-    void animateTo(final IGeoPoint point, final Double pZoom, final Long pSpeed, final Float pOrientation);
+    fun animateTo(point: IGeoPoint?, pZoom: Double?, pSpeed: Long?, pOrientation: Float?)
 
     /**
      * @since 6.1.0
      */
-    void animateTo(final IGeoPoint point, final Double pZoom, final Long pSpeed, final Float pOrientation, final Boolean pClockwise);
+    fun animateTo(point: IGeoPoint?, pZoom: Double?, pSpeed: Long?, pOrientation: Float?, pClockwise: Boolean?)
 }
