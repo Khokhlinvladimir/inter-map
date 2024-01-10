@@ -17,14 +17,14 @@ android {
          minSdkVersion Integer.parseInt(project.property('android-minSdkForSupportLib.version'))
          multiDexEnabled = true
          compileSdkVersion(project.hasProperty('android.compileSdkVersion')
-                 ? Integer.parseInt(project.property('android.compileSdkVersion')) : 23)
+                 ? Integer.parseInt(project.property('android.compileSdkVersion')) : 34)
 
 
-         minSdkVersion(14)
+         minSdkVersion(24)
 
 
          targetSdkVersion(project.hasProperty('android.targetSdkVersion')
-                 ? Integer.parseInt(project.property('android.targetSdkVersion')) : 23)
+                 ? Integer.parseInt(project.property('android.targetSdkVersion')) : 34)
 
 
          versionCode(project.hasProperty('android.versionCode')

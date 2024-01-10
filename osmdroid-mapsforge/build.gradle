@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         // mapsforge 0.8.0 has minSdk 10
-        minSdkVersion 10
+        minSdkVersion 24
     }
     buildTypes {
         release {
