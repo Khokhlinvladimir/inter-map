@@ -1,14 +1,11 @@
-package org.osmdroid.tileprovider;
+package org.osmdroid.tileprovider
 
-import android.content.BroadcastReceiver;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 
-public interface IRegisterReceiver {
-
-    Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter);
-
-    void unregisterReceiver(BroadcastReceiver receiver);
-
-    void destroy();
+interface IRegisterReceiver {
+    fun registerReceiver(receiver: BroadcastReceiver?, filter: IntentFilter?): Intent?
+    fun unregisterReceiver(receiver: BroadcastReceiver?)
+    fun destroy()
 }
