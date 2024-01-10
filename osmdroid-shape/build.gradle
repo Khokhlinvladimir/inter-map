@@ -2,6 +2,7 @@ description = 'Shapefile support for osmdroid'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
@@ -31,6 +32,7 @@ android {
 
 dependencies {
    
+    implementation 'androidx.core:core-ktx:+'
     testImplementation 'junit:junit:4.13.2'
     api  project(':osmdroid-android')
     api 'com.github.spyhunter99:jdbf:2.2.0'

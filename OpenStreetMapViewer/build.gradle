@@ -2,6 +2,7 @@ description = 'OpenMap in the Play Store, the example app for using osmdroid'
 
 apply plugin: 'com.android.application'
 apply from: "$rootDir/gradle/android-signing.gradle"
+apply plugin: 'org.jetbrains.kotlin.android'
 
 
 group = project.property("pom.groupId")
@@ -96,6 +97,7 @@ dependencies {
 
     //memory leak testing
     implementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    implementation 'androidx.core:core-ktx:+'
 
     //on device testing
     androidTestImplementation 'androidx.multidex:multidex:2.0.1'

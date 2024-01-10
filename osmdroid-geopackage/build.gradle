@@ -2,6 +2,7 @@ description = 'Geopackage support for osmdroid'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version = project.property("pom.version")
@@ -32,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:+'
+
     //crash logging
     //implementation 'ch.acra:acra:4.7.0'
 

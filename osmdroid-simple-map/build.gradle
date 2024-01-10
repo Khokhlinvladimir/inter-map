@@ -2,6 +2,7 @@ description = 'Simple osmdroid based map application'
 
 apply plugin: 'com.android.application'
 apply from: "$rootDir/gradle/android-signing.gradle"
+apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
@@ -43,6 +44,7 @@ android {
 dependencies {
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation project(':osmdroid-android')
+    implementation 'androidx.core:core-ktx:+'
 }
 
 
