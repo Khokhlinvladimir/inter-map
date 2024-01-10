@@ -1,5 +1,4 @@
 {
-  // using ISO 3166-1 alpha-3 codes
   "NLD":{"name":"Netherlands", "capital":{"name":"Amsterdam", "latitude":52.38333333, "longitude":4.9}},
   "LUX":{"name":"Luxembourg", "capital":{"name":"Luxembourg City", "latitude":49.61, "longitude":6.13333333}},
   "ITA":{"name":"Italy", "capital":{"name":"Rome", "latitude":41.88861111, "longitude":12.48666667}},
