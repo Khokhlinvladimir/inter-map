@@ -5,12 +5,6 @@ import android.os.Message;
 
 import org.osmdroid.tileprovider.MapTileProviderBase;
 
-/**
- * Custom-made {@link Handler} for {@link MapSnapshot}
- *
- * @author Fabrice Fontaine
- * @since 6.1.0
- */
 public class MapSnapshotHandler extends Handler {
 
     private MapSnapshot mMapSnapshot;
