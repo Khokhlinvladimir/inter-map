@@ -484,9 +484,7 @@ public abstract class ItemizedOverlay<Item extends OverlayItem> extends Overlay 
         void onFocusChanged(ItemizedOverlay<?> overlay, OverlayItem newFocus);
     }
 
-    /**
-     * @since 6.0.2
-     */
+
     protected boolean isEventOnItem(final Item pItem, final int pEventX, final int pEventY, final MapView pMapView) {
         if (pItem == null) {
             return false;
