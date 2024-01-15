@@ -14,13 +14,6 @@ import org.osmdroid.views.overlay.Overlay;
 
 import java.text.DecimalFormat;
 
-/**
- * created on 2/7/2018.
- *
- * @author Alex O'Ree
- * @since 6.0.0
- */
-
 public class LatLonGridlineOverlay2 extends Overlay {
 
     protected DecimalFormat mDecimalFormatter = new DecimalFormat("#.#####");
@@ -185,7 +178,6 @@ public class LatLonGridlineOverlay2 extends Overlay {
     /**
      * sets the text label paint styler
      * see https://github.com/osmdroid/osmdroid/issues/1723
-     * @since 6.1.11
      * @param paint
      */
     public void setTextStyle(Paint.Style paint) { mTextPaint.setStyle(paint);}
@@ -193,7 +185,6 @@ public class LatLonGridlineOverlay2 extends Overlay {
     /**
      * if for some reason there's missing setter for this class and you don't want to subclass it,
      * you can override the paint object with this method. Only used for the text painter
-     * @since 6.1.11
      * @param paint
      */
     public void setTextPaint(Paint paint) { mTextPaint= paint;}
@@ -202,8 +193,6 @@ public class LatLonGridlineOverlay2 extends Overlay {
      * getter for the Paint object. I'd suggest using the setter methods first or subclassing this class
      * if you need to do something else but this will get you access to the live instance of the paint object
      * which is used for drawing text labels
-     * @since 6.1.11
-     * @return
      */
     public Paint getTextPaint() { return mTextPaint;}
 
@@ -302,7 +291,6 @@ public class LatLonGridlineOverlay2 extends Overlay {
     }
 
     /**
-     * @since 6.1.7
      * Computes the start latitude when dealing with a latitude and an incrementor
      * Special focus on the "beyond possible" values of latitudes
      */
@@ -317,9 +305,7 @@ public class LatLonGridlineOverlay2 extends Overlay {
         return result;
     }
 
-    /**
-     * @since 6.1.7
-     */
+
     private String formatCoordinate(final double pValue, final boolean pLatitudeOrLongitude) {
         return mDecimalFormatter.format(pValue) + (pValue == 0 ? "" : pValue > 0 ?
                 (pLatitudeOrLongitude ? "N" : "E") : (pLatitudeOrLongitude ? "S" : "W"));
