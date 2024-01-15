@@ -20,7 +20,6 @@ import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.util.TileSystem;
-import org.osmdroid.views.MapView.OnFirstLayoutListener;
 
 import java.util.LinkedList;
 

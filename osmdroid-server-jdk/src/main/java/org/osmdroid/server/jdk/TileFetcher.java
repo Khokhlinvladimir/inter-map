@@ -40,7 +40,6 @@ import jakarta.ws.rs.WebApplicationException;
  * and let's you flip tiles sources using some jquery magic</li>
  * </ul>
  *
- * @author <a href="mailto:alexoree@apache.org">Alex O'Ree</a>
  */
 @Path("/")
 @Produces({"image/png", "application/json", "text/html", "text/css", "text/javascript"})
@@ -54,7 +53,6 @@ public class TileFetcher {
     public TileFetcher() throws Exception {
 
         initDatabases();
-
     }
 
     private void initDatabases() throws Exception {

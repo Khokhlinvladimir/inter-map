@@ -23,34 +23,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * The MapTileApproximater computes approximation of tiles.
  * The approximation is based on the tiles of the same region, but on lower zoom level tiles.
  * An obvious use is in offline mode: it's better to display an approximation than an empty grey square.
- *
- * @author Fabrice Fontaine
- * @since 5.6.5
  */
 public class MapTileApproximater extends MapTileModuleProviderBase {
 
     private final List<MapTileModuleProviderBase> mProviders = new CopyOnWriteArrayList<>();
     private int minZoomLevel;
 
-    /**
-     * @since 6.0.0
-     */
     public MapTileApproximater() {
         this(
                 Configuration.getInstance().getTileFileSystemThreads(),
                 Configuration.getInstance().getTileFileSystemMaxQueueSize());
     }
 
-    /**
-     * @since 6.0.0
-     */
+
     public MapTileApproximater(final int pThreadPoolSize, final int pPendingQueueSize) {
         super(pThreadPoolSize, pPendingQueueSize);
     }
 
-    /**
-     * @since 6.0.0
-     */
     public void addProvider(final MapTileModuleProviderBase pProvider) {
         mProviders.add(pProvider);
         computeZoomLevels();
@@ -125,8 +114,6 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
      * Approximate a tile from a lower zoom level
      *
      * @param pMapTileIndex Destination tile, for the same place on the planet as the source, but on a higher zoom
-     * @return
-     * @since 6.0.0
      */
     public Bitmap approximateTileFromLowerZoom(final long pMapTileIndex) {
         for (int zoomDiff = 1; MapTileIndex.getZoom(pMapTileIndex) - zoomDiff >= OpenStreetMapTileProviderConstants.MINIMUM_ZOOM_LEVEL; zoomDiff++) {
@@ -143,8 +130,6 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
      *
      * @param pMapTileIndex Destination tile, for the same place on the planet as the source, but on a higher zoom
      * @param pZoomDiff     Zoom level difference between the destination and the source; strictly positive
-     * @return
-     * @since 6.0.0
      */
     public Bitmap approximateTileFromLowerZoom(final long pMapTileIndex, final int pZoomDiff) {
         for (final MapTileModuleProviderBase provider : mProviders) {
@@ -162,8 +147,6 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
      * @param pProvider     Source tile provider
      * @param pMapTileIndex Destination tile, for the same place on the planet as the source, but on a higher zoom
      * @param pZoomDiff     Zoom level difference between the destination and the source; strictly positive
-     * @return
-     * @since 6.0.0
      */
     public static Bitmap approximateTileFromLowerZoom(
             final MapTileModuleProviderBase pProvider,
@@ -198,8 +181,6 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
      * @param pSrcDrawable  Source tile bitmap
      * @param pMapTileIndex Destination tile, for the same place on the planet as the source, but on a higher zoom
      * @param pZoomDiff     Zoom level difference between the destination and the source; strictly positive
-     * @return
-     * @since 5.6.5
      */
     public static Bitmap approximateTileFromLowerZoom(
             final BitmapDrawable pSrcDrawable,
@@ -258,9 +239,7 @@ public class MapTileApproximater extends MapTileModuleProviderBase {
         return Bitmap.createBitmap(pTileSizePx, pTileSizePx, Bitmap.Config.ARGB_8888);
     }
 
-    /**
-     * @since 6.0.0
-     */
+
     @Override
     public void detach() {
         super.detach();
