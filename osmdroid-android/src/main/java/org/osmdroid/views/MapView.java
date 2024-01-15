@@ -502,10 +502,18 @@ public class MapView extends ViewGroup implements IMapView,
      * @param pAnimationSpeed     Animation duration, in milliseconds
      * @since 6.0.3
      */
-    public double zoomToBoundingBox(final BoundingBox pBoundingBox, final boolean pAnimated,
-                                    final int pBorderSizeInPixels, final double pMaximumZoom,
-                                    final Long pAnimationSpeed) {
-        double nextZoom = mTileSystem.getBoundingBoxZoom(pBoundingBox, getWidth() - 2 * pBorderSizeInPixels, getHeight() - 2 * pBorderSizeInPixels);
+    public double zoomToBoundingBox(
+            final BoundingBox pBoundingBox,
+            final boolean pAnimated,
+            final int pBorderSizeInPixels,
+            final double pMaximumZoom,
+            final Long pAnimationSpeed
+    ) {
+        double nextZoom = mTileSystem.getBoundingBoxZoom(
+                pBoundingBox,
+                getWidth() - 2 * pBorderSizeInPixels,
+                getHeight() - 2 * pBorderSizeInPixels
+        );
         if (nextZoom == Double.MIN_VALUE // e.g. single point bounding box
                 || nextZoom > pMaximumZoom) { // e.g. tiny bounding box
             nextZoom = pMaximumZoom;
@@ -514,11 +522,17 @@ public class MapView extends ViewGroup implements IMapView,
         final GeoPoint center = pBoundingBox.getCenterWithDateLine();
 
         final Projection projection = new Projection(
-                nextZoom, getWidth(), getHeight(),
+                nextZoom,
+                getWidth(),
+                getHeight(),
                 center,
                 getMapOrientation(),
-                isHorizontalMapRepetitionEnabled(), isVerticalMapRepetitionEnabled(),
-                getMapCenterOffsetX(), getMapCenterOffsetY());
+                isHorizontalMapRepetitionEnabled(),
+                isVerticalMapRepetitionEnabled(),
+                getMapCenterOffsetX(),
+                getMapCenterOffsetY()
+        );
+
         final Point point = new Point();
         final double longitude = pBoundingBox.getCenterLongitude();
         projection.toPixels(new GeoPoint(pBoundingBox.getActualNorth(), longitude), point);
@@ -526,6 +540,7 @@ public class MapView extends ViewGroup implements IMapView,
         projection.toPixels(new GeoPoint(pBoundingBox.getActualSouth(), longitude), point);
         final int south = point.y;
         final int offset = ((getHeight() - south) - north) / 2;
+
         if (offset != 0) {
             projection.adjustOffsets(0, offset);
             projection.fromPixels(getWidth() / 2, getHeight() / 2, center);
@@ -762,8 +777,11 @@ public class MapView extends ViewGroup implements IMapView,
      * @param pExtraPixelHeight in pixels, enables scrolling this many pixels past the bounds
      * @since 6.0.0
      */
-    public void setScrollableAreaLimitLatitude(final double pNorth, final double pSouth,
-                                               final int pExtraPixelHeight) {
+    public void setScrollableAreaLimitLatitude(
+            final double pNorth,
+            final double pSouth,
+            final int pExtraPixelHeight
+    ) {
         mScrollableAreaLimitLatitude = true;
         mScrollableAreaLimitNorth = pNorth;
         mScrollableAreaLimitSouth = pSouth;
@@ -776,10 +794,12 @@ public class MapView extends ViewGroup implements IMapView,
      * @param pWest            decimal degrees longitude
      * @param pEast            decimal degrees longitude
      * @param pExtraPixelWidth in pixels, enables scrolling this many pixels past the bounds
-     * @since 6.0.0
      */
-    public void setScrollableAreaLimitLongitude(final double pWest, final double pEast,
-                                                final int pExtraPixelWidth) {
+    public void setScrollableAreaLimitLongitude(
+            final double pWest,
+            final double pEast,
+            final int pExtraPixelWidth
+    ) {
         mScrollableAreaLimitLongitude = true;
         mScrollableAreaLimitWest = pWest;
         mScrollableAreaLimitEast = pEast;
@@ -798,15 +818,31 @@ public class MapView extends ViewGroup implements IMapView,
         invalidateMapCoordinates(dirty.left, dirty.top, dirty.right, dirty.bottom, false);
     }
 
-    public void invalidateMapCoordinates(int left, int top, int right, int bottom) {
+    public void invalidateMapCoordinates(
+            int left,
+            int top,
+            int right,
+            int bottom
+    ) {
         invalidateMapCoordinates(left, top, right, bottom, false);
     }
 
-    public void postInvalidateMapCoordinates(int left, int top, int right, int bottom) {
+    public void postInvalidateMapCoordinates(
+            int left,
+            int top,
+            int right,
+            int bottom
+    ) {
         invalidateMapCoordinates(left, top, right, bottom, true);
     }
 
-    private void invalidateMapCoordinates(int left, int top, int right, int bottom, boolean post) {
+    private void invalidateMapCoordinates(
+            int left,
+            int top,
+            int right,
+            int bottom,
+            boolean post
+    ) {
         mInvalidateRect.set(left, top, right, bottom);
 
         final int centerX = getWidth() / 2;
@@ -831,8 +867,14 @@ public class MapView extends ViewGroup implements IMapView,
      */
     @Override
     protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
-        return new MapView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, null, MapView.LayoutParams.BOTTOM_CENTER, 0, 0);
+        return new MapView.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                null,
+                MapView.LayoutParams.BOTTOM_CENTER,
+                0,
+                0
+        );
     }
 
     @Override
@@ -855,7 +897,6 @@ public class MapView extends ViewGroup implements IMapView,
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         // Get the children to measure themselves so we know their size in onLayout()
         measureChildren(widthMeasureSpec, heightMeasureSpec);
-
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -934,8 +975,11 @@ public class MapView extends ViewGroup implements IMapView,
                 childLeft += lp.offsetX;
                 childTop += lp.offsetY;
                 child.layout(
-                        TileSystem.truncateToInt(childLeft), TileSystem.truncateToInt(childTop),
-                        TileSystem.truncateToInt(childLeft + childWidth), TileSystem.truncateToInt(childTop + childHeight));
+                        TileSystem.truncateToInt(childLeft),
+                        TileSystem.truncateToInt(childTop),
+                        TileSystem.truncateToInt(childLeft + childWidth),
+                        TileSystem.truncateToInt(childTop + childHeight)
+                );
             }
         }
         if (!isLayoutOccurred()) {
@@ -949,7 +993,6 @@ public class MapView extends ViewGroup implements IMapView,
 
     /**
      * enables you to add a listener for when the map is ready to go.
-     *
      * @param listener
      */
     public void addOnFirstLayoutListener(OnFirstLayoutListener listener) {
@@ -995,7 +1038,6 @@ public class MapView extends ViewGroup implements IMapView,
             mZoomController.onDetach();
         }
 
-        //https://github.com/osmdroid/osmdroid/issues/390
         if (mTileRequestCompleteHandler instanceof SimpleInvalidationHandler) {
             ((SimpleInvalidationHandler) mTileRequestCompleteHandler).destroy();
         }
@@ -1010,14 +1052,12 @@ public class MapView extends ViewGroup implements IMapView,
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         final boolean result = this.getOverlayManager().onKeyDown(keyCode, event, this);
-
         return result || super.onKeyDown(keyCode, event);
     }
 
     @Override
     public boolean onKeyUp(final int keyCode, final KeyEvent event) {
         final boolean result = this.getOverlayManager().onKeyUp(keyCode, event, this);
-
         return result || super.onKeyUp(keyCode, event);
     }
 
@@ -1243,8 +1283,11 @@ public class MapView extends ViewGroup implements IMapView,
     }
 
     @Override
-    public boolean setPositionAndScale(final Object obj, final PositionAndScale aNewObjPosAndScale,
-                                       final PointInfo aTouchPoint) {
+    public boolean setPositionAndScale(
+            final Object obj,
+            final PositionAndScale aNewObjPosAndScale,
+            final PointInfo aTouchPoint
+    ) {
         setMultiTouchScaleCurrentPoint(aNewObjPosAndScale.getXOff(), aNewObjPosAndScale.getYOff());
         setMultiTouchScale(aNewObjPosAndScale.getScale());
         requestLayout(); // Allows any views fixed to a Location in the MapView to adjust
@@ -1623,8 +1666,14 @@ public class MapView extends ViewGroup implements IMapView,
          * @param offsetY   the additional Y offset from the alignment location to draw the child within
          *                  the map view
          */
-        public LayoutParams(final int width, final int height, final IGeoPoint geoPoint,
-                            final int alignment, final int offsetX, final int offsetY) {
+        public LayoutParams(
+                final int width,
+                final int height,
+                final IGeoPoint geoPoint,
+                final int alignment,
+                final int offsetX,
+                final int offsetY
+        ) {
             super(width, height);
             if (geoPoint != null) {
                 this.geoPoint = geoPoint;
