@@ -500,7 +500,6 @@ public class MapView extends ViewGroup implements IMapView,
      * @param pBorderSizeInPixels Border size around the bounding box
      * @param pMaximumZoom        Maximum zoom we want from bounding box computation
      * @param pAnimationSpeed     Animation duration, in milliseconds
-     * @since 6.0.3
      */
     public double zoomToBoundingBox(
             final BoundingBox pBoundingBox,
