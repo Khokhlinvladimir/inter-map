@@ -25,7 +25,6 @@ import org.osmdroid.api.IGeoPoint
 import org.osmdroid.api.IMapController
 import org.osmdroid.api.IMapView
 import org.osmdroid.config.Configuration
-import org.osmdroid.config.Configuration.instance
 import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
 import org.osmdroid.events.ZoomEvent
@@ -54,59 +53,41 @@ class MapView(
         context: Context,
         tileProvider: MapTileProviderBase?,
         tileRequestCompleteHandler: Handler?, attrs: AttributeSet?, hardwareAccelerated: Boolean
-): ViewGroup(context, attrs), IMapView, MultiTouchObjectCanvas<Any> {
+) : ViewGroup(context, attrs), IMapView, MultiTouchObjectCanvas<Any> {
     /**
      * Current zoom level for map tiles.
      */
     private var mZoomLevel = 0.0
-
     private var mTileProvider: MapTileProviderBase? = null
-
     private var mOverlayManager: OverlayManager? = null
-
     var mProjection: Projection? = null
-
     private var mMapOverlay: TilesOverlay? = null
-
     private var mGestureDetector: GestureDetector? = null
-
     /**
      * Handles map scrolling
      */
     private var mScroller: Scroller? = null
-
     var mIsFlinging = false
-
     /**
      * Set to true when the `Projection` actually adjusted the scroll values
      * Consequence: on this side effect, we must stop the flinging
      */
     private var mImpossibleFlinging = false
-
-    protected val mIsAnimating = AtomicBoolean(false)
-    protected var mMinimumZoomLevel: Double? = null
-
-    protected var mMaximumZoomLevel: Double? = null
-
+    val mIsAnimating = AtomicBoolean(false)
+    var mMinimumZoomLevel: Double? = null
+    var mMaximumZoomLevel: Double? = null
     private var mController: MapController? = null
-
-
     private var mZoomController: CustomZoomButtonsController? = null
-
     private var mMultiTouchController: MultiTouchController<Any>? = null
-
     /**
      * Initial pinch gesture pixel (typically, the middle of both fingers)
      */
     private val mMultiTouchScaleInitPoint = PointF()
-
     /**
      * Initial pinch gesture geo point, computed from [MapVie.mMultiTouchScaleInitPoint]
      * and the current Projection
      */
     private val mMultiTouchScaleGeoPoint = GeoPoint(0.0, 0.0)
-
-
     /**
      * Current pinch gesture pixel (again, the middle of both fingers)
      * We must ensure that this pixel is the projection of [MapView.mMultiTouchScaleGeoPoint]
@@ -114,7 +95,6 @@ class MapView(
     private var mMultiTouchScaleCurrentPoint: PointF? = null
     // For rotation
     private var mapOrientation = 0f
-
     private val mInvalidateRect = Rect()
     private var mScrollableAreaLimitLatitude = false
     private var mScrollableAreaLimitNorth = 0.0
@@ -123,65 +103,46 @@ class MapView(
     private var mScrollableAreaLimitWest = 0.0
     private var mScrollableAreaLimitEast = 0.0
     private var mScrollableAreaLimitExtraPixelWidth = 0
-
     private var mScrollableAreaLimitExtraPixelHeight = 0
     private var mTileRequestCompleteHandler: Handler? = null
     private var mTilesScaledToDpi = false
-
     private var mTilesScaleFactor = 1f
-
     val mRotateScalePoint = Point()
-
     /* a point that will be reused to lay out added views */
     private val mLayoutPoint = Point()
-
     // Keep a set of listeners for when the maps have a layout
     private val mOnFirstLayoutListeners = LinkedList<OnFirstLayoutListener>()
-
     /* becomes true once onLayout has been called for the first time i.e. map is ready to go. */
     private var mLayoutOccurred = false
     private var horizontalMapRepetitionEnabled = true
-
     private var verticalMapRepetitionEnabled = true
     private var mCenter: GeoPoint? = null
     private var mMapScrollX: Long = 0
     private var mMapScrollY: Long = 0
-
     var mListners: ArrayList<MapListener> = ArrayList()
-
     private var mStartAnimationZoom = 0.0
-
     private var mZoomRounding = false
-
     private val mRepository = MapViewRepository(this)
-
-
     private val mRescaleScreenRect = Rect() // optimization
-
     private var mDestroyModeOnDetach = true
     /**
      * The map center used to be projected into the screen center.
      * Now we have a possible offset from the screen center; default offset is [0, 0].
      */
     private var mMapCenterOffsetX = 0
-
     private var mMapCenterOffsetY = 0
     private var enableFling = true
-
-
     private var pauseFling = false // issue 269, boolean used for disabling fling during zoom changes
 
     // ===========================================================
     // Constructor
     // ===========================================================
 
-    private var tileRequestCompleteHandler: Handler? = null
-    private var hardwareAccelerated: Boolean = false
-
     constructor(context: Context,
                 tileProvider: MapTileProviderBase?,
-                tileRequestCompleteHandler: Handler?, attrs: AttributeSet?) : this(context, tileProvider, tileRequestCompleteHandler, attrs, Configuration.instance!!.isMapViewHardwareAccelerated) {
-    }
+                tileRequestCompleteHandler: Handler?, attrs: AttributeSet?) : this(
+            context, tileProvider, tileRequestCompleteHandler, attrs, Configuration.instance!!.isMapViewHardwareAccelerated
+    )
 
     init {
         var tilesProvider: MapTileProviderBase? = tileProvider
@@ -204,12 +165,12 @@ class MapView(
         mScroller = Scroller(context)
         if (tilesProvider == null) {
             val tileSource: ITileSource = getTileSourceFromAttributes(attrs)
-            tilesProvider = MapTileProviderBasic(context.getApplicationContext(), tileSource)
+            tilesProvider = MapTileProviderBasic(context.applicationContext, tileSource)
         }
-        mTileRequestCompleteHandler = if (tileRequestCompleteHandler == null) SimpleInvalidationHandler(this) else tileRequestCompleteHandler
+        mTileRequestCompleteHandler = tileRequestCompleteHandler ?: SimpleInvalidationHandler(this)
         mTileProvider = tilesProvider
         mTileProvider!!.tileRequestCompleteHandlers.add(mTileRequestCompleteHandler)
-        updateTileSizeForDensity(mTileProvider!!.getTileSource())
+        updateTileSizeForDensity(mTileProvider!!.tileSource)
         mMapOverlay = TilesOverlay(mTileProvider, context, horizontalMapRepetitionEnabled, verticalMapRepetitionEnabled)
         mOverlayManager = DefaultOverlayManager(mMapOverlay)
         mZoomController = CustomZoomButtonsController(this)
@@ -221,17 +182,11 @@ class MapView(
         mZoomController!!.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, null, null, attrs) {}
-    constructor(context: Context) : this(context, null, null, null) {}
-    constructor(context: Context,
-                aTileProvider: MapTileProviderBase?) : this(context, aTileProvider, null) {
-    }
-
-    constructor(context: Context,
-                aTileProvider: MapTileProviderBase?,
-                tileRequestCompleteHandler: Handler?) : this(context, aTileProvider, tileRequestCompleteHandler,
-            null) {
-    }
+    constructor(context: Context, attrs: AttributeSet?) : this(context, null, null, attrs)
+    constructor(context: Context) : this(context, null, null, null)
+    constructor(context: Context, aTileProvider: MapTileProviderBase?) : this(context, aTileProvider, null)
+    constructor(context: Context, aTileProvider: MapTileProviderBase?, tileRequestCompleteHandler: Handler?)
+            : this(context, aTileProvider, tileRequestCompleteHandler, null)
 
 // ===========================================================
     // Getter & Setter
@@ -245,7 +200,7 @@ class MapView(
      * 0) Overlay gets drawn first, the one with the highest as the last one.
      */
 
-     fun getOverlays(): MutableList<Overlay?>? {
+    fun getOverlays(): MutableList<Overlay?>? {
         return getOverlayManager().overlays()
     }
 
@@ -330,9 +285,6 @@ class MapView(
             return mProjection!!
         }
 
-
-
-
     /**
      * Use {@link #resetProjection()} instead
      *
@@ -340,7 +292,7 @@ class MapView(
      */
 
     @Deprecated("", ReplaceWith("mProjection = p"))
-    protected fun setProjection(p: Projection) {
+    fun setProjection(p: Projection) {
         mProjection = p
     }
 
@@ -412,7 +364,7 @@ class MapView(
         val tileSize = aTileSource.tileSizePixels
         val density = resources.displayMetrics.density * 256 / tileSize
         val size = (tileSize * if (isTilesScaledToDpi()) density * mTilesScaleFactor else mTilesScaleFactor).toInt()
-        if (instance!!.isDebugMapView) Log.d(IMapView.LOGTAG, "Scaling tiles to $size")
+        if (Configuration.instance!!.isDebugMapView) Log.d(IMapView.LOGTAG, "Scaling tiles to $size")
         TileSystem.setTileSize(size)
     }
 
@@ -829,7 +781,7 @@ class MapView(
         val centerY = height / 2
         if (this.getMapOrientation() != 0f)
             GeometryMath.getBoundingBoxForRotatatedRectangle(mInvalidateRect, centerX, centerY,
-                this.getMapOrientation() + 180, mInvalidateRect)
+                    this.getMapOrientation() + 180, mInvalidateRect)
 
         if (post) super.postInvalidate(mInvalidateRect.left, mInvalidateRect.top, mInvalidateRect.right, mInvalidateRect.bottom)
         else super.invalidate(mInvalidateRect)
@@ -844,7 +796,7 @@ class MapView(
 
 
     override fun generateDefaultLayoutParams(): ViewGroup.LayoutParams {
-        return MapView.LayoutParams(
+        return LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 null,
@@ -855,16 +807,16 @@ class MapView(
     }
 
     override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
-        return MapView.LayoutParams(context, attrs)
+        return LayoutParams(context, attrs)
     }
 
     // Override to allow type-checking of LayoutParams.
-     fun checkLayoutParams(p: LayoutParams?): Boolean {
-        return p is MapView.LayoutParams
+    fun checkLayoutParams(p: LayoutParams?): Boolean {
+        return p is LayoutParams
     }
 
     override fun generateLayoutParams(p: ViewGroup.LayoutParams?): ViewGroup.LayoutParams {
-        return MapView.LayoutParams(p)
+        return LayoutParams(p)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -887,7 +839,7 @@ class MapView(
      * Code was moved from [.onLayout]
      * in order to avoid Android Studio warnings on direct calls
      */
-    fun myOnLayout(
+    private fun myOnLayout(
             changed: Boolean,
             l: Int,
             t: Int,
@@ -902,7 +854,7 @@ class MapView(
 
             if (child.visibility != GONE) {
 
-                val lp = child.layoutParams as MapView.LayoutParams
+                val lp = child.layoutParams as LayoutParams
                 val childHeight = child.measuredHeight
                 val childWidth = child.measuredWidth
                 projection.toPixels(lp.geoPoint, mLayoutPoint)
@@ -918,32 +870,32 @@ class MapView(
                 var childTop = y
 
                 when (lp.alignment) {
-                    MapView.LayoutParams.TOP_LEFT -> {
+                    LayoutParams.TOP_LEFT -> {
                         childLeft = paddingLeft + x
                         childTop = paddingTop + y
                     }
 
-                    MapView.LayoutParams.TOP_CENTER -> {
+                    LayoutParams.TOP_CENTER -> {
                         childLeft = paddingLeft + x - childWidth / 2
                         childTop = paddingTop + y
                     }
 
-                    MapView.LayoutParams.TOP_RIGHT -> {
+                    LayoutParams.TOP_RIGHT -> {
                         childLeft = paddingLeft + x - childWidth
                         childTop = paddingTop + y
                     }
 
-                    MapView.LayoutParams.CENTER_LEFT -> {
+                    LayoutParams.CENTER_LEFT -> {
                         childLeft = paddingLeft + x
                         childTop = paddingTop + y - childHeight / 2
                     }
 
-                    MapView.LayoutParams.CENTER -> {
+                    LayoutParams.CENTER -> {
                         childLeft = paddingLeft + x - childWidth / 2
                         childTop = paddingTop + y - childHeight / 2
                     }
 
-                    MapView.LayoutParams.CENTER_RIGHT -> {
+                    LayoutParams.CENTER_RIGHT -> {
                         childLeft = paddingLeft + x - childWidth
                         childTop = paddingTop + y - childHeight / 2
                     }
@@ -986,7 +938,7 @@ class MapView(
      * @param listener
      */
 
-     fun addOnFirstLayoutListener(listener: OnFirstLayoutListener?) {
+    fun addOnFirstLayoutListener(listener: OnFirstLayoutListener?) {
         // Don't add if we already have a layout
         if (!isLayoutOccurred()) mOnFirstLayoutListeners.add(listener!!)
     }
@@ -1163,8 +1115,8 @@ class MapView(
         scrollTo((getMapScrollX() + x).toInt(), (getMapScrollY() + y).toInt())
     }
 
-    override fun setBackgroundColor(pColor: Int) {
-        mMapOverlay!!.loadingBackgroundColor = pColor
+    override fun setBackgroundColor(color: Int) {
+        mMapOverlay!!.loadingBackgroundColor = color
         invalidate()
     }
 
@@ -1183,7 +1135,7 @@ class MapView(
             /* Draw all Overlays. */
             getOverlayManager().onDraw(c, this)
             // Restore the canvas matrix
-           projection.restore(c, false)
+            projection.restore(c, false)
             if (mZoomController != null) {
                 mZoomController!!.draw(c)
             }
@@ -1209,10 +1161,6 @@ class MapView(
     // ===========================================================
     // Animation
     // ===========================================================
-
-    // ===========================================================
-    // Animation
-    // ===========================================================
     /**
      * Determines if maps are animating a zoom operation. Useful for overlays to avoid recalculating
      * during an animation sequence.
@@ -1222,10 +1170,6 @@ class MapView(
     fun isAnimating(): Boolean {
         return mIsAnimating.get()
     }
-
-    // ===========================================================
-    // Implementation of MultiTouchObjectCanvas
-    // ===========================================================
 
     // ===========================================================
     // Implementation of MultiTouchObjectCanvas
@@ -1330,7 +1274,7 @@ class MapView(
      */
 
     @Deprecated("")
-     fun setBuiltInZoomControls(on: Boolean) {
+    fun setBuiltInZoomControls(on: Boolean) {
         mZoomController!!.setVisibility(
                 if (on) CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT
                 else CustomZoomButtonsController.Visibility.NEVER
@@ -1714,21 +1658,20 @@ class MapView(
         mZoomRounding = pZoomRounding
     }
 
- companion object {
-     @JvmStatic
-     var mTileSystem: TileSystem = TileSystemWebMercator()
+    companion object {
+        @JvmStatic
+        var mTileSystem: TileSystem = TileSystemWebMercator()
 
-     @JvmStatic
-     fun getTileSystem(): TileSystem {
-         return mTileSystem
-     }
- }
-
-
+        @JvmStatic
+        fun getTileSystem(): TileSystem {
+            return mTileSystem
+        }
+    }
 
     fun setTileSystem(pTileSystem: TileSystem) {
         mTileSystem = pTileSystem
     }
+
     fun getRepository(): MapViewRepository {
         return mRepository
     }

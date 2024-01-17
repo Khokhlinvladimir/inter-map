@@ -1,5 +1,5 @@
 
-package org.osmdroid.views;
+package org.osmdroid.views.oldclasses;
 
 import android.content.Context;
 import android.graphics.Canvas;
