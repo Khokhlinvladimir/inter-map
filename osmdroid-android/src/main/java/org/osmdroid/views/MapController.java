@@ -176,7 +176,7 @@ public class MapController implements IMapController, OnFirstLayoutListener {
         }
 
         if (!mMapView.isAnimating()) {
-            mMapView.mIsFlinging = false;
+            mMapView.setMIsFlinging(false);
             final int xStart = (int) mMapView.getMapScrollX();
             final int yStart = (int) mMapView.getMapScrollY();
 
@@ -210,7 +210,7 @@ public class MapController implements IMapController, OnFirstLayoutListener {
 
     @Override
     public void stopPanning() {
-        mMapView.mIsFlinging = false;
+        mMapView.setMIsFlinging(false);
         mMapView.getScroller().forceFinished(true);
     }
 
@@ -224,7 +224,7 @@ public class MapController implements IMapController, OnFirstLayoutListener {
 
         if (!mMapView.getScroller().isFinished()) {
             if (jumpToTarget) {
-                mMapView.mIsFlinging = false;
+                mMapView.setMIsFlinging(false);
                 mMapView.getScroller().abortAnimation();
             } else
                 stopPanning();
@@ -232,7 +232,7 @@ public class MapController implements IMapController, OnFirstLayoutListener {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             final Animator currentAnimator = this.mCurrentAnimator;
-            if (mMapView.mIsAnimating.get()) {
+            if (mMapView.getMIsAnimating().get()) {
                 if (jumpToTarget) {
                     currentAnimator.end();
                 } else {
@@ -240,7 +240,7 @@ public class MapController implements IMapController, OnFirstLayoutListener {
                 }
             }
         } else {
-            if (mMapView.mIsAnimating.get()) {
+            if (mMapView.getMIsAnimating().get()) {
                 mMapView.clearAnimation();
             }
         }
@@ -356,12 +356,12 @@ public class MapController implements IMapController, OnFirstLayoutListener {
         if (!canZoom) {
             return false;
         }
-        if (mMapView.mIsAnimating.getAndSet(true)) {
+        if (mMapView.getMIsAnimating().getAndSet(true)) {
             // TODO extend zoom (and return true)
             return false;
         }
         ZoomEvent event = null;
-        for (MapListener mapListener : mMapView.mListners) {
+        for (MapListener mapListener : mMapView.getMListners()) {
             mapListener.onZoom(event != null ? event : (event = new ZoomEvent(mMapView, zoomLevel)));
         }
         mMapView.setMultiTouchScaleInitPoint(xPixel, yPixel);
@@ -422,11 +422,11 @@ public class MapController implements IMapController, OnFirstLayoutListener {
 
 
     protected void onAnimationStart() {
-        mMapView.mIsAnimating.set(true);
+        mMapView.getMIsAnimating().set(true);
     }
 
     protected void onAnimationEnd() {
-        mMapView.mIsAnimating.set(false);
+        mMapView.getMIsAnimating().set(false);
         mMapView.resetMultiTouchScale();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mCurrentAnimator = null;
