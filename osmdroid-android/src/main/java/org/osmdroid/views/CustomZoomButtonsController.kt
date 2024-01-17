@@ -1,224 +1,205 @@
-package org.osmdroid.views;
+package org.osmdroid.views
 
-import android.animation.ValueAnimator;
-import android.graphics.Canvas;
-import android.os.Build;
-import android.view.MotionEvent;
-import android.view.animation.LinearInterpolator;
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.graphics.Canvas
+import android.os.Build
+import android.view.MotionEvent
+import android.view.animation.LinearInterpolator
 
-public class CustomZoomButtonsController {
+class CustomZoomButtonsController(private val mMapView: MapView) {
+    enum class Visibility {
+        ALWAYS, NEVER, SHOW_AND_FADEOUT
+    }
 
-    public enum Visibility {ALWAYS, NEVER, SHOW_AND_FADEOUT}
+    private val mThreadSync = Any()
+    private var mFadeOutAnimation: ValueAnimator? = null
+    val display: CustomZoomButtonsDisplay = CustomZoomButtonsDisplay(mMapView)
+    private var mListener: OnZoomListener? = null
+    private var mZoomInEnabled = false
+    private var mZoomOutEnabled = false
+    private var mAlpha01 = 0f
+    private var detached = false
+    private var mVisibility = Visibility.NEVER
+    private var mFadeOutAnimationDurationInMillis = 500
+    private var mShowDelayInMillis = 3500
+    private var mJustActivated = false
+    private var mLatestActivation: Long = 0
+    private var mThread: Thread? = null
+    private val mRunnable: Runnable
 
-    private final Object mThreadSync = new Object();
-    private final MapView mMapView;
-    private final ValueAnimator mFadeOutAnimation;
-    private CustomZoomButtonsDisplay mDisplay;
-    private OnZoomListener mListener;
-    private boolean mZoomInEnabled;
-    private boolean mZoomOutEnabled;
-    private float mAlpha01;
-    private boolean detached;
-    private Visibility mVisibility = Visibility.NEVER;
-    private int mFadeOutAnimationDurationInMillis = 500;
-    private int mShowDelayInMillis = 3500;
-    private boolean mJustActivated;
-    private long mLatestActivation;
-    private Thread mThread;
-    private final Runnable mRunnable;
-
-    public CustomZoomButtonsController(final MapView pMapView) {
-        mMapView = pMapView;
-        mDisplay = new CustomZoomButtonsDisplay(mMapView);
+    init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            mFadeOutAnimation = ValueAnimator.ofFloat(0, 1);
-            mFadeOutAnimation.setInterpolator(new LinearInterpolator());
-            mFadeOutAnimation.setDuration(mFadeOutAnimationDurationInMillis);
-            mFadeOutAnimation.addUpdateListener(
-                    new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+
+                mFadeOutAnimation = ValueAnimator.ofFloat(0f, 1f)
+                (mFadeOutAnimation as? ValueAnimator)?.let {
+                it.interpolator = LinearInterpolator()
+                    it.duration = mFadeOutAnimationDurationInMillis.toLong()
+                    it.addUpdateListener(
+                        AnimatorUpdateListener { valueAnimator ->
                             if (detached) {
-                                mFadeOutAnimation.cancel();
-                                return;
+                                it.cancel()
+                                return@AnimatorUpdateListener
                             }
-                            mAlpha01 = 1 - (float) valueAnimator.getAnimatedValue();
-                            invalidate();
+                            mAlpha01 = 1 - valueAnimator.animatedValue as Float
+                            invalidate()
                         }
-                    }
-            );
-        } else {
-            mFadeOutAnimation = null;
-        }
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    final long pending = mLatestActivation + mShowDelayInMillis - nowInMillis();
-                    if (pending <= 0) {
-                        break;
-                    }
-                    try {
-                        Thread.sleep(pending, 0);
-                    } catch (InterruptedException e) {
-                        //
-                    }
-                }
-                startFadeOut();
+                )
             }
-        };
-    }
-
-    public void setZoomInEnabled(final boolean pEnabled) {
-        mZoomInEnabled = pEnabled;
-    }
-
-    public void setZoomOutEnabled(final boolean pEnabled) {
-        mZoomOutEnabled = pEnabled;
-    }
-
-    public CustomZoomButtonsDisplay getDisplay() {
-        return mDisplay;
-    }
-
-    public void setOnZoomListener(final OnZoomListener pListener) {
-        mListener = pListener;
-    }
-
-    public void setVisibility(final Visibility pVisibility) {
-        mVisibility = pVisibility;
-        switch (mVisibility) {
-            case ALWAYS:
-                mAlpha01 = 1;
-                break;
-            case NEVER:
-            case SHOW_AND_FADEOUT:
-                mAlpha01 = 0;
-                break;
-        }
-    }
-
-    public void setShowFadeOutDelays(final int pShowDelayInMillis,
-                                     final int pFadeOutAnimationDurationInMillis) {
-        mShowDelayInMillis = pShowDelayInMillis;
-        mFadeOutAnimationDurationInMillis = pFadeOutAnimationDurationInMillis;
-    }
-
-    public void onDetach() {
-        detached = true;
-        stopFadeOut();
-    }
-
-    private long nowInMillis() {
-        return System.currentTimeMillis();
-    }
-
-    private void startFadeOut() {
-        if (detached) {
-            return;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            mFadeOutAnimation.setStartDelay(0);
-            mMapView.post(new Runnable() {
-                @Override
-                public void run() {
-                    mFadeOutAnimation.start();
-                }
-            });
         } else {
-            mAlpha01 = 0;
-            invalidate();
+            mFadeOutAnimation = null
+        }
+        mRunnable = Runnable {
+            while (true) {
+                val pending = mLatestActivation + mShowDelayInMillis - nowInMillis()
+                if (pending <= 0) {
+                    break
+                }
+                try {
+                    Thread.sleep(pending, 0)
+                } catch (e: InterruptedException) {
+                    //
+                }
+            }
+            startFadeOut()
         }
     }
 
-    private void stopFadeOut() {
+    fun setZoomInEnabled(pEnabled: Boolean) {
+        mZoomInEnabled = pEnabled
+    }
+
+    fun setZoomOutEnabled(pEnabled: Boolean) {
+        mZoomOutEnabled = pEnabled
+    }
+
+    fun setOnZoomListener(pListener: OnZoomListener?) {
+        mListener = pListener
+    }
+
+    fun setVisibility(pVisibility: Visibility) {
+        mVisibility = pVisibility
+        mAlpha01 = when (mVisibility) {
+            Visibility.ALWAYS -> 1f
+            Visibility.NEVER, Visibility.SHOW_AND_FADEOUT -> 0f
+        }
+    }
+
+    fun setShowFadeOutDelays(pShowDelayInMillis: Int,
+                             pFadeOutAnimationDurationInMillis: Int) {
+        mShowDelayInMillis = pShowDelayInMillis
+        mFadeOutAnimationDurationInMillis = pFadeOutAnimationDurationInMillis
+    }
+
+    fun onDetach() {
+        detached = true
+        stopFadeOut()
+    }
+
+    private fun nowInMillis(): Long {
+        return System.currentTimeMillis()
+    }
+
+    private fun startFadeOut() {
+        if (detached) {
+            return
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            mFadeOutAnimation.cancel();
+            mFadeOutAnimation!!.startDelay = 0
+            mMapView.post { mFadeOutAnimation!!.start() }
+        } else {
+            mAlpha01 = 0f
+            invalidate()
         }
     }
 
-    private void invalidate() {
-        if (detached) {
-            return;
+    private fun stopFadeOut() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            mFadeOutAnimation!!.cancel()
         }
-        mMapView.postInvalidate();
     }
 
-    public void activate() {
+    private fun invalidate() {
         if (detached) {
-            return;
+            return
+        }
+        mMapView.postInvalidate()
+    }
+
+    fun activate() {
+        if (detached) {
+            return
         }
         if (mVisibility != Visibility.SHOW_AND_FADEOUT) {
-            return;
+            return
         }
-        final float alpha = mAlpha01;
-        if (!mJustActivated) {
-            mJustActivated = alpha == 0;
+        val alpha = mAlpha01
+        mJustActivated = if (!mJustActivated) {
+            alpha == 0f
         } else {
-            mJustActivated = false;
+            false
         }
-        stopFadeOut();
-        mAlpha01 = 1;
-        mLatestActivation = nowInMillis();
-        invalidate();
-        if (mThread == null || mThread.getState() == Thread.State.TERMINATED) {
-            synchronized (mThreadSync) {
-                if (mThread == null || mThread.getState() == Thread.State.TERMINATED) {
-                    mThread = new Thread(mRunnable);
-                    mThread.setName(this.getClass().getName() + "#active");
-                    mThread.start();
+        stopFadeOut()
+        mAlpha01 = 1f
+        mLatestActivation = nowInMillis()
+        invalidate()
+        if (mThread == null || mThread!!.state == Thread.State.TERMINATED) {
+            synchronized(mThreadSync) {
+                if (mThread == null || mThread!!.state == Thread.State.TERMINATED) {
+                    mThread = Thread(mRunnable)
+                    mThread!!.name = this.javaClass.name + "#active"
+                    mThread!!.start()
                 }
             }
         }
     }
 
-    private boolean checkJustActivated() {
+    private fun checkJustActivated(): Boolean {
         if (mJustActivated) {
-            mJustActivated = false;
-            return true;
+            mJustActivated = false
+            return true
         }
-        return false;
+        return false
     }
 
-    public boolean isTouched(final MotionEvent pMotionEvent) {
-        if (mAlpha01 == 0) {
-            return false;
+    fun isTouched(pMotionEvent: MotionEvent?): Boolean {
+        if (mAlpha01 == 0f) {
+            return false
         }
         if (checkJustActivated()) {
-            return false;
+            return false
         }
-        if (mDisplay.isTouched(pMotionEvent, true)) {
+        if (display.isTouched(pMotionEvent, true)) {
             if (mZoomInEnabled && mListener != null) {
-                mListener.onZoom(true);
+                mListener!!.onZoom(true)
             }
-            return true;
+            return true
         }
-        if (mDisplay.isTouched(pMotionEvent, false)) {
+        if (display.isTouched(pMotionEvent, false)) {
             if (mZoomOutEnabled && mListener != null) {
-                mListener.onZoom(false);
+                mListener!!.onZoom(false)
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
-    public interface OnZoomListener {
-        void onVisibilityChanged(boolean b);
-
-        void onZoom(boolean b);
+    interface OnZoomListener {
+        fun onVisibilityChanged(b: Boolean)
+        fun onZoom(b: Boolean)
     }
 
-    @Deprecated
-    public boolean onSingleTapConfirmed(final MotionEvent pMotionEvent) {
-        return isTouched(pMotionEvent);
+    @Deprecated("")
+    fun onSingleTapConfirmed(pMotionEvent: MotionEvent?): Boolean {
+        return isTouched(pMotionEvent)
     }
 
-    @Deprecated
-    public boolean onLongPress(final MotionEvent pMotionEvent) {
-        return isTouched(pMotionEvent);
+    @Deprecated("")
+    fun onLongPress(pMotionEvent: MotionEvent?): Boolean {
+        return isTouched(pMotionEvent)
     }
 
-    public void draw(final Canvas pCanvas) {
-        mDisplay.draw(pCanvas, mAlpha01, mZoomInEnabled, mZoomOutEnabled);
+    fun draw(pCanvas: Canvas?) {
+        display.draw(pCanvas, mAlpha01, mZoomInEnabled, mZoomOutEnabled)
     }
 }
