@@ -162,7 +162,7 @@ class CustomZoomButtonsController(private val mMapView: MapView) {
         return false
     }
 
-    fun isTouched(pMotionEvent: MotionEvent?): Boolean {
+    fun isTouched(pMotionEvent: MotionEvent): Boolean {
         if (mAlpha01 == 0f) {
             return false
         }
@@ -190,16 +190,16 @@ class CustomZoomButtonsController(private val mMapView: MapView) {
     }
 
     @Deprecated("")
-    fun onSingleTapConfirmed(pMotionEvent: MotionEvent?): Boolean {
+    fun onSingleTapConfirmed(pMotionEvent: MotionEvent): Boolean {
         return isTouched(pMotionEvent)
     }
 
     @Deprecated("")
-    fun onLongPress(pMotionEvent: MotionEvent?): Boolean {
+    fun onLongPress(pMotionEvent: MotionEvent): Boolean {
         return isTouched(pMotionEvent)
     }
 
-    fun draw(pCanvas: Canvas?) {
+    fun draw(pCanvas: Canvas) {
         display.draw(pCanvas, mAlpha01, mZoomInEnabled, mZoomOutEnabled)
     }
 }

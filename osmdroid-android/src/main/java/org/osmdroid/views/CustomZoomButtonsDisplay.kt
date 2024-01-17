@@ -1,236 +1,243 @@
-package org.osmdroid.views;
+package org.osmdroid.views
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.view.MotionEvent;
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Point
+import android.graphics.drawable.BitmapDrawable
+import android.view.MotionEvent
+import org.osmdroid.library.R
 
-import org.osmdroid.library.R;
-
-public class CustomZoomButtonsDisplay {
-
-    public enum HorizontalPosition {LEFT, CENTER, RIGHT}
-
-    public enum VerticalPosition {TOP, CENTER, BOTTOM}
-
-    private final MapView mMapView;
-    private final Point mUnrotatedPoint = new Point();
-    private Bitmap mZoomInBitmapEnabled;
-    private Bitmap mZoomOutBitmapEnabled;
-    private Bitmap mZoomInBitmapDisabled;
-    private Bitmap mZoomOutBitmapDisabled;
-    private Paint mAlphaPaint;
-    private int mBitmapSize;
-    private HorizontalPosition mHorizontalPosition;
-    private VerticalPosition mVerticalPosition;
-    private boolean mHorizontalOrVertical;
-    private float mMargin; // as fraction of the bitmap size
-    private float mPadding; // as fraction of the bitmap size
-    private float mAdditionalPixelMarginLeft; // additional left margin in pixels
-    private float mAdditionalPixelMarginTop; // additional top margin in pixels
-    private float mAdditionalPixelMarginRight; // additional right margin in pixels
-    private float mAdditionalPixelMarginBottom;    // additional bottom margin in pixels
-    private float mPixelMarginLeft; // calculated overall left margin in pixels
-    private float mPixelMarginTop; // calculated overall top margin in pixels
-    private float mPixelMarginRight; // calculated overall right margin in pixels
-    private float mPixelMarginBottom;    // calculated overall bottom margin in pixels
-
-    public CustomZoomButtonsDisplay(final MapView pMapView) {
-        mMapView = pMapView;
-        // default values
-        setPositions(true, HorizontalPosition.CENTER, VerticalPosition.BOTTOM);
-        setMarginPadding(.5f, .5f);
+class CustomZoomButtonsDisplay(private val mMapView: MapView) {
+    enum class HorizontalPosition {
+        LEFT, CENTER, RIGHT
     }
 
-    public void setPositions(
-            final boolean pHorizontalOrVertical,
-            final HorizontalPosition pHorizontalPosition, final VerticalPosition pVerticalPosition) {
-        mHorizontalOrVertical = pHorizontalOrVertical;
-        mHorizontalPosition = pHorizontalPosition;
-        mVerticalPosition = pVerticalPosition;
+    enum class VerticalPosition {
+        TOP, CENTER, BOTTOM
+    }
+
+    private val mUnrotatedPoint = Point()
+    private var mZoomInBitmapEnabled: Bitmap? = null
+    private var mZoomOutBitmapEnabled: Bitmap? = null
+    private var mZoomInBitmapDisabled: Bitmap? = null
+    private var mZoomOutBitmapDisabled: Bitmap? = null
+    private var mAlphaPaint: Paint? = null
+    private var mBitmapSize = 0
+    private var mHorizontalPosition: HorizontalPosition? = null
+    private var mVerticalPosition: VerticalPosition? = null
+    private var mHorizontalOrVertical = false
+    private var mMargin // as fraction of the bitmap size
+            = 0f
+    private var mPadding // as fraction of the bitmap size
+            = 0f
+    private var mAdditionalPixelMarginLeft // additional left margin in pixels
+            = 0f
+    private var mAdditionalPixelMarginTop // additional top margin in pixels
+            = 0f
+    private var mAdditionalPixelMarginRight // additional right margin in pixels
+            = 0f
+    private var mAdditionalPixelMarginBottom // additional bottom margin in pixels
+            = 0f
+    private var mPixelMarginLeft // calculated overall left margin in pixels
+            = 0f
+    private var mPixelMarginTop // calculated overall top margin in pixels
+            = 0f
+    private var mPixelMarginRight // calculated overall right margin in pixels
+            = 0f
+    private var mPixelMarginBottom // calculated overall bottom margin in pixels
+            = 0f
+
+    init {
+        // default values
+        setPositions(true, HorizontalPosition.CENTER, VerticalPosition.BOTTOM)
+        setMarginPadding(.5f, .5f)
+    }
+
+    fun setPositions(
+            pHorizontalOrVertical: Boolean,
+            pHorizontalPosition: HorizontalPosition?, pVerticalPosition: VerticalPosition?) {
+        mHorizontalOrVertical = pHorizontalOrVertical
+        mHorizontalPosition = pHorizontalPosition
+        mVerticalPosition = pVerticalPosition
     }
 
     /**
      * sets margin and padding as fraction of the bitmap width
      */
-    public void setMarginPadding(final float pMargin, final float pPadding) {
-        mMargin = pMargin;
-        mPadding = pPadding;
-        refreshPixelMargins();
+    fun setMarginPadding(pMargin: Float, pPadding: Float) {
+        mMargin = pMargin
+        mPadding = pPadding
+        refreshPixelMargins()
     }
 
     /**
      * sets additional margin in pixels
      */
-    public void setAdditionalPixelMargins(final float pLeft, final float pTop, final float pRight, final float pBottom) {
-        mAdditionalPixelMarginLeft = pLeft;
-        mAdditionalPixelMarginTop = pTop;
-        mAdditionalPixelMarginRight = pRight;
-        mAdditionalPixelMarginBottom = pBottom;
-        refreshPixelMargins();
+    fun setAdditionalPixelMargins(pLeft: Float, pTop: Float, pRight: Float, pBottom: Float) {
+        mAdditionalPixelMarginLeft = pLeft
+        mAdditionalPixelMarginTop = pTop
+        mAdditionalPixelMarginRight = pRight
+        mAdditionalPixelMarginBottom = pBottom
+        refreshPixelMargins()
     }
 
     /**
      * calculate overall margins in pixels
      */
-    private void refreshPixelMargins() {
-        final float bitmapFractionMarginInPixels = mMargin * mBitmapSize;
-        mPixelMarginLeft = bitmapFractionMarginInPixels + mAdditionalPixelMarginLeft;
-        mPixelMarginTop = bitmapFractionMarginInPixels + mAdditionalPixelMarginTop;
-        mPixelMarginRight = bitmapFractionMarginInPixels + mAdditionalPixelMarginRight;
-        mPixelMarginBottom = bitmapFractionMarginInPixels + mAdditionalPixelMarginBottom;
+    private fun refreshPixelMargins() {
+        val bitmapFractionMarginInPixels = mMargin * mBitmapSize
+        mPixelMarginLeft = bitmapFractionMarginInPixels + mAdditionalPixelMarginLeft
+        mPixelMarginTop = bitmapFractionMarginInPixels + mAdditionalPixelMarginTop
+        mPixelMarginRight = bitmapFractionMarginInPixels + mAdditionalPixelMarginRight
+        mPixelMarginBottom = bitmapFractionMarginInPixels + mAdditionalPixelMarginBottom
     }
 
-    public void setBitmaps(final Bitmap pInEnabled, final Bitmap pInDisabled,
-                           final Bitmap pOutEnabled, final Bitmap pOutDisabled) {
-        mZoomInBitmapEnabled = pInEnabled;
-        mZoomInBitmapDisabled = pInDisabled;
-        mZoomOutBitmapEnabled = pOutEnabled;
-        mZoomOutBitmapDisabled = pOutDisabled;
-        mBitmapSize = mZoomInBitmapEnabled.getWidth();
-        refreshPixelMargins();
+    fun setBitmaps(pInEnabled: Bitmap?, pInDisabled: Bitmap?,
+                   pOutEnabled: Bitmap?, pOutDisabled: Bitmap?) {
+        mZoomInBitmapEnabled = pInEnabled
+        mZoomInBitmapDisabled = pInDisabled
+        mZoomOutBitmapEnabled = pOutEnabled
+        mZoomOutBitmapDisabled = pOutDisabled
+        mBitmapSize = mZoomInBitmapEnabled!!.width
+        refreshPixelMargins()
     }
 
-    protected Bitmap getZoomBitmap(final boolean pInOrOut, final boolean pEnabled) {
-        final Bitmap icon = getIcon(pInOrOut);
-        mBitmapSize = icon.getWidth();
-        refreshPixelMargins();
-        final Bitmap bitmap = Bitmap.createBitmap(mBitmapSize, mBitmapSize, Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bitmap);
-        final Paint backgroundPaint = new Paint();
-        backgroundPaint.setColor(pEnabled ? Color.WHITE : Color.LTGRAY);
-        backgroundPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(0, 0, mBitmapSize - 1, mBitmapSize - 1, backgroundPaint);
-        canvas.drawBitmap(icon, 0, 0, null);
-        return bitmap;
+    protected fun getZoomBitmap(pInOrOut: Boolean, pEnabled: Boolean): Bitmap {
+        val icon = getIcon(pInOrOut)
+        mBitmapSize = icon.width
+        refreshPixelMargins()
+        val bitmap = Bitmap.createBitmap(mBitmapSize, mBitmapSize, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val backgroundPaint = Paint()
+        backgroundPaint.color = if (pEnabled) Color.WHITE else Color.LTGRAY
+        backgroundPaint.style = Paint.Style.FILL
+        canvas.drawRect(0f, 0f, (mBitmapSize - 1).toFloat(), (mBitmapSize - 1).toFloat(), backgroundPaint)
+        canvas.drawBitmap(icon, 0f, 0f, null)
+        return bitmap
     }
 
-    protected Bitmap getIcon(final boolean pInOrOut) {
-        final int resourceId = pInOrOut ? R.drawable.sharp_add_black_36 : R.drawable.sharp_remove_black_36;
-        return ((BitmapDrawable) mMapView.getResources().getDrawable(resourceId)).getBitmap();
+    protected fun getIcon(pInOrOut: Boolean): Bitmap {
+        val resourceId = if (pInOrOut) R.drawable.sharp_add_black_36 else R.drawable.sharp_remove_black_36
+        return (mMapView.resources.getDrawable(resourceId) as BitmapDrawable).bitmap
     }
 
-    public void draw(final Canvas pCanvas, final float pAlpha01,
-                     final boolean pZoomInEnabled, final boolean pZoomOutEnabled) {
-        if (pAlpha01 == 0) {
-            return;
+    fun draw(pCanvas: Canvas, pAlpha01: Float,
+             pZoomInEnabled: Boolean, pZoomOutEnabled: Boolean) {
+        if (pAlpha01 == 0f) {
+            return
         }
-        final Paint paint;
-        if (pAlpha01 == 1) {
-            paint = null;
+        val paint: Paint?
+        if (pAlpha01 == 1f) {
+            paint = null
         } else {
             if (mAlphaPaint == null) {
-                mAlphaPaint = new Paint();
+                mAlphaPaint = Paint()
             }
-            mAlphaPaint.setAlpha((int) (pAlpha01 * 255));
-            paint = mAlphaPaint;
+            mAlphaPaint!!.alpha = (pAlpha01 * 255).toInt()
+            paint = mAlphaPaint
         }
         pCanvas.drawBitmap(
-                getBitmap(true, pZoomInEnabled),
-                getTopLeft(true, true),
-                getTopLeft(true, false),
-                paint);
+                getBitmap(true, pZoomInEnabled)!!,
+                getTopLeft(pInOrOut = true, pXOrY = true),
+                getTopLeft(pInOrOut = true, pXOrY = false),
+                paint)
         pCanvas.drawBitmap(
-                getBitmap(false, pZoomOutEnabled),
-                getTopLeft(false, true),
-                getTopLeft(false, false),
-                paint);
+                getBitmap(false, pZoomOutEnabled)!!,
+                getTopLeft(pInOrOut = false, pXOrY = true),
+                getTopLeft(pInOrOut = false, pXOrY = false),
+                paint)
     }
 
-    private float getTopLeft(final boolean pInOrOut, final boolean pXOrY) {
-        final float topLeft;
+    private fun getTopLeft(pInOrOut: Boolean, pXOrY: Boolean): Float {
+        val topLeft: Float
         if (pXOrY) {
-            topLeft = getFirstLeft(mMapView.getWidth());
+            topLeft = getFirstLeft(mMapView.width)
             if (!mHorizontalOrVertical) { // vertical: same left
-                return topLeft;
+                return topLeft
             }
-            if (!pInOrOut) { // horizontal: zoom out first
-                return topLeft;
-            }
-            return topLeft + mBitmapSize + mPadding * mBitmapSize;
+            return if (!pInOrOut) { // horizontal: zoom out first
+                topLeft
+            } else topLeft + mBitmapSize + mPadding * mBitmapSize
         }
-        topLeft = getFirstTop(mMapView.getHeight());
+        topLeft = getFirstTop(mMapView.height)
         if (mHorizontalOrVertical) { // horizontal: same top
-            return topLeft;
+            return topLeft
         }
-        if (pInOrOut) { // vertical: zoom in first
-            return topLeft;
-        }
-        return topLeft + mBitmapSize + mPadding * mBitmapSize;
+        return if (pInOrOut) { // vertical: zoom in first
+            topLeft
+        } else topLeft + mBitmapSize + mPadding * mBitmapSize
     }
 
-    private float getFirstLeft(final int pMapViewWidth) {
-        switch (mHorizontalPosition) {
-            case LEFT:
-                return mPixelMarginLeft;
-            case RIGHT:
-                return pMapViewWidth - mPixelMarginRight - mBitmapSize
-                        - (mHorizontalOrVertical ? mPadding * mBitmapSize + mBitmapSize : 0);
-            case CENTER:
-                return pMapViewWidth / 2f
-                        - (mHorizontalOrVertical ? mPadding * mBitmapSize / 2 + mBitmapSize : mBitmapSize / 2f);
+    private fun getFirstLeft(pMapViewWidth: Int): Float {
+        when (mHorizontalPosition) {
+            HorizontalPosition.LEFT -> return mPixelMarginLeft
+            HorizontalPosition.RIGHT -> return (pMapViewWidth - mPixelMarginRight - mBitmapSize
+                    - if (mHorizontalOrVertical) (mPadding * mBitmapSize + mBitmapSize).toInt() else 0)
+
+            HorizontalPosition.CENTER -> return (pMapViewWidth / 2f
+                    - if (mHorizontalOrVertical) mPadding * mBitmapSize / 2 + mBitmapSize else mBitmapSize / 2f)
+
+            else -> {}
         }
-        throw new IllegalArgumentException();
+        throw IllegalArgumentException()
     }
 
-    private float getFirstTop(final int pMapViewHeight) {
-        switch (mVerticalPosition) {
-            case TOP:
-                return mPixelMarginTop;
-            case BOTTOM:
-                return pMapViewHeight - mPixelMarginBottom - mBitmapSize
-                        - (mHorizontalOrVertical ? 0 : mPadding * mBitmapSize + mBitmapSize);
-            case CENTER:
-                return pMapViewHeight / 2f
-                        - (mHorizontalOrVertical ? mBitmapSize / 2f : mPadding * mBitmapSize / 2 + mBitmapSize);
+    private fun getFirstTop(pMapViewHeight: Int): Float {
+        when (mVerticalPosition) {
+            VerticalPosition.TOP -> return mPixelMarginTop
+            VerticalPosition.BOTTOM -> return (pMapViewHeight - mPixelMarginBottom - mBitmapSize
+                    - if (mHorizontalOrVertical) 0 else (mPadding * mBitmapSize + mBitmapSize).toInt())
+
+            VerticalPosition.CENTER -> return (pMapViewHeight / 2f
+                    - if (mHorizontalOrVertical) mBitmapSize / 2f else mPadding * mBitmapSize / 2 + mBitmapSize)
+
+            else -> {}
         }
-        throw new IllegalArgumentException();
+        throw IllegalArgumentException()
     }
 
-    private Bitmap getBitmap(final boolean pInOrOut, final boolean pEnabled) {
+    private fun getBitmap(pInOrOut: Boolean, pEnabled: Boolean): Bitmap? {
         if (mZoomInBitmapEnabled == null) {
             setBitmaps(
-                    getZoomBitmap(true, true),
-                    getZoomBitmap(true, false),
-                    getZoomBitmap(false, true),
-                    getZoomBitmap(false, false)
-            );
+                    getZoomBitmap(pInOrOut = true, pEnabled = true),
+                    getZoomBitmap(pInOrOut = true, pEnabled = false),
+                    getZoomBitmap(pInOrOut = false, pEnabled = true),
+                    getZoomBitmap(pInOrOut = false, pEnabled = false)
+            )
         }
         if (pInOrOut) {
-            return pEnabled ? mZoomInBitmapEnabled : mZoomInBitmapDisabled;
+            return if (pEnabled) mZoomInBitmapEnabled else mZoomInBitmapDisabled
         }
-        return pEnabled ? mZoomOutBitmapEnabled : mZoomOutBitmapDisabled;
+        return if (pEnabled) mZoomOutBitmapEnabled else mZoomOutBitmapDisabled
     }
 
-    @Deprecated
-    public boolean isTouchedRotated(final MotionEvent pMotionEvent, final boolean pInOrOut) {
-        if (mMapView.getMapOrientation() == 0) {
-            mUnrotatedPoint.set((int) pMotionEvent.getX(), (int) pMotionEvent.getY());
+    @Deprecated("")
+    fun isTouchedRotated(pMotionEvent: MotionEvent, pInOrOut: Boolean): Boolean {
+        if (mMapView.getMapOrientation() == 0f) {
+            mUnrotatedPoint[pMotionEvent.x.toInt()] = pMotionEvent.y.toInt()
         } else {
-            mMapView.getProjection().rotateAndScalePoint(
-                    (int) pMotionEvent.getX(), (int) pMotionEvent.getY(), mUnrotatedPoint);
+            mMapView.projection.rotateAndScalePoint(pMotionEvent.x.toInt(), pMotionEvent.y.toInt(), mUnrotatedPoint)
         }
-        return isTouched(mUnrotatedPoint.x, mUnrotatedPoint.y, pInOrOut);
+        return isTouched(mUnrotatedPoint.x, mUnrotatedPoint.y, pInOrOut)
     }
 
-    public boolean isTouched(final MotionEvent pMotionEvent, final boolean pInOrOut) {
-        if (pMotionEvent.getAction() == MotionEvent.ACTION_UP) {
-            return isTouched((int) pMotionEvent.getX(), (int) pMotionEvent.getY(), pInOrOut);
+    fun isTouched(pMotionEvent: MotionEvent, pInOrOut: Boolean): Boolean {
+        return if (pMotionEvent.action == MotionEvent.ACTION_UP) {
+            isTouched(pMotionEvent.x.toInt(), pMotionEvent.y.toInt(), pInOrOut)
         } else {
-            return false;
+            false
         }
     }
 
-    private boolean isTouched(final int pEventX, final int pEventY, final boolean pInOrOut) {
-        return isTouched(pInOrOut, true, pEventX)
-                && isTouched(pInOrOut, false, pEventY);
+    private fun isTouched(pEventX: Int, pEventY: Int, pInOrOut: Boolean): Boolean {
+        return (isTouched(pInOrOut, true, pEventX.toFloat())
+                && isTouched(pInOrOut, false, pEventY.toFloat()))
     }
 
-    private boolean isTouched(final boolean pInOrOut, final boolean pXOrY, final float pEvent) {
-        final float topLeft = getTopLeft(pInOrOut, pXOrY);
-        return pEvent >= topLeft && pEvent <= topLeft + mBitmapSize;
+    private fun isTouched(pInOrOut: Boolean, pXOrY: Boolean, pEvent: Float): Boolean {
+        val topLeft = getTopLeft(pInOrOut, pXOrY)
+        return pEvent >= topLeft && pEvent <= topLeft + mBitmapSize
     }
 }
