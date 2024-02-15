@@ -1,25 +1,25 @@
 package org.osmdroid.sample
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import org.osmdroid.config.Configuration.instance
 import org.osmdroid.simplemap.R
+import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Overlay
-import org.osmdroid.views.overlay.compass.CompassOverlay
-import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
 import org.osmdroid.views.overlay.gestures.OneFingerZoomOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
@@ -65,7 +65,6 @@ class MapActivity : AppCompatActivity() {
         mLocationOverlay.enableMyLocation()
         mapView!!.getOverlays()!!.add(mLocationOverlay)
 
-
         // Создание маркера
         val marker = Marker(mapView)
         marker.position = GeoPoint(55.75087199739751, 37.61757608743155) // Задайте широту и долготу
@@ -74,15 +73,39 @@ class MapActivity : AppCompatActivity() {
         marker.title = "Название места"
         marker.snippet = "Дополнительная информация"
 
+        marker.setOnMarkerClickListener { marker, mapView -> // Добавление обьекта нарисованного на Canvas
+            mapView!!.getOverlays()!!.add(CustomOverlay(mapView = mapView))
+
+            true
+        }
+
         // Добавление маркера на карту
         mapView!!.getOverlays()!!.add(marker)
 
-        // Добавление обьекта нарисованного на Canvas
-        // mapView!!.getOverlays()!!.add(CustomOverlay(mapView = mapView!!))
 
 
 
+        // Ограничение области панорамирования (пример для всего мира)
+        val boundingBox = BoundingBox(85.0, 180.0, -85.0, -180.0)
+        mapView!!.setScrollableAreaLimitDouble(boundingBox)
+
+         mapView!!.setMinZoomLevel(2.0) // Минимальный масштаб, например, уровень страны или континента
+         mapView!!.setMaxZoomLevel(20.0) // Максимальный масштаб, например, уровень улиц
+
+
+
+
+        // Задание нового уровня зума, например, увеличение на 1
+//        val currentZoomLevel: Double = mapView!!.zoomLevelDouble
+//        val newZoomLevel = currentZoomLevel + 3
+//        // Анимированное изменение зума карты
+//        mapView!!.controller?.zoomTo(newZoomLevel, 1500)
+//
+//
+//        val moscow = GeoPoint(55.752825516743314, 37.620692000639295)
+//        mapView!!.controller?.setCenter(moscow)
     }
+
 
     public override fun onResume() {
         super.onResume()
@@ -116,25 +139,27 @@ class MapActivity : AppCompatActivity() {
         const val REQUEST_LOCATION_PERMISSION = 1
     }
 
-    class CustomOverlay(mapView: MapView) : Overlay() {
-        private val projection = mapView.projection
-        val bottomGeoPoint = GeoPoint(43.68242316567707, 40.26641550645863)
-        val topGeoPoint = GeoPoint(43.66864227178646, 40.25869344400052)
+    class CustomOverlay(private val mapView: MapView) : Overlay() {
+
+        private val geoPoint = GeoPoint(48.8566, 2.3522) // Пример для Парижа
 
         private val paint = Paint().apply {
             color = Color.RED // Цвет линии
-            strokeWidth = 70f    // Толщина линии
+            strokeWidth = 5f    // Толщина линии
             style = Paint.Style.STROKE
         }
 
         override fun draw(canvas: Canvas, mapView: MapView, shadow: Boolean) {
             super.draw(canvas, mapView, shadow)
 
-            val screenCoordsBottom = projection.toPixels(bottomGeoPoint, null)
+            // Вычисление текущих экранных координат geoPoint
+            val projection = mapView.projection
+            val scale = projection.zoomLevel
+            val screenCoords = projection.toPixels(geoPoint, null)
 
-            projection
-            canvas.drawLine(screenCoordsBottom!!.x.toFloat(), screenCoordsBottom.y.toFloat(),
-                    300.toFloat(), 300.toFloat(), paint)
+            // Отрисовка элемента на карте в координатах geoPoint
+            // Здесь я примерно рисую круг, но вы можете рисовать что угодно.
+            screenCoords?.y?.toFloat()?.let { canvas.drawCircle(screenCoords.x.toFloat(), it, (20f / scale).toFloat(), paint) }
         }
     }
 
