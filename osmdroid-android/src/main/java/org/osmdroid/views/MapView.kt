@@ -49,7 +49,7 @@ import kotlin.math.ln
 import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.CUPCAKE)
-class MapView(
+open class MapView(
         context: Context,
         tileProvider: MapTileProviderBase?,
         tileRequestCompleteHandler: Handler?, attrs: AttributeSet?, hardwareAccelerated: Boolean
