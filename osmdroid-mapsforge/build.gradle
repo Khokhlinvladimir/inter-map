@@ -79,8 +79,6 @@ afterEvaluate {
             }
         }
     }
-
-
 }
 
 //apply from: "$rootDir/gradle/javadoc-aar.gradle"

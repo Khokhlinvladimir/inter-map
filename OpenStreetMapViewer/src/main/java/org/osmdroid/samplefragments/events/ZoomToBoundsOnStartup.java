@@ -16,7 +16,7 @@ import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.util.BoundingBox;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.OnFirstLayoutListener;
 
 import static org.osmdroid.samplefragments.events.SampleMapEventListener.df;
 
@@ -89,7 +89,7 @@ on a button click
     }
 
     private void attach() {
-        mMapView.addOnFirstLayoutListener(new MapView.OnFirstLayoutListener() {
+        mMapView.addOnFirstLayoutListener(new OnFirstLayoutListener() {
 
             @Override
             public void onFirstLayout(View v, int left, int top, int right, int bottom) {

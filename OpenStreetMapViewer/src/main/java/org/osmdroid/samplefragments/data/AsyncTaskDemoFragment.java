@@ -18,7 +18,7 @@ import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.OnFirstLayoutListener;
 import org.osmdroid.views.overlay.FolderOverlay;
 import org.osmdroid.views.overlay.IconOverlay;
 import org.osmdroid.views.overlay.Overlay;
@@ -83,7 +83,7 @@ public class AsyncTaskDemoFragment extends BaseSampleFragment {
         setHasOptionsMenu(true);
 
         // MapView.OnFirstLayoutListener initial map display also triggers onScroll to update the markers
-        mMapView.addOnFirstLayoutListener(new MapView.OnFirstLayoutListener() {
+        mMapView.addOnFirstLayoutListener(new OnFirstLayoutListener() {
             @Override
             public void onFirstLayout(View v, int left, int top, int right, int bottom) {
                 mMapView.zoomToBoundingBox(new BoundingBox(56.0, 7.0, 45.0, 16.0), false);

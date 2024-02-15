@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 
 import org.osmdroid.util.BoundingBox;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.OnFirstLayoutListener;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 
@@ -13,7 +13,7 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
  * Created by alex on 9/14/16.
  */
 
-public class SampleTester extends BaseSampleFragment implements MapView.OnFirstLayoutListener {
+public class SampleTester extends BaseSampleFragment implements OnFirstLayoutListener {
     @Override
     public String getSampleTitle() {
         return "Alex's Tester";

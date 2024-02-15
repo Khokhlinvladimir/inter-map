@@ -1,7 +1,6 @@
 package org.osmdroid.sample
 
 import android.Manifest
-import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.graphics.Canvas
 import android.graphics.Color
@@ -9,10 +8,10 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Composable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration.instance
 import org.osmdroid.simplemap.R
 import org.osmdroid.util.BoundingBox
@@ -86,10 +85,15 @@ class MapActivity : AppCompatActivity() {
 
 
         // Ограничение области панорамирования (пример для всего мира)
-        val boundingBox = BoundingBox(85.0, 180.0, -85.0, -180.0)
+        val boundingBox = BoundingBox(85.0, 360.0, -85.0, -360.0)
         mapView!!.setScrollableAreaLimitDouble(boundingBox)
 
-         mapView!!.setMinZoomLevel(2.0) // Минимальный масштаб, например, уровень страны или континента
+        // Для разрешения бесконечного скролла по горизонтали
+        mapView!!.setHorizontalMapRepetitionEnabled(true)
+        mapView!!.setVerticalMapRepetitionEnabled(false)
+
+
+        mapView!!.setMinZoomLevel(2.0) // Минимальный масштаб, например, уровень страны или континента
          mapView!!.setMaxZoomLevel(20.0) // Максимальный масштаб, например, уровень улиц
 
 

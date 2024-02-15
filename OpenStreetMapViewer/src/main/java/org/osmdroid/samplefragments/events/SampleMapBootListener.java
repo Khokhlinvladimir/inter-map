@@ -6,13 +6,14 @@ import android.view.View;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.OnFirstLayoutListener;
 
 /**
  * A quick tutorial on how to listen for when the map is ready to go<br>
  * <a href="https://github.com/osmdroid/osmdroid/issues/324">issue 324</a>
  * Created by alex on 6/4/16.
  */
-public class SampleMapBootListener extends BaseSampleFragment implements MapView.OnFirstLayoutListener {
+public class SampleMapBootListener extends BaseSampleFragment implements OnFirstLayoutListener {
     @Override
     public String getSampleTitle() {
         return "Start up events";

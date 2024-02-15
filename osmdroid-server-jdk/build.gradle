@@ -118,8 +118,6 @@ afterEvaluate {
                 artifact "build/distributions/osmdroid-server-jdk-" + project.property("pom.version") + ".zip"
 
             }
-
-
         }
     }
 
