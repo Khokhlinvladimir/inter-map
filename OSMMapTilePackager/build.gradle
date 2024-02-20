@@ -100,7 +100,7 @@ afterEvaluate {
                         license {
                             name=project.property("pom.licenses.license.0.name");
                             url=project.property("pom.licenses.license.0.url");
-                            distribution==project.property("pom.licenses.license.0.distribution");
+                            distribution=project.property("pom.licenses.license.0.distribution");
                         }
 
                     }
@@ -113,9 +113,8 @@ afterEvaluate {
             }
         }
     }
-
-
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

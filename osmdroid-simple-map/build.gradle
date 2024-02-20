@@ -8,28 +8,21 @@ group = project.property("pom.groupId")
 version =  project.property("pom.version")
 
 android {
-    compileSdkVersion findProperty('android.compileSdkVersion').toInteger()
+    compileSdkVersion 34
      defaultConfig {
 
          applicationId project.group + "." +
                  project.name.toString().toLowerCase().replaceAll("[-]", ".")
                          .replaceAll("[^a-zA-Z0-9\\.]", "")
 
-         minSdkVersion Integer.parseInt(project.property('android-minSdkForSupportLib.version'))
+         minSdkVersion 24
          multiDexEnabled = true
-         compileSdkVersion(project.hasProperty('android.compileSdkVersion')
-                 ? Integer.parseInt(project.property('android.compileSdkVersion')) : 34)
+
+         targetSdkVersion 34
 
 
-         minSdkVersion(24)
-
-
-         targetSdkVersion(project.hasProperty('android.targetSdkVersion')
-                 ? Integer.parseInt(project.property('android.targetSdkVersion')) : 34)
-
-
-         versionCode(project.hasProperty('android.versionCode')
-                 ? Integer.parseInt(project.property('android.versionCode')) : 1)
+         /*versionCode(project.hasProperty('android.versionCode')
+                 ? Integer.parseInt(project.property('android.versionCode')) : 1)*/
 
          versionName project.version
      }

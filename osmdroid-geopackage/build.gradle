@@ -8,10 +8,11 @@ group = project.property("pom.groupId")
 version = project.property("pom.version")
 
 android {
-    compileSdkVersion findProperty('android.compileSdkVersion').toInteger()
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 24
+        targetSdkVersion 34
     }
     buildTypes {
         release {

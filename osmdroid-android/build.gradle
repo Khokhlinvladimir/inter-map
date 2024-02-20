@@ -3,42 +3,39 @@ apply plugin: 'com.android.library'
 apply plugin: "maven-publish"
 apply plugin: 'org.jetbrains.kotlin.android'
 
-
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
 
-
 android {
-    compileSdkVersion findProperty('android.compileSdkVersion').toInteger()
+    compileSdkVersion 34
 
     defaultConfig{
-        targetSdkVersion  findProperty('android.targetSdkVersion').toInteger()
+        minSdkVersion 24
+        targetSdkVersion  34
     }
 
     lintOptions {
         abortOnError false
     }
-	testOptions { 
-       unitTests.returnDefaultValues = true
-   }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
-        }
-    }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
         }
     }
 
     buildFeatures {
         compose true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.1'
     }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -51,21 +48,16 @@ dependencies {
     testImplementation "junit:junit:${project.property('junit.version')}"
     testImplementation "org.robolectric:robolectric:${project.property('robolectric.version')}"
 
-    //    ЗАВИСИМОСТИ COMPOSE:
-
-    // Платформа Compose, обеспечивает зависимости для Compose.
+    // Dependencies for Compose
     implementation platform('androidx.compose:compose-bom:2022.10.00')
-    // Compose UI, основные компоненты пользовательского интерфейса Compose.
     implementation 'androidx.compose.ui:ui'
-    // Compose UI Graphics, графические возможности Compose.
     implementation 'androidx.compose.ui:ui-graphics'
-    // Compose UI Tooling Preview, инструменты для разработки с Compose.
     implementation 'androidx.compose.ui:ui-tooling-preview'
-    // Compose Material 3, библиотека для создания Material Design пользовательского интерфейса в Compose.
     implementation 'androidx.compose.material3:material3'
 }
 
 import org.apache.tools.ant.filters.*
+
 task copyFiles(type: Copy) {
     from 'src/main/filtered/org/osmdroid'
     into 'src/main/java/org/osmdroid'
@@ -85,18 +77,17 @@ afterEvaluate {
                 artifactId project.name
                 version = project.property("pom.version")
                 pom {
-                    description =  project.description
+                    description = project.description
                     url = project.property("pom.url")
 
-                    //scm, organization and developers are injected via other mechanisms
+                    // SCM, organization, and developers are injected via other mechanisms
 
                     licenses {
                         license {
-                            name=project.property("pom.licenses.license.0.name");
-                            url=project.property("pom.licenses.license.0.url");
-                            distribution==project.property("pom.licenses.license.0.distribution");
+                            name = project.property("pom.licenses.license.0.name")
+                            url = project.property("pom.licenses.license.0.url")
+                            distribution = project.property("pom.licenses.license.0.distribution")
                         }
-
                     }
                 }
             }
@@ -104,15 +95,12 @@ afterEvaluate {
     }
 }
 
-
 task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
 artifacts {
-//    archives packageReleaseJar
     archives androidSourcesJar
-
 }
-preBuild.dependsOn(copyFiles)
 
+preBuild.dependsOn(copyFiles)

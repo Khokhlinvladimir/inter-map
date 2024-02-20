@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-		package="org.osmdroid.library">
-	<supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" />
+	xmlns:tools="http://schemas.android.com/tools"
+	package="org.osmdroid.library">
+	<supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true"
+		tools:targetApi="donut" />
 
-	<uses-feature android:name="android.hardware.location.network" android:required="false" />
-	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
-	<uses-feature android:name="android.hardware.telephony" android:required="false" />
-	<uses-feature android:name="android.hardware.wifi" android:required="false" />
+	<uses-feature android:name="android.hardware.location.network" android:required="false"
+		tools:targetApi="eclair" />
+	<uses-feature android:name="android.hardware.location.gps" android:required="false"
+		tools:targetApi="eclair" />
+	<uses-feature android:name="android.hardware.telephony" android:required="false"
+		tools:targetApi="eclair" />
+	<uses-feature android:name="android.hardware.wifi" android:required="false"
+		tools:targetApi="eclair" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 
 </manifest>

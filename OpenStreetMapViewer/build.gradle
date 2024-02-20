@@ -9,8 +9,8 @@ group = project.property("pom.groupId")
 version = project.property("pom.version")
 
 android {
-    compileSdkVersion findProperty('android.compileSdkVersion').toInteger()
-
+    compileSdkVersion 34
+    compileSdk 34
 
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,18 +19,22 @@ android {
         applicationId "org.osmdroid"
 
         minSdkVersion 24
+        targetSdkVersion 34
+
         multiDexEnabled = true
 
-        compileSdkVersion(project.hasProperty('android.compileSdkVersion')
-                ? Integer.parseInt(project.property('android.compileSdkVersion')) : 33)
+   /*     compileSdkVersion(project.hasProperty('android.compileSdkVersion')
+                ? Integer.parseInt(project.property('android.compileSdkVersion')) : 34)
 
         // default targetSdkVersion to API 23, if not provided
         targetSdkVersion(project.hasProperty('android.targetSdkVersion')
-                ? Integer.parseInt(project.property('android.targetSdkVersion')) : 33)
+                ? Integer.parseInt(project.property('android.targetSdkVersion')) : 34)
 
         // default versionCode o 1 if not provided
         versionCode(project.hasProperty('android.versionCode')
-                ? Integer.parseInt(project.property('android.versionCode')) : 33)
+                ? Integer.parseInt(project.property('android.versionCode')) : 34)
+
+    */
 
         versionName project.version
     }

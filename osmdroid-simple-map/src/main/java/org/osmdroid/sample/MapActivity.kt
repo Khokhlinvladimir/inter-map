@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration.instance
+import org.osmdroid.sample.tiles.setupCustomTilesOverlays
 import org.osmdroid.simplemap.R
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
@@ -97,7 +97,7 @@ class MapActivity : AppCompatActivity() {
          mapView!!.setMaxZoomLevel(20.0) // Максимальный масштаб, например, уровень улиц
 
 
-
+        setupCustomTilesOverlays(mapView!!, assets)
 
         // Задание нового уровня зума, например, увеличение на 1
 //        val currentZoomLevel: Double = mapView!!.zoomLevelDouble
@@ -109,6 +109,7 @@ class MapActivity : AppCompatActivity() {
 //        val moscow = GeoPoint(55.752825516743314, 37.620692000639295)
 //        mapView!!.controller?.setCenter(moscow)
     }
+
 
 
     public override fun onResume() {
