@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import org.osmdroid.config.Configuration.instance
+import org.osmdroid.sample.tiles.AssetsTileSource
 import org.osmdroid.sample.tiles.setupCustomTilesOverlays
 import org.osmdroid.simplemap.R
 import org.osmdroid.util.BoundingBox
@@ -66,7 +67,7 @@ class MapActivity : AppCompatActivity() {
 
         // Создание маркера
         val marker = Marker(mapView)
-        marker.position = GeoPoint(55.75087199739751, 37.61757608743155) // Задайте широту и долготу
+        marker.position = GeoPoint(36.49012395408768, 30.523714151400714) // Задайте широту и долготу
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         marker.icon = ResourcesCompat.getDrawable(resources, R.drawable.marker_default, null)
         marker.title = "Название места"
@@ -81,9 +82,6 @@ class MapActivity : AppCompatActivity() {
         // Добавление маркера на карту
         mapView!!.getOverlays()!!.add(marker)
 
-
-
-
         // Ограничение области панорамирования (пример для всего мира)
         val boundingBox = BoundingBox(85.0, 360.0, -85.0, -360.0)
         mapView!!.setScrollableAreaLimitDouble(boundingBox)
@@ -92,12 +90,15 @@ class MapActivity : AppCompatActivity() {
         mapView!!.setHorizontalMapRepetitionEnabled(true)
         mapView!!.setVerticalMapRepetitionEnabled(false)
 
-
         mapView!!.setMinZoomLevel(2.0) // Минимальный масштаб, например, уровень страны или континента
-         mapView!!.setMaxZoomLevel(20.0) // Максимальный масштаб, например, уровень улиц
+        mapView!!.setMaxZoomLevel(20.0) // Максимальный масштаб, например, уровень улиц
 
+        // Добавление кастомных тайлов на карту
 
         setupCustomTilesOverlays(mapView!!, assets)
+
+        mapView!!.setMultiTouchControls(true)
+
 
         // Задание нового уровня зума, например, увеличение на 1
 //        val currentZoomLevel: Double = mapView!!.zoomLevelDouble
@@ -109,7 +110,6 @@ class MapActivity : AppCompatActivity() {
 //        val moscow = GeoPoint(55.752825516743314, 37.620692000639295)
 //        mapView!!.controller?.setCenter(moscow)
     }
-
 
 
     public override fun onResume() {

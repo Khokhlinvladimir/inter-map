@@ -3,6 +3,7 @@ package org.osmdroid.sample.tiles
 import android.content.res.AssetManager
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.MapTileProviderBasic
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase
 import org.osmdroid.util.MapTileIndex
@@ -26,10 +27,10 @@ class AssetsTileSource(
         return "$name/$z/$x/$y.$imageFilenameEnding"
     }
 
-    override fun getDrawable(filePath: String?): Drawable? {
-        if (filePath == null) return null
+    override fun getDrawable(aFilePath: String?): Drawable? {
+        if (aFilePath == null) return null
         return try {
-            assetManager.open(filePath).use { inputStream ->
+            assetManager.open(aFilePath).use { inputStream ->
                 Drawable.createFromStream(inputStream, null)
             }
         } catch (e: IOException) {
@@ -38,7 +39,13 @@ class AssetsTileSource(
     }
 }
 
-fun setupCustomTilesOverlays(mapView: MapView, assetManager: AssetManager) {
+fun setupCustomTilesOverlays(mapView: MapView,  assetManager: AssetManager) {
+
+    Configuration.instance?.cacheMapTileCount = 60000.toShort()
+    Configuration.instance?.cacheMapTileOvershoot = 2000.toShort()
+    Configuration.instance?.osmdroidTileCache = mapView.context.getExternalFilesDir(null)
+
+
     val customTileSource = AssetsTileSource(
             assetManager = assetManager,
             name = "customtiles",
@@ -51,9 +58,16 @@ fun setupCustomTilesOverlays(mapView: MapView, assetManager: AssetManager) {
     val tileProvider = MapTileProviderBasic(mapView.context).apply {
         tileSource = customTileSource
     }
+
     val tilesOverlay = TilesOverlay(tileProvider, mapView.context).apply {
         loadingBackgroundColor = Color.TRANSPARENT // Прозрачный фон при загрузке
     }
 
-    mapView.getOverlays()?.add(tilesOverlay)
+    tilesOverlay.loadingLineColor = Color.TRANSPARENT
+
+
+     mapView.getOverlays()?.add(tilesOverlay)
+
+    // Данный метод отключает мерцание, но удаляет тайлы по умолчанию.
+    // mapView.setTileSource(customTileSource)
 }
