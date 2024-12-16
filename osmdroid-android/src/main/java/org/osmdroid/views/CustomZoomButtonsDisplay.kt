@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.drawable.BitmapDrawable
 import android.view.MotionEvent
-import org.osmdroid.library.R
+import org.osmdroid.R
 
 class CustomZoomButtonsDisplay(private val mMapView: MapView) {
     enum class HorizontalPosition {

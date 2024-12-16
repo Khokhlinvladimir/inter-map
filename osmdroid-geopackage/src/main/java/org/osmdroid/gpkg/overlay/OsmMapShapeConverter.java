@@ -46,7 +46,7 @@ import org.osmdroid.gpkg.overlay.features.PolygonOptions;
 import org.osmdroid.gpkg.overlay.features.PolygonOrientation;
 import org.osmdroid.gpkg.overlay.features.PolylineOptions;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;

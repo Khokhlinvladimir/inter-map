@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import org.osmdroid.api.IMapView;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.overlay.TilesOverlay;
 
 import java.util.ArrayList;

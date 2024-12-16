@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import androidx.fragment.app.DialogFragment;
 

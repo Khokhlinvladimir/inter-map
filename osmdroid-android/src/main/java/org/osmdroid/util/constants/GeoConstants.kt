@@ -1,6 +1,6 @@
 package org.osmdroid.util.constants
 
-import org.osmdroid.library.R
+import org.osmdroid.R
 
 interface GeoConstants {
 

@@ -198,7 +198,7 @@
 - the highest zoom level osmdroid supports [\#230](https://github.com/osmdroid/osmdroid/issues/230)
 - move integration tests into sample app \(maven build only\) [\#229](https://github.com/osmdroid/osmdroid/issues/229)
 - Tiles not loading on android 6\(API 23\) [\#223](https://github.com/osmdroid/osmdroid/issues/223)
-- Can't resolve "org.osmdroid.views.MapView" after update to osmdroid 5.0.1 [\#222](https://github.com/osmdroid/osmdroid/issues/222)
+- Can't resolve "org.osmdroid.views.oldclasses.MapView" after update to osmdroid 5.0.1 [\#222](https://github.com/osmdroid/osmdroid/issues/222)
 - compile 'org.osmdroid:osmdroid-android:5.0.1@aar' not working for me [\#217](https://github.com/osmdroid/osmdroid/issues/217)
 - Stale Branches Cleanup [\#216](https://github.com/osmdroid/osmdroid/issues/216)
 - New Night Mode in V5.0.1 [\#210](https://github.com/osmdroid/osmdroid/issues/210)

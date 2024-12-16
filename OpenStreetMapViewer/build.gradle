@@ -8,6 +8,7 @@ group = project.property("pom.groupId")
 version = project.property("pom.version")
 
 android {
+    namespace = "org.osmdroid.OpenStreetMapViewer"
     compileSdkVersion 34
     compileSdk 34
 

@@ -14,7 +14,7 @@ import org.osmdroid.R;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.tileprovider.modules.IFilesystemCache;
 import org.osmdroid.tileprovider.modules.SqlTileWriter;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 /**
  * An example of importing stored on disk cache produced by osmdroid < 5.4 using the older TileWriter

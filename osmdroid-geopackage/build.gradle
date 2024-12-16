@@ -8,6 +8,7 @@ group = project.property("pom.groupId")
 version = project.property("pom.version")
 
 android {
+    namespace = "org.osmdroid.gpkg"
     compileSdkVersion 34
 
     defaultConfig {
@@ -34,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.core:core-ktx:1.15.0'
 
     //crash logging
     //implementation 'ch.acra:acra:4.7.0'

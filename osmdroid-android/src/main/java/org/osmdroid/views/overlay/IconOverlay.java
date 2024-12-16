@@ -11,8 +11,8 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 
 /**
- * {@link org.osmdroid.views.overlay.IconOverlay} is an icon placed at a particular
- * {@link org.osmdroid.api.IGeoPoint} on the {@link org.osmdroid.views.MapView}'s surface.
+ * {@link IconOverlay} is an icon placed at a particular
+ * {@link IGeoPoint} on the {@link MapView}'s surface.
  * <p>
  * Inspired by {@link Marker} but without the Datafields and the pop-window support.
  * <p>

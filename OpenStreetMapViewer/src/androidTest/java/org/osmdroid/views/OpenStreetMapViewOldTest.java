@@ -12,12 +12,13 @@ import android.graphics.Point;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.osmdroid.R;
+import org.osmdroid.OpenStreetMapViewer.R;
 import org.osmdroid.StarterMapActivity;
 import org.osmdroid.tileprovider.util.Counters;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.TileSystem;
 import org.osmdroid.util.TileSystemWebMercator;
+import org.osmdroid.views.MapView;
 
 import java.util.Random;
 
@@ -29,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Neil Boyd
  */
-public class OpenStreetMapViewTest {
+public class OpenStreetMapViewOldTest {
 
     @Rule
     public ActivityTestRule<StarterMapActivity> activityRule =
@@ -39,7 +40,7 @@ public class OpenStreetMapViewTest {
 
     private static final TileSystem tileSystem = new TileSystemWebMercator();
 
-    public OpenStreetMapViewTest() {
+    public OpenStreetMapViewOldTest() {
         Counters.reset();
     }
 

@@ -10,6 +10,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.PointL;
 import org.osmdroid.util.TileSystem;
 import org.osmdroid.views.Projection;
+import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Polygon;
 import org.osmdroid.views.overlay.Polyline;
 
@@ -35,7 +36,7 @@ public class PathProjection {
         final Path out = (reuse != null) ? reuse : new Path();
         out.incReserve(in.size());
 
-        final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+        final TileSystem tileSystem = MapView.getTileSystem();
         boolean first = true;
         for (final GeoPoint gp : in) {
             final Point underGeopointTileCoords = new Point();

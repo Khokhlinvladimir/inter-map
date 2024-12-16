@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import org.osmdroid.R;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 /**
  * Created by alex on 9/25/16.

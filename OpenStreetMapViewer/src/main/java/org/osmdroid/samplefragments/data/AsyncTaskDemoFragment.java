@@ -19,6 +19,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.OnFirstLayoutListener;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.overlay.FolderOverlay;
 import org.osmdroid.views.overlay.IconOverlay;
 import org.osmdroid.views.overlay.Overlay;
@@ -141,7 +142,7 @@ public class AsyncTaskDemoFragment extends BaseSampleFragment {
     private Drawable mMarkerIcon = null;
 
     /**
-     * This must be reomoved from {@link org.osmdroid.views.MapView} when
+     * This must be reomoved from {@link MapView} when
      * {@link BackgroundMarkerLoaderTask} finishes
      */
     private FolderOverlay mCurrentBackgroundContentFolder = null;
@@ -153,8 +154,8 @@ public class AsyncTaskDemoFragment extends BaseSampleFragment {
     private int mMissedMapZoomScrollUpdates = 0;
 
     /**
-     * called by {@link org.osmdroid.views.MapView} if zoom or scroll has changed to
-     * reload marker for new visible region in the {@link org.osmdroid.views.MapView}
+     * called by {@link MapView} if zoom or scroll has changed to
+     * reload marker for new visible region in the {@link MapView}
      */
     private void reloadMarker() {
         // initialized

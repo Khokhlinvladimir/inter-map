@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * {@link org.osmdroid.views.overlay.ClickableIconOverlay} is a clickable icon item on the
- * {@link org.osmdroid.views.MapView} containing {@link org.osmdroid.api.IGeoPoint},
+ * {@link MapView} containing {@link org.osmdroid.api.IGeoPoint},
  * {@link ClickableIconOverlay#getID() unique id} and
  * {@link ClickableIconOverlay#getData() data}.
  * <p>

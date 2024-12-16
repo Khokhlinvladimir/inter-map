@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import org.osmdroid.api.IMapView;
-import org.osmdroid.library.R;
+import org.osmdroid.R;
 import org.osmdroid.views.MapView;
 
 import java.util.List;

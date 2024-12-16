@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.TileSystem;
+import org.osmdroid.views.MapView;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -154,7 +155,7 @@ public class DomParserWms111 {
 
     //e is "Layer"
     private static Collection<? extends WMSLayer> parseLayers(Node element) {
-        final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+        final TileSystem tileSystem = MapView.getTileSystem();
         List<WMSLayer> rets = new ArrayList<>();
         WMSLayer ret = new WMSLayer();
 

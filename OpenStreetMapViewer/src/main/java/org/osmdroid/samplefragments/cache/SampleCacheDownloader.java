@@ -21,7 +21,7 @@ import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 /**
  * Sample for using the cache manager to download tiles on screen

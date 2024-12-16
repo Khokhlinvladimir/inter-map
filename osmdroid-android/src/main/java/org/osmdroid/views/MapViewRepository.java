@@ -3,7 +3,7 @@ package org.osmdroid.views;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import org.osmdroid.library.R;
+import org.osmdroid.R;
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
@@ -25,7 +25,7 @@ public class MapViewRepository {
     private Drawable mDefaultMarkerIcon;
     private final Set<InfoWindow> mInfoWindowList = new HashSet<>();
 
-    public MapViewRepository(final MapView pMapView) {
+    public MapViewRepository(final org.osmdroid.views.MapView pMapView) {
         mMapView = pMapView;
     }
 

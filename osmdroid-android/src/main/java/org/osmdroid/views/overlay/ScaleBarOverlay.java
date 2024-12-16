@@ -11,7 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.library.R;
+import org.osmdroid.R;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.constants.GeoConstants;
 import org.osmdroid.views.MapView;

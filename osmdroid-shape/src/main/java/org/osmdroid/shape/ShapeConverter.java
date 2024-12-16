@@ -15,7 +15,7 @@ import org.nocrala.tools.gis.data.esri.shapefile.shape.shapes.PolygonShape;
 import org.nocrala.tools.gis.data.esri.shapefile.shape.shapes.PolylineShape;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polygon;

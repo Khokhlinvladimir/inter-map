@@ -2,7 +2,7 @@ package org.osmdroid.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import static junit.framework.Assert.assertEquals;
 

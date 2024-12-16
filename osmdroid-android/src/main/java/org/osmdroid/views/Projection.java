@@ -652,7 +652,7 @@ public class Projection implements IProjection {
 
         IGeoPoint neGeoPoint = fromPixels(
                 mScreenRectProjection.right, mScreenRectProjection.top, null, true);
-        final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+        final TileSystem tileSystem = MapView.getTileSystem();
         if (neGeoPoint.getLatitude() > tileSystem.getMaxLatitude()) {
             neGeoPoint = new GeoPoint(tileSystem.getMaxLatitude(), neGeoPoint.getLongitude());
         }

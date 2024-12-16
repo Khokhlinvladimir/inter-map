@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.samplefragments.SampleFactory;
 import org.osmdroid.samplefragments.ui.SamplesMenuFragment;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import java.util.Collections;
 

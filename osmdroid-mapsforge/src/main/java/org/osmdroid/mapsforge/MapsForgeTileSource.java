@@ -21,7 +21,7 @@ import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
 import org.osmdroid.util.MapTileIndex;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import java.io.File;
 import java.io.FileInputStream;

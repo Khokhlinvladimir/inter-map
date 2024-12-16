@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import org.locationtech.proj4j.ProjCoordinate;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.modules.IFilesystemCache;
@@ -16,11 +15,11 @@ import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.util.TileSystem;
+import org.osmdroid.views.oldclasses.MapView;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +38,7 @@ import mil.nga.proj.ProjectionTransform;
  */
 public class GeoPackageMapTileModuleProvider extends MapTileModuleProviderBase {
 
-    private final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+    private final TileSystem tileSystem = MapView.getTileSystem();
 
     //TileRetriever retriever;
     protected IFilesystemCache tileWriter = null;

@@ -3,7 +3,7 @@
 /**
  * <ul>
  * <li>{@link org.osmdroid.views.overlay.infowindow.InfoWindow} is a (pop-up-) View that can
- * be displayed on an {@link org.osmdroid.views.MapView}, associated to a {@link org.osmdroid.api.IGeoPoint}.</li>
+ * be displayed on an {@link org.osmdroid.views.oldclasses.MapView}, associated to a {@link org.osmdroid.api.IGeoPoint}.</li>
  * <li>{@link org.osmdroid.views.overlay.Marker} is an icon placed at a particular point on the
  * map's surface that can have a popup-{@link org.osmdroid.views.overlay.infowindow.InfoWindow} (a bubble).</li>
  * <li>The {@link org.osmdroid.views.overlay.OverlayWithIW} is an {@link org.osmdroid.views.overlay.Overlay} that
@@ -18,7 +18,7 @@
  * implementation of {@link org.osmdroid.views.overlay.infowindow.InfoWindow} for a
  * {@link org.osmdroid.views.overlay.Marker}.</li>
  * <li>{@link org.osmdroid.views.overlay.Marker} is an icon placed at a particular
- * {@link org.osmdroid.api.IGeoPoint} on the {@link org.osmdroid.views.MapView}'s surface.</li>
+ * {@link org.osmdroid.api.IGeoPoint} on the {@link org.osmdroid.views.oldclasses.MapView}'s surface.</li>
  * </ul>
  */
 package org.osmdroid.views.overlay.infowindow;

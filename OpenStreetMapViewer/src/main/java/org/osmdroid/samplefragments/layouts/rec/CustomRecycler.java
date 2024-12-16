@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import org.osmdroid.R;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import java.util.ArrayList;
 

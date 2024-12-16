@@ -10,7 +10,7 @@ import org.osmdroid.util.IterableWithSize;
 import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.util.MyMath;
 import org.osmdroid.util.TileSystem;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 

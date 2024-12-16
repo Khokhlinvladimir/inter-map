@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import org.osmdroid.library.R;
+import org.osmdroid.R;
 
 public class ItemizedOverlayControlView extends LinearLayout {
 

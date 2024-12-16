@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import org.osmdroid.tileprovider.MapTileProviderBase;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 /**
  * The only delta with this class vs the standard mapview is that it overcomes some of the issues

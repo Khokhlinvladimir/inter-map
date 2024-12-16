@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import org.osmdroid.ExtraSamplesActivity;
 import org.osmdroid.R;
 import org.osmdroid.samplefragments.BaseSampleFragment;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import androidx.fragment.app.FragmentManager;
 

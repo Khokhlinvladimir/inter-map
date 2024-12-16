@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import org.osmdroid.library.R;
+import org.osmdroid.R;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.IOverlayMenuProvider;

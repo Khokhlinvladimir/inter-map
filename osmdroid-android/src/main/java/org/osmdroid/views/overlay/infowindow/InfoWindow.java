@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * {@link org.osmdroid.views.overlay.infowindow.InfoWindow} is a (pop-up-) View that can
- * be displayed on an {@link org.osmdroid.views.MapView}, associated to a
+ * be displayed on an {@link MapView}, associated to a
  * {@link org.osmdroid.api.IGeoPoint}.
  * <p>
  * Typical usage: cartoon-like bubbles displayed when clicking an overlay item (i.e. a

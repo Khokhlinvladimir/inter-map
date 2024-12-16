@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import org.osmdroid.R;
 import org.osmdroid.samplefragments.BaseSampleFragment;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 /**
  * Created by alex on 10/22/16.

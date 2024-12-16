@@ -8,7 +8,7 @@ import org.osmdroid.bugtestfragments.WeathForceActivity;
 import org.osmdroid.model.IBaseActivity;
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.samplefragments.ui.SamplesMenuFragment;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -69,7 +69,7 @@ public class BoundingBox implements Parcelable, Serializable {
         //validate the values
         if (Configuration.getInstance().isEnforceTileSystemBounds()) {
 
-            final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+            final TileSystem tileSystem = MapView.getTileSystem();
             if (!tileSystem.isValidLatitude(north))
                 throw new IllegalArgumentException("north must be in " + tileSystem.toStringLatitudeSpan());
             if (!tileSystem.isValidLatitude(south))
@@ -187,7 +187,7 @@ public class BoundingBox implements Parcelable, Serializable {
             // center is on the other side of earth
             longitude += 180;
         }
-        return org.osmdroid.views.MapView.getTileSystem().cleanLongitude(longitude);
+        return MapView.getTileSystem().cleanLongitude(longitude);
     }
 
     /**
@@ -310,7 +310,7 @@ public class BoundingBox implements Parcelable, Serializable {
     public BoundingBox increaseByScale(final float pBoundingboxPaddingRelativeScale) {
         if (pBoundingboxPaddingRelativeScale <= 0)
             throw new IllegalArgumentException("pBoundingboxPaddingRelativeScale must be positive");
-        final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+        final TileSystem tileSystem = MapView.getTileSystem();
         // out-of-bounds latitude will be clipped
         final double latCenter = getCenterLatitude();
         final double latSpanHalf = getLatitudeSpan() / 2 * pBoundingboxPaddingRelativeScale;
@@ -541,7 +541,7 @@ public class BoundingBox implements Parcelable, Serializable {
         try {
             return fromGeoPoints(points);
         } catch (IllegalArgumentException e) {
-            final TileSystem tileSystem = org.osmdroid.views.MapView.getTileSystem();
+            final TileSystem tileSystem = MapView.getTileSystem();
             return new BoundingBox(tileSystem.getMaxLatitude(),
                     tileSystem.getMaxLongitude(),
                     tileSystem.getMinLatitude(),

@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import org.osmdroid.views.oldclasses.MapView;
 import org.osmdroid.views.Projection;
 
 import java.util.ArrayList;

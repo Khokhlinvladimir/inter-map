@@ -5,7 +5,6 @@ import android.view.View;
 
 import org.osmdroid.samplefragments.BaseSampleFragment;
 import org.osmdroid.util.BoundingBox;
-import org.osmdroid.views.MapView;
 import org.osmdroid.views.OnFirstLayoutListener;
 
 /**
