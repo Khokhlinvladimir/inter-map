@@ -5,27 +5,22 @@ apply from: "$rootDir/gradle/android-signing.gradle"
 apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
-version =  project.property("pom.version")
+version = project.property("pom.version")
 
 android {
     compileSdkVersion 34
-     defaultConfig {
 
-         applicationId project.group + "." +
-                 project.name.toString().toLowerCase().replaceAll("[-]", ".")
-                         .replaceAll("[^a-zA-Z0-9\\.]", "")
+    defaultConfig {
+        applicationId project.group + "." +
+                project.name.toString().toLowerCase()
+                        .replaceAll("[-]", ".")
+                        .replaceAll("[^a-zA-Z0-9\\.]", "")
 
-         minSdkVersion 24
-         multiDexEnabled = true
-
-         targetSdkVersion 34
-
-
-         /*versionCode(project.hasProperty('android.versionCode')
-                 ? Integer.parseInt(project.property('android.versionCode')) : 1)*/
-
-         versionName project.version
-     }
+        minSdkVersion 24
+        targetSdkVersion 34
+        multiDexEnabled true
+        versionName project.version
+    }
 
     lint {
         baseline = file("lint-baseline.xml")
@@ -34,9 +29,11 @@ android {
     buildFeatures {
         compose true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.1'
     }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -49,32 +46,18 @@ dependencies {
     implementation project(':osmdroid-android')
     implementation 'androidx.core:core-ktx:1.12.0'
 
-    //    ЗАВИСИМОСТИ COMPOSE:
-
-    // Платформа Compose, обеспечивает зависимости для Compose.
+    // ЗАВИСИМОСТИ COMPOSE:
     implementation platform('androidx.compose:compose-bom:2022.10.00')
-    // Compose UI, основные компоненты пользовательского интерфейса Compose.
     implementation 'androidx.compose.ui:ui'
-    // Compose UI Graphics, графические возможности Compose.
     implementation 'androidx.compose.ui:ui-graphics'
-    // Compose UI Tooling Preview, инструменты для разработки с Compose.
     implementation 'androidx.compose.ui:ui-tooling-preview'
-    // Compose Material 3, библиотека для создания Material Design пользовательского интерфейса в Compose.
     implementation 'androidx.compose.material3:material3'
 
     // ЗАВИСИМОСТИ ANDROIDX И KOTLIN:
-
-    // AndroidX Core KTX, предоставляет расширения для Android Framework.
     implementation 'androidx.core:core-ktx:1.12.0'
-    // Платформа Kotlin, обеспечивает зависимости для языка Kotlin.
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
-    // AndroidX Lifecycle KTX, предоставляет расширения для управления жизненным циклом компонентов Android.
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0-alpha01"
     implementation "androidx.compose.runtime:runtime-livedata:1.6.1"
-    // AndroidX Activity Compose, предоставляет интеграцию между AndroidX Activity и Compose.
     implementation 'androidx.activity:activity-compose:1.8.2'
 }
-
-
-

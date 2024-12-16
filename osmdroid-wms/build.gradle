@@ -4,21 +4,24 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
-version =  project.property("pom.version")
+version = project.property("pom.version")
 
 android {
-
     compileSdkVersion 34
+
     lintOptions {
         abortOnError false
     }
+
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 34
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,17 +37,17 @@ android {
 }
 
 dependencies {
-    //
-    api  project(':osmdroid-android')
+    // Основная зависимость osmdroid
+    api project(':osmdroid-android')
+
+    // Объединение зависимостей из обеих веток
     implementation 'androidx.core:core-ktx:1.12.0'
     testImplementation "junit:junit:${project.property('junit.version')}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
 }
-
-
 
 afterEvaluate {
     publishing {
-
         publications {
             release(MavenPublication) {
                 from components.release
@@ -52,18 +55,15 @@ afterEvaluate {
                 artifactId project.name
                 version = project.property("pom.version")
                 pom {
-                    description =  project.description
+                    description = project.description
                     url = project.property("pom.url")
-
-                    //scm, organization and developers are injected via other mechanisms
 
                     licenses {
                         license {
-                            name=project.property("pom.licenses.license.0.name");
-                            url=project.property("pom.licenses.license.0.url");
-                            distribution==project.property("pom.licenses.license.0.distribution");
+                            name = project.property("pom.licenses.license.0.name")
+                            url = project.property("pom.licenses.license.0.url")
+                            distribution = project.property("pom.licenses.license.0.distribution")
                         }
-
                     }
                 }
             }
@@ -76,9 +76,5 @@ task androidSourcesJar(type: Jar) {
 }
 
 artifacts {
-//    archives packageReleaseJar
     archives androidSourcesJar
-
 }
-
-

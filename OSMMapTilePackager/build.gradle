@@ -17,6 +17,8 @@ test {
 java {
     withSourcesJar()
     withJavadocJar()
+    sourceCompatibility = JavaVersion.VERSION_17  // Устанавливаем поддержку Java 17.
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(Javadoc) {
@@ -27,12 +29,11 @@ tasks.withType(Javadoc) {
 }
 
 dependencies {
-    implementation 'org.apache.httpcomponents:httpmime:4.5.13'
-    implementation 'org.apache.james:apache-mime4j:0.8.7'
-    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.14'
+    implementation 'org.apache.james:apache-mime4j:0.8.11'
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
 
-
-    testImplementation "junit:junit:${project.property('junit.version')}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
 }
 
 //copy the instrumentation tests from the maven osmdroid-android-it src folder
@@ -41,7 +42,6 @@ task preBuildTask1(type: Copy) {
     description 'copy java classes from osmdroid-android.'
     from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/tileprovider/util/StreamUtils.java")
     into "src/main/java/org/osmdroid/tileprovider/util/"
-
 }
 
 task preBuildTask2(type: Copy) {
@@ -49,9 +49,7 @@ task preBuildTask2(type: Copy) {
     description 'copy java classes from osmdroid-android.'
     from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/util/GEMFFile.java")
     into "src/main/java/org/osmdroid/util/"
-
 }
-
 
 task preBuildTask3(type: Copy) {
     println("copying api sources")
@@ -63,9 +61,7 @@ task preBuildTask3(type: Copy) {
         exclude 'IProjection.java'
     }
     into "src/main/java/org/osmdroid/api/"
-
 }
-
 
 task preBuildTask4(type: Delete) {
     println("removing android specific api sources")
@@ -83,7 +79,6 @@ compileJava.dependsOn preBuildTask4
 
 afterEvaluate {
     publishing {
-
         publications {
             release(MavenPublication) {
                 from components.java
@@ -91,31 +86,23 @@ afterEvaluate {
                 artifactId project.name
                 version = project.property("pom.version")
                 pom {
-                    description =  project.description
+                    description = project.description
                     url = project.property("pom.url")
 
                     //scm, organization and developers are injected via other mechanisms
-
                     licenses {
                         license {
-                            name=project.property("pom.licenses.license.0.name");
-                            url=project.property("pom.licenses.license.0.url");
-                            distribution=project.property("pom.licenses.license.0.distribution");
+                            name = project.property("pom.licenses.license.0.name")
+                            url = project.property("pom.licenses.license.0.url")
+                            distribution = project.property("pom.licenses.license.0.distribution")
                         }
-
                     }
                 }
             }
 
             pdZipPublication(MavenPublication) {
                 artifact "build/distributions/OSMMapTilePackager-" + project.property("pom.version") + ".zip"
-
             }
         }
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 }

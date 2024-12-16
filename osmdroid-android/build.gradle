@@ -4,14 +4,14 @@ apply plugin: "maven-publish"
 apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
-version =  project.property("pom.version")
+version = project.property("pom.version")
 
 android {
     compileSdkVersion 34
 
-    defaultConfig{
+    defaultConfig {
         minSdkVersion 24
-        targetSdkVersion  34
+        targetSdkVersion 34
     }
 
     lintOptions {
@@ -58,6 +58,10 @@ dependencies {
 
 import org.apache.tools.ant.filters.*
 
+task cleanCustomFiles(type: Delete) {
+    delete file('src/main/java/org/osmdroid/OsmdroidBuildInfo.java')
+}
+
 task copyFiles(type: Copy) {
     from 'src/main/filtered/org/osmdroid'
     into 'src/main/java/org/osmdroid'
@@ -67,9 +71,11 @@ task copyFiles(type: Copy) {
     ])
 }
 
+preBuild.dependsOn(copyFiles)
+copyFiles.dependsOn(cleanCustomFiles)
+
 afterEvaluate {
     publishing {
-
         publications {
             release(MavenPublication) {
                 from components.release
@@ -102,5 +108,3 @@ task androidSourcesJar(type: Jar) {
 artifacts {
     archives androidSourcesJar
 }
-
-preBuild.dependsOn(copyFiles)
