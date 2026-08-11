@@ -46,11 +46,11 @@ public class DrawPolygonHoles extends BaseSampleFragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.layout_drawpolyholes, null);
         mMapView = v.findViewById(R.id.mapview);
-        btnRotateLeft = v.findViewById(R.id.btnRotateLeft);
-        btnRotateRight = v.findViewById(R.id.btnRotateRight);
+        btnRotateLeft = v.<ImageButton>findViewById(R.id.btnRotateLeft);
+        btnRotateRight = v.<ImageButton>findViewById(R.id.btnRotateRight);
         btnRotateRight.setOnClickListener(this);
         btnRotateLeft.setOnClickListener(this);
-        textViewCurrentLocation = v.findViewById(R.id.textViewCurrentLocation);
+        textViewCurrentLocation = v.<TextView>findViewById(R.id.textViewCurrentLocation);
         mMapView = v.findViewById(R.id.mapview);
         mMapView.setMapListener(new MapListener() {
             @Override
@@ -74,16 +74,16 @@ public class DrawPolygonHoles extends BaseSampleFragment implements View.OnClick
         mMapView.setMultiTouchControls(true);
         mMapView.getOverlayManager().add(mRotationGestureOverlay);
 
-        panning = v.findViewById(R.id.enablePanning);
+        panning = v.<ImageButton>findViewById(R.id.enablePanning);
         panning.setOnClickListener(this);
         panning.setBackgroundColor(Color.BLACK);
-        painting = v.findViewById(R.id.enablePainting);
+        painting = v.<ImageButton>findViewById(R.id.enablePainting);
         painting.setOnClickListener(this);
 
-        holes = v.findViewById(R.id.enableHoles);
+        holes = v.<ImageButton>findViewById(R.id.enableHoles);
         holes.setOnClickListener(this);
 
-        paint = v.findViewById(R.id.paintingSurface);
+        paint = v.<CustomPaintingSurface>findViewById(R.id.paintingSurface);
         paint.init(mMapView);
 
         return v;

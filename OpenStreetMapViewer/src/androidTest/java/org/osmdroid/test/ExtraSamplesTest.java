@@ -95,12 +95,12 @@ public class ExtraSamplesTest  {
                 final BaseSampleFragment basefrag = sampleFactory.getSample(fireOrder[i]);
                 if (basefrag.skipOnCiTests())
                     break;
-                Log.i(SamplesMenuFragment.TAG, "loading fragment (" + i + "/" + sampleFactory.count() + ") run " + k + " " + basefrag.getSampleTitle() + ", " + frag.getClass().getCanonicalName());
+                Log.i(SamplesMenuFragment.TAG, "loading fragment (" + i + "/" + sampleFactory.count() + ") run " + k + " " + basefrag.sampleTitle + ", " + frag.getClass().getCanonicalName());
 
                 Counters.printToLogcat();
                 if (Counters.countOOM > 0 || Counters.fileCacheOOM > 0) {
                     OsmApplication.writeHprof();
-                    Assert.fail("OOM Detected, aborting! this test run was " + basefrag.getSampleTitle() + ", " + basefrag.getClass().getCanonicalName() + " iteration " + k);
+                    Assert.fail("OOM Detected, aborting! this test run was " + basefrag.sampleTitle + ", " + basefrag.getClass().getCanonicalName() + " iteration " + k);
                 }
 
 
@@ -116,7 +116,7 @@ public class ExtraSamplesTest  {
                         } catch (Exception oom) {
                             ok = false;
                             oom.printStackTrace();
-                            Assert.fail("Error popping fragment " + basefrag.getSampleTitle() + basefrag.getClass().getCanonicalName() + oom);
+                            Assert.fail("Error popping fragment " + basefrag.sampleTitle + basefrag.getClass().getCanonicalName() + oom);
 
                         }
 
@@ -138,7 +138,7 @@ public class ExtraSamplesTest  {
                 } catch (Exception oom) {
                     ok = false;
                     oom.printStackTrace();
-                    Assert.fail("Error popping fragment " + basefrag.getSampleTitle() + basefrag.getClass().getCanonicalName() + oom);
+                    Assert.fail("Error popping fragment " + basefrag.sampleTitle + basefrag.getClass().getCanonicalName() + oom);
 
                 }
 
