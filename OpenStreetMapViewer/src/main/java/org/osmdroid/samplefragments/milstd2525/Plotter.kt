@@ -342,7 +342,7 @@ class Plotter : SampleGridlines(), View.OnClickListener, TextWatcher, ListPicker
         }
         if (def!!.canDraw()) {
             val picker = ModifierPicker()
-            picker.show(getActivity(), def)
+            picker.show(requireActivity(), def)
 
             if (def.maxPoints == 1) {
                 enablePanning()
