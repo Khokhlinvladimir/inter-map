@@ -184,15 +184,15 @@ public class GeopackageFeatures extends BaseSampleFragment {
 
                             MarkerOptions markerRenderingOptions = new MarkerOptions();
                             PolylineOptions polylineRenderingOptions = new PolylineOptions();
-                            polylineRenderingOptions.setWidth(2f);
-                            polylineRenderingOptions.setColor(Color.argb(100, 255, 0, 0));
-                            polylineRenderingOptions.setTitle(databases.get(k) + ":" + features.get(i));
+                            polylineRenderingOptions.width = 2f;
+                            polylineRenderingOptions.color = Color.argb(100, 255, 0, 0);
+                            polylineRenderingOptions.title = databases.get(k) + ":" + features.get(i);
 
                             PolygonOptions polygonOptions = new PolygonOptions();
-                            polygonOptions.setStrokeWidth(2f);
-                            polygonOptions.setFillColor(Color.argb(100, 255, 0, 255));
-                            polygonOptions.setStrokeColor(Color.argb(100, 0, 0, 255));
-                            polygonOptions.setTitle(databases.get(k) + ":" + features.get(i));
+                            polygonOptions.strokeWidth = 2f;
+                            polygonOptions.fillColor = Color.argb(100, 255, 0, 255);
+                            polygonOptions.strokeColor = Color.argb(100, 0, 0, 255);
+                            polygonOptions.title = databases.get(k) + ":" + features.get(i);
 
                             OsmMapShapeConverter converter = new OsmMapShapeConverter(null, markerRenderingOptions, polylineRenderingOptions, polygonOptions);
 
@@ -254,7 +254,7 @@ public class GeopackageFeatures extends BaseSampleFragment {
     }
 
     private void applyTheming(String state, String stateabbr, long population, PolygonOptions polygonOptions) {
-        polygonOptions.setTitle(stateabbr);
+        polygonOptions.title = stateabbr;
         final int alpha = 100;
         switch (stateabbr) {
             case "CA":
@@ -277,12 +277,12 @@ public class GeopackageFeatures extends BaseSampleFragment {
             case "VT":
             case "VA":
             case "WA":
-                polygonOptions.setFillColor(Color.argb(alpha, 0, 0, 255));
-                polygonOptions.setSubtitle(state + "<br>Population:" + population + "<br>Voted: Democratic in 2016");
+                polygonOptions.fillColor = Color.argb(alpha, 0, 0, 255);
+                polygonOptions.subtitle = state + "<br>Population:" + population + "<br>Voted: Democratic in 2016";
                 break;
             default:
-                polygonOptions.setFillColor(Color.argb(alpha, 255, 0, 0));
-                polygonOptions.setSubtitle(state + "<br>Population:" + population + "<br>Voted: Republican in 2016");
+                polygonOptions.fillColor = Color.argb(alpha, 255, 0, 0);
+                polygonOptions.subtitle = state + "<br>Population:" + population + "<br>Voted: Republican in 2016";
 
         }
     }

@@ -148,7 +148,7 @@ public class GeopackageSample extends BaseSampleFragment {
             if (!tileSources.isEmpty()) {
                 mMapView.setTileSource(tileSources.get(0));
 
-                mMapView.zoomToBoundingBox(tileSources.get(0).getBounds(), true);
+                mMapView.zoomToBoundingBox(tileSources.get(0).bounds, true);
                 mMapView.getController().setZoom(tileSources.get(0).getMinimumZoomLevel());
                 sourceSet = true;
             }
