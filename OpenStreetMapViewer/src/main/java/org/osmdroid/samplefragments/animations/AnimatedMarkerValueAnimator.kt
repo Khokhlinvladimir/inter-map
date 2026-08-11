@@ -36,9 +36,9 @@ class AnimatedMarkerValueAnimator : BaseSampleFragment(), View.OnClickListener {
         btnCache!!.setOnClickListener(this)
         btnCache!!.setText("Start/Stop Animation")
 
-        marker = Marker(mMapView)
+        marker = Marker(mMapView!!)
         marker!!.setTitle("An animated marker")
-        marker!!.setPosition(GeoPoint(0.0, 0.0))
+        marker!!.position = GeoPoint(0.0, 0.0)
         mMapView!!.getOverlayManager().add(marker)
 
 

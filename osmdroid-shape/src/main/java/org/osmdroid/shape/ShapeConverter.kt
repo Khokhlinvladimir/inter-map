@@ -67,8 +67,8 @@ object ShapeConverter {
                 when (s.shapeType) {
                     ShapeType.POINT -> {
                         val aPoint = s as PointShape
-                        val m = Marker(map)
-                        m.setPosition(fixOutOfRange(GeoPoint(aPoint.y, aPoint.x)))
+                        val m = Marker(requireNotNull(map))
+                        m.position = fixOutOfRange(GeoPoint(aPoint.y, aPoint.x))
 
                         shapeMetaSetter.set(metadata, m)
 
@@ -84,7 +84,7 @@ object ShapeConverter {
                             val polygon = Polygon(map)
 
                             val points: Array<PointData?> = aPolygon.getPointsOfPart(i)
-                            val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                            val pts: MutableList<GeoPoint> = ArrayList<GeoPoint>()
 
                             for (nullablePoint in points) {
                                 val p = requireNotNull(nullablePoint)
@@ -109,7 +109,7 @@ object ShapeConverter {
                             val line = Polyline(map)
 
                             val points: Array<PointData?> = polylineShape.getPointsOfPart(i)
-                            val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                            val pts: MutableList<GeoPoint> = ArrayList<GeoPoint>()
 
                             for (nullablePoint in points) {
                                 val p = requireNotNull(nullablePoint)
@@ -132,8 +132,8 @@ object ShapeConverter {
                         val points: Array<PointData?> = aPoint.points
                         for (nullablePoint in points) {
                             val p = requireNotNull(nullablePoint)
-                            val m = Marker(map)
-                            m.setPosition(fixOutOfRange(GeoPoint(p.y, p.x)))
+                            val m = Marker(requireNotNull(map))
+                            m.position = fixOutOfRange(GeoPoint(p.y, p.x))
 
                             shapeMetaSetter.set(metadata, m)
 
@@ -177,14 +177,14 @@ object ShapeConverter {
     }
 
     private fun fixOutOfRange(point: GeoPoint): GeoPoint {
-        if (point.latitude > 90.00) point.setLatitude(90.00)
-        else if (point.latitude < -90.00) point.setLatitude(-90.00)
+        if (point.latitude > 90.00) point.latitude = 90.00
+        else if (point.latitude < -90.00) point.latitude = -90.00
 
         if (abs(point.longitude) > 180.00) {
             var longitude = point.longitude
             val diff = (if (longitude > 0) -360 else 360).toDouble()
             while (abs(longitude) > 180) longitude += diff
-            point.setLongitude(longitude)
+            point.longitude = longitude
         }
 
         return point

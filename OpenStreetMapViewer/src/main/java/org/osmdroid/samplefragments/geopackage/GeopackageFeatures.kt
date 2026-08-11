@@ -274,7 +274,7 @@ class GeopackageFeatures : BaseSampleFragment() {
 
         if (currentSource != null) {
             sb.append("\n")
-            sb.append(currentSource!!.name() + "," + currentSource!!.getBaseUrl())
+            sb.append(currentSource!!.name() + "," + currentSource!!.baseUrl)
         }
 
 

@@ -54,14 +54,14 @@ class SampleZoomToBounding : BaseSampleFragment(), View.OnClickListener {
 
         mMapView = MapView(getActivity()!!)
         (root.findViewById<View?>(R.id.mapview) as LinearLayout).addView(mMapView)
-        polygon = Polygon(mMapView)
+        polygon = Polygon(mMapView!!)
         val btnCache = root.findViewById<Button>(R.id.btnCache)
         btnCache.setOnClickListener(this)
         btnCache.setText("Zoom to bounds")
 
         polygon!!.getOutlinePaint().setColor(Color.parseColor("#990000FF"))
         polygon!!.getOutlinePaint().setStrokeWidth(2f)
-        polygon!!.getFillPaint().setColor(Color.parseColor("#330000FF"))
+        polygon!!.getFillPaint()!!.setColor(Color.parseColor("#330000FF"))
         mMapView!!.getOverlays()!!.add(polygon)
 
         return root
@@ -73,7 +73,7 @@ class SampleZoomToBounding : BaseSampleFragment(), View.OnClickListener {
             R.id.btnCache -> {
                 var ok = false
                 while (!ok) {
-                    val south = getRandomLatitude(tileSystem.getMinLatitude())
+                    val south = getRandomLatitude(tileSystem.minLatitude)
                     val north = getRandomLatitude(south)
                     val west = this.randomLongitude
                     var east = this.randomLongitude
@@ -83,7 +83,7 @@ class SampleZoomToBounding : BaseSampleFragment(), View.OnClickListener {
                     if (ok) {
                         val text = "with a border of " + border + " the computed zoom is " + zoom + " for box " + boundingBox
                         Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show()
-                        val points: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                        val points: MutableList<GeoPoint> = ArrayList()
                         if (west > east) {
                             east += 360.0
                         }
@@ -107,7 +107,7 @@ class SampleZoomToBounding : BaseSampleFragment(), View.OnClickListener {
      * @since 6.0.0
      */
     private fun addPoints(
-        pPoints: MutableList<GeoPoint?>,
+        pPoints: MutableList<GeoPoint>,
         pBeginLat: Double, pBeginLon: Double,
         pEndLat: Double, pEndLon: Double
     ) {

@@ -12,6 +12,6 @@ class SampleHereWeGo : BaseSampleFragment() {
 
     public override fun addOverlays() {
         super.addOverlays()
-        mMapView!!.setTileSource(HEREWeGoTileSource(getContext()))
+        mMapView!!.setTileSource(HEREWeGoTileSource(requireContext()))
     }
 }

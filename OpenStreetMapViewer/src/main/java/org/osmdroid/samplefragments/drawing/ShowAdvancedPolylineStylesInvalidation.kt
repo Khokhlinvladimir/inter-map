@@ -43,7 +43,7 @@ class ShowAdvancedPolylineStylesInvalidation : BaseSampleFragment(), View.OnClic
 
     // Simple wrapper class to group a point and scalar together
     // No getters and setters
-    internal class PointWithScalar(var mPoint: GeoPoint?, var mScalar: Float)
+    internal class PointWithScalar(var mPoint: GeoPoint, var mScalar: Float)
 
     // list holding the initial and extended data
     private var mInitialData: ArrayList<PointWithScalar>? = null
@@ -126,20 +126,20 @@ class ShowAdvancedPolylineStylesInvalidation : BaseSampleFragment(), View.OnClic
         }
 
         // create polyline
-        mPolyline = Polyline(mMapView, false, false)
+        mPolyline = Polyline(mMapView!!, false, false)
 
         // setup border
         mPolyline!!.getOutlinePaintLists().add(MonochromaticPaintList(paintBorder))
 
         // setup mapping objects
         mMapping = ColorMappingVariationHue(MIN_SCALAR.toFloat(), MAX_SCALAR.toFloat(), MIN_HUE.toFloat(), MAX_HUE.toFloat(), SAT, LUM)
-        mContainer = ColorMappingForScalarContainer(mMapping)
+        mContainer = ColorMappingForScalarContainer(mMapping!!)
 
         // add initial data to polyline
         addDataToPolyline(mInitialData!!)
 
         // setup the mapping
-        mPolyline!!.getOutlinePaintLists().add(PolychromaticPaintList(paintMapping, mMapping, true))
+        mPolyline!!.getOutlinePaintLists().add(PolychromaticPaintList(paintMapping, mMapping!!, true))
 
         // update UI
         mMapView!!.getOverlayManager().add(mPolyline)

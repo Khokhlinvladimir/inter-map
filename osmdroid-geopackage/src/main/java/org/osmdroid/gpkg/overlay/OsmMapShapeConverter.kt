@@ -217,7 +217,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             line.setSubDescription(polylineOptions.subtitle)
         }
 
-        val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+        val pts: MutableList<GeoPoint> = ArrayList()
         for (point in lineString.getPoints()) {
             val latLng = toLatLng(point)
             pts.add(latLng)
@@ -236,8 +236,8 @@ class OsmMapShapeConverter @JvmOverloads constructor(
      */
     fun toPolygon(polygon: mil.nga.sf.Polygon): Polygon {
         val newPoloygon = Polygon()
-        val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
-        val holes: MutableList<MutableList<GeoPoint?>?> = ArrayList<MutableList<GeoPoint?>?>()
+        val pts: MutableList<GeoPoint> = ArrayList()
+        val holes: MutableList<MutableList<GeoPoint>> = ArrayList()
 
         val rings = polygon.getRings()
 
@@ -254,7 +254,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             // Add the holes
             for (i in 1 until rings.size) {
                 val hole = rings.get(i)
-                val holeLatLngs: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                val holeLatLngs: MutableList<GeoPoint> = ArrayList()
                 for (point in hole.getPoints()) {
                     val latLng = toLatLng(point)
                     holeLatLngs.add(latLng)
@@ -272,7 +272,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
         newPoloygon.setHoles(holes)
 
         if (polygonOptions != null) {
-            newPoloygon.getFillPaint().setColor(polygonOptions.fillColor)
+            newPoloygon.getFillPaint()!!.setColor(polygonOptions.fillColor)
             newPoloygon.getOutlinePaint().setColor(polygonOptions.strokeColor)
             newPoloygon.getOutlinePaint().setStrokeWidth(polygonOptions.strokeWidth)
             newPoloygon.setTitle(polygonOptions.title)
@@ -290,9 +290,9 @@ class OsmMapShapeConverter @JvmOverloads constructor(
      */
     fun toCurvePolygon(curvePolygon: CurvePolygon<*>): Polygon {
         val polygonOptions = Polygon()
-        val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+        val pts: MutableList<GeoPoint> = ArrayList()
         val rings = curvePolygon.getRings()
-        val holes: MutableList<MutableList<GeoPoint?>?> = ArrayList<MutableList<GeoPoint?>?>()
+        val holes: MutableList<MutableList<GeoPoint>> = ArrayList()
         if (!rings.isEmpty()) {
             var z: Double? = null
 
@@ -323,7 +323,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             // Add the holes
             for (i in 1 until rings.size) {
                 val hole = rings.get(i)
-                val holeLatLngs: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                val holeLatLngs: MutableList<GeoPoint> = ArrayList()
                 if (hole is CompoundCurve) {
                     val holeCompoundCurve = hole
                     for (holeLineString in holeCompoundCurve.getLineStrings()) {
@@ -738,12 +738,12 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             options: MarkerOptions? = MarkerOptions()
         ): Marker {
             val m = Marker(map)
-            m.setPosition(latLng)
+            m.position = latLng
             if (options != null) {
                 if (options.icon != null) {
-                    m.setIcon(options.icon)
+                    m.icon = options.icon
                 }
-                m.setAlpha(options.alpha)
+                m.alpha = options.alpha
                 m.setTitle(options.title)
                 m.setSubDescription(options.subdescription)
                 m.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
@@ -777,14 +777,14 @@ class OsmMapShapeConverter @JvmOverloads constructor(
          */
         fun addPolygonToMap(
             map: MapView,
-            pts: MutableList<GeoPoint?>?,
-            holes: MutableList<MutableList<GeoPoint?>?>, options: PolygonOptions?
+            pts: List<GeoPoint>,
+            holes: List<List<GeoPoint>>, options: PolygonOptions?
         ): Polygon {
             val polygon1 = Polygon(map)
             polygon1.setPoints(pts)
-            polygon1.getHoles().addAll(holes)
+            polygon1.setHoles(holes)
             if (options != null) {
-                polygon1.getFillPaint().setColor(options.fillColor)
+                polygon1.getFillPaint()!!.setColor(options.fillColor)
                 polygon1.setTitle(options.title)
                 polygon1.getOutlinePaint().setColor(options.strokeColor)
                 polygon1.getOutlinePaint().setStrokeWidth(options.strokeWidth)
@@ -810,7 +810,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             polygon: Polygon, options: PolygonOptions?
         ): Polygon {
             if (options != null) {
-                polygon.getFillPaint().setColor(options.fillColor)
+                polygon.getFillPaint()!!.setColor(options.fillColor)
                 polygon.setTitle(options.title)
                 polygon.getOutlinePaint().setColor(options.strokeColor)
                 polygon.getOutlinePaint().setStrokeWidth(options.strokeWidth)
@@ -867,7 +867,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
         ): org.osmdroid.gpkg.overlay.features.MultiPolygon {
             val multiPolygon = org.osmdroid.gpkg.overlay.features.MultiPolygon()
             for (polygonOption in polygons) {
-                val polygon: Polygon = addPolygonToMap(map, polygonOption.getActualPoints(), polygonOption.getHoles(), opts)
+                val polygon: Polygon = addPolygonToMap(map, polygonOption.getActualPoints(), polygonOption.holes, opts)
 
                 if (polygon.getInfoWindow() == null) polygon.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
                 multiPolygon.add(polygon)

@@ -37,7 +37,7 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
 
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
         mMapView!!.controller!!.setZoom(13.0)
-        mMapView!!.controller!!.setCenter(sCentralParkBoundingBox.getCenterWithDateLine())
+        mMapView!!.controller!!.setCenter(sCentralParkBoundingBox.centerWithDateLine)
 
         super.onActivityCreated(savedInstanceState)
     }
@@ -57,11 +57,11 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
         mMapView!!.getTileProvider()!!.setTileSource(mapnik)
 
 
-        var line = Polyline(mMapView)
+        var line = Polyline(mMapView!!)
         line.setTitle("Central Park, NYC")
         line.setSubDescription(Polyline::class.java.getCanonicalName())
         line.getOutlinePaint().setStrokeWidth(20f)
-        var pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+        var pts: MutableList<GeoPoint> = ArrayList()
 
         //here, we create a polygon, note that you need 5 points in order to make a closed polygon (rectangle)
         pts.add(GeoPoint(40.796788, -73.949232))
@@ -71,7 +71,7 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
         pts.add(GeoPoint(40.796788, -73.949232))
         line.setPoints(pts)
         line.setGeodesic(true)
-        line.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView))
+        line.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView!!))
         //Note, the info window will not show if you set the onclick listener
         //line can also attach click listeners to the line
         /*
@@ -86,33 +86,32 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
         mMapView!!.setMaxZoomLevel(22.0)
 
 
-        val marker = Marker(mMapView)
-        marker.setDraggable(false)
+        val marker = Marker(mMapView!!)
+        marker.isDraggable = false
         marker.setTitle("Central Park")
-        marker.setPosition(
+        marker.position =
             GeoPoint(
                 ((40.796788 - 40.768094) / 2) + 40.768094,
                 ((-73.949232 - -73.981762) / 2) + -73.981762
             )
-        )
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.setIcon(getResources().getDrawable(R.drawable.sfgpuci))
+        marker.icon = getResources().getDrawable(R.drawable.sfgpuci)
         marker.setTitle("Start point")
-        marker.setDraggable(true)
+        marker.isDraggable = true
         mMapView!!.getOverlays()!!.add(marker)
 
 
         //here, we create a polygon using polygon class, note that you need 4 points in order to make a rectangle
-        val polygon = Polygon(mMapView)
+        val polygon = Polygon(mMapView!!)
         polygon.setTitle("This is a polygon")
         polygon.setSubDescription(Polygon::class.java.getCanonicalName())
-        polygon.getFillPaint().setColor(Color.RED)
+        polygon.getFillPaint()!!.setColor(Color.RED)
         polygon.setVisible(true)
         polygon.getOutlinePaint().setColor(Color.BLACK)
-        polygon.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView))
+        polygon.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView!!))
 
 
-        pts = ArrayList<GeoPoint?>()
+        pts = ArrayList()
         pts.add(GeoPoint(40.886788, -73.959232))
         pts.add(GeoPoint(40.886788, -73.971762))
         pts.add(GeoPoint(40.878094, -73.971762))
@@ -121,14 +120,14 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
         mMapView!!.getOverlays()!!.add(polygon)
 
 
-        val m = Marker(mMapView)
-        m.setPosition(GeoPoint(51.7875, 6.135278))
-        m.setImage(getResources().getDrawable(R.drawable.icon))
-        line = Polyline(mMapView)
+        val m = Marker(mMapView!!)
+        m.position = GeoPoint(51.7875, 6.135278)
+        m.image = getResources().getDrawable(R.drawable.icon)
+        line = Polyline(mMapView!!)
         line.setTitle("TEST")
         line.setSubDescription(Polyline::class.java.getCanonicalName())
         line.getOutlinePaint().setStrokeWidth(20f)
-        pts = ArrayList<GeoPoint?>()
+        pts = ArrayList()
 
         //here, we create a polygon, note that you need 5 points in order to make a closed polygon (rectangle)
         pts.add(GeoPoint(51.7875, 6.135278))
@@ -138,7 +137,7 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
         pts.add(GeoPoint(51.7875, 6.135278))
         line.setPoints(pts)
         line.setGeodesic(true)
-        line.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView))
+        line.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView!!))
 
         mMapView!!.getOverlayManager().add(m)
         mMapView!!.getOverlayManager().add(line)

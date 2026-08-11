@@ -19,7 +19,7 @@ class SampleTester : BaseSampleFragment(), OnFirstLayoutListener {
         //sorry for the spaghetti code this is to filter out the compass on api 8
         //Note: the compass overlay causes issues on API 8 devices. See https://github.com/osmdroid/osmdroid/issues/218
         mCompassOverlay = CompassOverlay(
-            getContext(), InternalCompassOrientationProvider(getContext()),
+            requireContext(), InternalCompassOrientationProvider(requireContext()),
             mMapView
         )
         mCompassOverlay!!.enableCompass()
@@ -54,7 +54,7 @@ class SampleTester : BaseSampleFragment(), OnFirstLayoutListener {
         //Note: the compass overlay causes issues on API 8 devices. See https://github.com/osmdroid/osmdroid/issues/218
         if (mCompassOverlay != null) {
             //this call is needed because onPause, the orientation provider is destroyed to prevent context leaks
-            this.mCompassOverlay!!.setOrientationProvider(InternalCompassOrientationProvider(getActivity()))
+            this.mCompassOverlay!!.setOrientationProvider(InternalCompassOrientationProvider(requireActivity()))
             this.mCompassOverlay!!.enableCompass()
         }
     }

@@ -21,10 +21,11 @@ class SampleOpenSeaMap : BaseSampleFragment() {
 
     public override fun addOverlays() {
         super.addOverlays()
-        mProvider = MapTileProviderBasic(getContext())
-        val seaMap = TilesOverlay(mProvider, getContext())
-        seaMap.setLoadingLineColor(Color.TRANSPARENT)
-        seaMap.setLoadingBackgroundColor(Color.TRANSPARENT)
+        val provider = MapTileProviderBasic(requireContext())
+        mProvider = provider
+        val seaMap = TilesOverlay(provider, requireContext())
+        seaMap.loadingLineColor = Color.TRANSPARENT
+        seaMap.loadingBackgroundColor = Color.TRANSPARENT
         seaMap.setLoadingDrawable(null)
         mProvider!!.setTileSource(TileSourceFactory.OPEN_SEAMAP)
         mMapView!!.getOverlays()!!.add(seaMap)

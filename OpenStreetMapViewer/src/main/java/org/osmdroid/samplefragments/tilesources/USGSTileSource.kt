@@ -27,7 +27,7 @@ class USGSTileSource
     aBaseUrl: Array<String?>? = arrayOf<String?>("http://basemap.nationalmap.gov/ArcGIS/rest/services/USGSTopo/MapServer/tile/")
 ) : OnlineTileSourceBase(aName, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl, "USGS") {
     override fun getTileURLString(pMapTileIndex: Long): String {
-        return (getBaseUrl() + MapTileIndex.getZoom(pMapTileIndex) + "/" + MapTileIndex.getY(pMapTileIndex) + "/" + MapTileIndex.getX(pMapTileIndex)
+        return (baseUrl + MapTileIndex.getZoom(pMapTileIndex) + "/" + MapTileIndex.getY(pMapTileIndex) + "/" + MapTileIndex.getX(pMapTileIndex)
                 + mImageFilenameEnding)
     }
 }

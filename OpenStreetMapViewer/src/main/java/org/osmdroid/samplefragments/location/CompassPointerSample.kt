@@ -15,8 +15,8 @@ class CompassPointerSample : BaseSampleFragment() {
 
     public override fun addOverlays() {
         super.addOverlays()
-        val overlay = CompassOverlay(getContext(), mMapView)
-        overlay.setPointerMode(true)
+        val overlay = CompassOverlay(requireContext(), mMapView!!)
+        overlay.isPointerMode = true
         overlay.enableCompass()
         mMapView!!.getOverlayManager().add(overlay)
         mMapView!!.invalidate()

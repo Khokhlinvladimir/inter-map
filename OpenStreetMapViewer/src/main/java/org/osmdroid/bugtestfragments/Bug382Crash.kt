@@ -20,7 +20,7 @@ class Bug382Crash : BaseSampleFragment() {
 
     override fun addOverlays() {
         super.addOverlays()
-        val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+        val geoPoints: MutableList<GeoPoint> = ArrayList<GeoPoint>()
         geoPoints.add(GeoPoint(26.0, 113.5))
         geoPoints.add(GeoPoint(26.0, 114.5))
         geoPoints.add(GeoPoint(27.0, 114.5))
@@ -31,10 +31,10 @@ class Bug382Crash : BaseSampleFragment() {
 
         polygon = Polygon(mMapView)
         polygon!!.setPoints(geoPoints.subList(0, 3))
-        polygon!!.getFillPaint().setColor(-0x69007e00)
+        polygon!!.getFillPaint()!!.setColor(-0x69007e00)
         polygon!!.getOutlinePaint().setColor(Color.RED)
         polygon!!.getOutlinePaint().setStrokeWidth(4f)
-        polygon!!.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView))
+        polygon!!.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView!!))
         polygon!!.setTitle("Polygon tapped!")
         mMapView!!.getOverlays()!!.add(polygon)
         mMapView!!.invalidate()
@@ -43,7 +43,7 @@ class Bug382Crash : BaseSampleFragment() {
         polyline!!.setPoints(geoPoints.subList(3, 6))
         polyline!!.getOutlinePaint().setColor(Color.YELLOW)
         polyline!!.getOutlinePaint().setStrokeWidth(8f)
-        polyline!!.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView))
+        polyline!!.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, mMapView!!))
         polyline!!.setTitle("Polyline tapped!")
         mMapView!!.getOverlays()!!.add(polyline)
         mMapView!!.invalidate()

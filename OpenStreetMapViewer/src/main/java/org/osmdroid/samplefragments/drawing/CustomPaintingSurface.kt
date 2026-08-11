@@ -111,12 +111,13 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
         // kill this so we don't double draw
         mPath.reset()
         if (map != null) {
-            val projection = map!!.projection
-            val geoPoints = ArrayList<GeoPoint?>()
+            val mapView = map!!
+            val projection = mapView.projection
+            val geoPoints = ArrayList<GeoPoint>()
             val unrotatedPoint = Point()
             for (i in pts.indices) {
                 projection.unrotateAndScalePoint(pts.get(i)!!.x, pts.get(i)!!.y, unrotatedPoint)
-                val iGeoPoint = projection.fromPixels(unrotatedPoint.x, unrotatedPoint.y) as GeoPoint?
+                val iGeoPoint = projection.fromPixels(unrotatedPoint.x, unrotatedPoint.y) as GeoPoint
                 geoPoints.add(iGeoPoint)
             }
 
@@ -126,10 +127,10 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
                     Mode.Polyline, Mode.PolylineAsPath -> {
                         val asPath = drawingMode == Mode.PolylineAsPath
                         val color = Color.argb(100, 100, 100, 100)
-                        val line = Polyline(map)
+                        val line = Polyline(mapView)
                         line.usePath(true)
                         line.setInfoWindow(
-                            BasicInfoWindow(R.layout.bonuspack_bubble, map)
+                            BasicInfoWindow(R.layout.bonuspack_bubble, mapView)
                         )
                         line.getOutlinePaint().setColor(color)
                         line.setTitle("This is a polyline" + (if (asPath) " as Path" else ""))
@@ -158,7 +159,7 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
                             arrowPath.lineTo(10f, 0f)
                             arrowPath.lineTo(-10f, 10f)
                             arrowPath.close()
-                            val managers: MutableList<MilestoneManager?> = ArrayList<MilestoneManager?>()
+                            val managers: MutableList<MilestoneManager> = ArrayList()
                             managers.add(
                                 MilestoneManager(
                                     MilestonePixelDistanceLister(50.0, 50.0),
@@ -168,22 +169,22 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
                             line.setMilestoneManagers(managers)
                         }
                         line.setSubDescription(line.getBounds().toString())
-                        map!!.getOverlayManager().add(line)
+                        mapView.getOverlayManager().add(line)
                         lastPolygon = null
                     }
 
                     Mode.Polygon -> {
-                        val polygon = Polygon(map)
+                        val polygon = Polygon(mapView)
                         polygon.setInfoWindow(
-                            BasicInfoWindow(R.layout.bonuspack_bubble, map)
+                            BasicInfoWindow(R.layout.bonuspack_bubble, mapView)
                         )
-                        polygon.getFillPaint().setColor(Color.argb(75, 255, 0, 0))
+                        polygon.getFillPaint()!!.setColor(Color.argb(75, 255, 0, 0))
                         polygon.setPoints(geoPoints)
                         polygon.setTitle("A sample polygon")
                         polygon.showInfoWindow()
                         if (withArrows) {
                             val bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.round_navigation_white_48)
-                            val managers: MutableList<MilestoneManager?> = ArrayList<MilestoneManager?>()
+                            val managers: MutableList<MilestoneManager> = ArrayList()
                             managers.add(
                                 MilestoneManager(
                                     MilestonePixelDistanceLister(20.0, 200.0),
@@ -193,11 +194,12 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
                             polygon.setMilestoneManagers(managers)
                         }
                         polygon.setOnClickListener(object : Polygon.OnClickListener {
-                            override fun onClick(polygon: Polygon, mapView: MapView, eventPos: GeoPoint?): Boolean {
+                            override fun onClick(polygon: Polygon?, mapView: MapView?, eventPos: GeoPoint?): Boolean {
+                                polygon ?: return false
                                 lastPolygon = polygon
                                 polygon.onClickDefault(polygon, mapView, eventPos)
                                 Toast.makeText(
-                                    mapView.getContext(),
+                                    mapView!!.getContext(),
                                     "polygon with " + polygon.getActualPoints().size + "pts was tapped",
                                     Toast.LENGTH_LONG
                                 ).show()
@@ -205,18 +207,18 @@ class CustomPaintingSurface(context: Context?, attrs: AttributeSet?) : View(cont
                             }
                         })
                         //polygon.setSubDescription(BoundingBox.fromGeoPoints(polygon.getPoints()).toString());
-                        map!!.getOverlayManager().add(polygon)
+                        mapView.getOverlayManager().add(polygon)
                         lastPolygon = polygon
                     }
 
                     Mode.PolygonHole -> if (lastPolygon != null) {
-                        val holes: MutableList<MutableList<GeoPoint?>?> = ArrayList<MutableList<GeoPoint?>?>()
+                        val holes: MutableList<MutableList<GeoPoint>> = ArrayList()
                         holes.add(geoPoints)
                         lastPolygon!!.setHoles(holes)
                     }
                 }
 
-                map!!.invalidate()
+                mapView.invalidate()
             }
         }
 

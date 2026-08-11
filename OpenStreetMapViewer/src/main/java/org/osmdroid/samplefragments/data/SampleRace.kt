@@ -41,7 +41,7 @@ class SampleRace : BaseSampleFragment() {
     /**
      * @since 6.0.3
      */
-    private val mGeoPoints: MutableList<GeoPoint?> = this.geoPoints
+    private val mGeoPoints: MutableList<GeoPoint> = this.geoPoints
 
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
         mMapView!!.post(object : Runnable {
@@ -57,12 +57,12 @@ class SampleRace : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val line = Polyline(mMapView)
+        val line = Polyline(mMapView!!)
         line.getOutlinePaint().setColor(COLOR_POLYLINE_STATIC)
         line.getOutlinePaint().setStrokeWidth(LINE_WIDTH_BIG)
         line.setPoints(mGeoPoints)
         line.getOutlinePaint().setStrokeCap(Paint.Cap.ROUND)
-        val managers: MutableList<MilestoneManager?> = ArrayList<MilestoneManager?>()
+        val managers: MutableList<MilestoneManager> = ArrayList()
         val slicerForPath = MilestoneMeterDistanceSliceLister()
         val bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.next)
         val slicerForIcon = MilestoneMeterDistanceSliceLister()
@@ -236,13 +236,13 @@ class SampleRace : BaseSampleFragment() {
         )
     }
 
-    private val geoPoints: MutableList<GeoPoint?>
+    private val geoPoints: MutableList<GeoPoint>
         /**
          * @since 6.0.2
          * TODO get a real list of geo points instead of this lousy manual list
          */
         get() {
-            val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+            val pts: MutableList<GeoPoint> = ArrayList()
             pts.add(GeoPoint(48.85546563875735, 2.359844067173981)) // saint paul
             pts.add(GeoPoint(48.85737826660179, 2.351524365470226)) // hôtel de ville
             pts.add(GeoPoint(48.86253652215784, 2.3354870181106264)) // louvre 1

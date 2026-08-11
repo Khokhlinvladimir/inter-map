@@ -30,16 +30,17 @@ class MilStdPointPlottingOverlay : Overlay() {
         this.def = def
     }
 
-    override fun onLongPress(e: MotionEvent, mapView: MapView): Boolean {
+    override fun onLongPress(e: MotionEvent, mapView: MapView?): Boolean {
+        val map = mapView ?: return false
         if (def != null) {
-            val pt = mapView.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
+            val pt = map.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
 
             //just in case the point is off the map, let's fix the coordinates
-            if (pt.longitude < -180) pt.setLongitude(pt.longitude + 360)
-            if (pt.longitude > 180) pt.setLongitude(pt.longitude - 360)
+            if (pt.longitude < -180) pt.longitude = pt.longitude + 360
+            if (pt.longitude > 180) pt.longitude = pt.longitude - 360
             //latitude is a bit harder. see https://en.wikipedia.org/wiki/Mercator_projection
-            if (pt.latitude > getTileSystem().getMaxLatitude()) pt.setLatitude(getTileSystem().getMaxLatitude())
-            if (pt.latitude < getTileSystem().getMinLatitude()) pt.setLatitude(getTileSystem().getMinLatitude())
+            if (pt.latitude > getTileSystem().maxLatitude) pt.latitude = getTileSystem().maxLatitude
+            if (pt.latitude < getTileSystem().minLatitude) pt.latitude = getTileSystem().minLatitude
 
             val code = requireNotNull(def!!.symbolCode).replace("*", "-")
             //TODO if (!def.isMultiPoint())
@@ -49,15 +50,15 @@ class MilStdPointPlottingOverlay : Overlay() {
                 attr.put(MilStdAttributes.PixelSize, size.toString() + "")
 
                 val ii = MilStdIconRenderer.getInstance().RenderIcon(code, def!!.modifiers, attr)
-                val m = Marker(mapView)
-                m.setPosition(pt)
+                val m = Marker(map)
+                m.position = pt
                 m.setTitle(code)
                 m.setSnippet(def!!.description + "\n" + def!!.hierarchy)
-                m.setSubDescription(def!!.path + "\n" + m.getPosition().latitude + "," + m.getPosition().longitude)
+                m.setSubDescription(def!!.path + "\n" + m.position.latitude + "," + m.position.longitude)
                 if (ii != null && ii.getImage() != null) {
                     val d = BitmapDrawable(ii.getImage())
-                    m.setImage(d)
-                    m.setIcon(d)
+                    m.image = d
+                    m.icon = d
 
                     val centerX = ii.getCenterPoint().x //pixel center position
                     //calculate what percentage of the center this value is
@@ -68,8 +69,8 @@ class MilStdPointPlottingOverlay : Overlay() {
                     m.setAnchor(realCenterX, realCenterY)
 
 
-                    mapView.getOverlayManager().add(m)
-                    mapView.invalidate()
+                    map.getOverlayManager().add(m)
+                    map.invalidate()
                 }
             }
 

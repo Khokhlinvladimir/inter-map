@@ -49,7 +49,7 @@ class SampleSimpleFastPointOverlay : BaseSampleFragment() {
 
         // set some visual options for the overlay
         // we use here MAXIMUM_OPTIMIZATION algorithm, which works well with >100k points
-        var opt = SimpleFastPointOverlayOptions.getDefaultStyle()
+        var opt = SimpleFastPointOverlayOptions.defaultStyle
             .setSymbol(SimpleFastPointOverlayOptions.Shape.SQUARE)
             .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
             .setRadius(7f).setIsClickable(true).setCellSize(12).setTextStyle(textStyle)
@@ -60,10 +60,10 @@ class SampleSimpleFastPointOverlay : BaseSampleFragment() {
 
         // onClick callback
         sfpo.setOnClickListener(object : SimpleFastPointOverlay.OnClickListener {
-            override fun onClick(points: PointAdapter, point: Int) {
+            override fun onClick(points: PointAdapter?, point: Int?) {
                 Toast.makeText(
                     mMapView!!.getContext(),
-                    "You clicked " + (points.get(point) as LabelledGeoPoint).getLabel(),
+                    "You clicked " + (points!!.get(point!!) as LabelledGeoPoint).label,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -115,7 +115,7 @@ class SampleSimpleFastPointOverlay : BaseSampleFragment() {
         val individualStyledPointTheme = SimplePointTheme(individualStyledPoints)
 
         // set some visual options for the theme
-        opt = SimpleFastPointOverlayOptions.getDefaultStyle()
+        opt = SimpleFastPointOverlayOptions.defaultStyle
             .setSymbol(SimpleFastPointOverlayOptions.Shape.SQUARE)
             .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
             .setRadius(7f).setCellSize(12).setMinZoomShowLabels(10)
@@ -131,7 +131,7 @@ class SampleSimpleFastPointOverlay : BaseSampleFragment() {
             override fun run() {
                 if (mMapView != null && mMapView!!.controller != null && mMapView!!.getIntrinsicScreenRect(null)
                         .height() > 0
-                ) mMapView!!.zoomToBoundingBox(sfpo.getBoundingBox().concat(sfpo1.getBoundingBox()), false)
+                ) mMapView!!.zoomToBoundingBox(requireNotNull(sfpo.boundingBox).concat(requireNotNull(sfpo1.boundingBox)), false)
             }
         }, 500L)
     }

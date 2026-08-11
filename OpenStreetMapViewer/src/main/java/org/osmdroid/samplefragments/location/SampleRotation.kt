@@ -45,7 +45,7 @@ class SampleRotation : BaseSampleFragment(), View.OnClickListener {
         mRotationGestureOverlay.setEnabled(true)
         mMapView!!.getOverlays()!!.add(mRotationGestureOverlay)
 
-        val mScaleBarOverlay = ScaleBarOverlay(mMapView)
+        val mScaleBarOverlay = ScaleBarOverlay(mMapView!!)
         mScaleBarOverlay.setScaleBarOffset(0, (40 * dm.density).toInt())
         mScaleBarOverlay.setCentred(true)
         mScaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, 10)

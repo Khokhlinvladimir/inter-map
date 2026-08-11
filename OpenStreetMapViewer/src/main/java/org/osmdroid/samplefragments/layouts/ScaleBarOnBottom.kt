@@ -18,7 +18,7 @@ class ScaleBarOnBottom : BaseSampleFragment() {
         val context: Context? = this.getActivity()
         val dm = context!!.getResources().getDisplayMetrics()
 
-        val scaleBarOverlay = ScaleBarOverlay(mMapView)
+        val scaleBarOverlay = ScaleBarOverlay(mMapView!!)
 
         scaleBarOverlay.setCentred(true)
 

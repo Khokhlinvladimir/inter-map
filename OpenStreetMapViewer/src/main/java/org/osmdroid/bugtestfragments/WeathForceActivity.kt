@@ -75,8 +75,8 @@ class WeathForceActivity : BaseActivity(), LocationListener, IOrientationConsume
         val mapController = mMapView!!.controller
         mapController!!.setZoom(9)
         mapController.setCenter(startPoint)
-        val startMarker = Marker(mMapView)
-        startMarker.setPosition(startPoint)
+        val startMarker = Marker(mMapView!!)
+        startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         mMapView!!.getOverlays()!!.add(startMarker)
 
@@ -85,8 +85,8 @@ class WeathForceActivity : BaseActivity(), LocationListener, IOrientationConsume
     }
 
     fun addOverlays() {
-        mLocationOverlay = MyLocationNewOverlay(mMapView)
-        mLocationOverlay!!.setEnableAutoStop(false)
+        mLocationOverlay = MyLocationNewOverlay(mMapView!!)
+        mLocationOverlay!!.enableAutoStop = false
         mLocationOverlay!!.enableFollowLocation()
         mLocationOverlay!!.enableMyLocation()
         this.mMapView!!.getOverlayManager().add(mLocationOverlay)

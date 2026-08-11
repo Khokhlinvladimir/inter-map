@@ -35,7 +35,7 @@ class SampleWhackyColorFilter : BaseSampleFragment() {
             )
         ) //alpha
 
-        this.mMapView!!.getOverlayManager().getTilesOverlay().setColorFilter(ColorMatrixColorFilter(cm))
+        this.mMapView!!.getOverlayManager().getTilesOverlay()!!.setColorFilter(ColorMatrixColorFilter(cm))
 
         //pro tip, set the color filter to null to reset to normal viewing
     }

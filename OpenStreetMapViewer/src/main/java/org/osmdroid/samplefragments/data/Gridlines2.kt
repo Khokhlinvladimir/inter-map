@@ -15,7 +15,7 @@ class Gridlines2 : BaseSampleFragment() {
         get() = "Lat/Lon Gridlines (customized)"
 
     override fun addOverlays() {
-        mMapView!!.getOverlayManager().getTilesOverlay().setColorFilter(TilesOverlay.INVERT_COLORS)
+        mMapView!!.getOverlayManager().getTilesOverlay()!!.setColorFilter(TilesOverlay.INVERT_COLORS)
         val grids = LatLonGridlineOverlay2()
         grids.setBackgroundColor(Color.BLACK)
         grids.setFontColor(Color.RED)

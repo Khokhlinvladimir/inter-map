@@ -42,7 +42,7 @@ class WeatherGroundOverlaySample : BaseSampleFragment(), Runnable {
         super.addOverlays()
 
         mOverlay = GroundOverlay()
-        mOverlay!!.setTransparency(0.5f)
+        mOverlay!!.transparency = 0.5f
         mOverlay!!.setPosition(mNorthEast, mSouthWest)
         mMapView!!.getOverlayManager().add(mOverlay)
 
@@ -50,7 +50,7 @@ class WeatherGroundOverlaySample : BaseSampleFragment(), Runnable {
 
         mMapView!!.post(object : Runnable {
             override fun run() {
-                val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                val geoPoints: MutableList<GeoPoint> = ArrayList()
                 geoPoints.add(mNorthEast)
                 geoPoints.add(mSouthWest)
                 mMapView!!.zoomToBoundingBox(BoundingBox.fromGeoPoints(geoPoints), false, 50)
@@ -87,7 +87,7 @@ class WeatherGroundOverlaySample : BaseSampleFragment(), Runnable {
             val options = BitmapFactory.Options()
             options.inJustDecodeBounds = true
             val bitmap = BitmapFactory.decodeStream(`is`)
-            mOverlay!!.setImage(bitmap)
+            mOverlay!!.image = bitmap
             val act: Activity? = getActivity()
             if (act != null) {
                 act.runOnUiThread(object : Runnable {

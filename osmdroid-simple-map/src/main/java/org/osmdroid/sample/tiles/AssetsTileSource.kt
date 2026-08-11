@@ -56,7 +56,7 @@ fun setupCustomTilesOverlays(mapView: MapView,  assetManager: AssetManager) {
     )
 
     val tileProvider = MapTileProviderBasic(mapView.context).apply {
-        tileSource = customTileSource
+        setTileSource(customTileSource)
     }
 
     val tilesOverlay = TilesOverlay(tileProvider, mapView.context).apply {

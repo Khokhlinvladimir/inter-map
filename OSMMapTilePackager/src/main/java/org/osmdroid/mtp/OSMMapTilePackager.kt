@@ -296,10 +296,10 @@ object OSMMapTilePackager {
     // ===========================================================
     // Methods
     // ===========================================================
-    private fun runCreateGEMFFile(pTempFolder: String, pDestinationFile: String?) {
+    private fun runCreateGEMFFile(pTempFolder: String, pDestinationFile: String) {
         try {
             println("Creating GEMF archive from " + pTempFolder + " to " + pDestinationFile + " ...")
-            val sourceFolders: MutableList<File?> = ArrayList<File?>()
+            val sourceFolders: MutableList<File> = ArrayList()
             sourceFolders.add(File(pTempFolder))
             val file: GEMFFile = GEMFFile(pDestinationFile, sourceFolders)
             println(" done.")

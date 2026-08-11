@@ -17,10 +17,10 @@ import org.osmdroid.tileprovider.modules.SqlTileWriter
  */
 class SqlTileWriterExt : SqlTileWriter() {
     fun select(rows: Int, offset: Int): Cursor? {
-        val db = getDb()
+        val db = db
         if (db != null) return db.rawQuery(
             "select " + DatabaseFileArchive.COLUMN_KEY + "," + COLUMN_EXPIRES + "," + DatabaseFileArchive.COLUMN_PROVIDER + " from " + DatabaseFileArchive.TABLE + " limit ? offset ?",
-            arrayOf<String>(rows.toString() + "", offset.toString() + "")
+            arrayOf<String?>(rows.toString(), offset.toString())
         )
         return null
     }
@@ -32,7 +32,7 @@ class SqlTileWriterExt : SqlTileWriter() {
          * @return
          */
         get() {
-            val db = getDb()
+            val db = db
             val ret: MutableList<SourceCount?> = ArrayList<SourceCount?>()
             if (db == null) {
                 return ret
@@ -72,7 +72,7 @@ class SqlTileWriterExt : SqlTileWriter() {
     val rowCountExpired: Long
         get() = getRowCount(
             COLUMN_EXPIRES + "<?",
-            arrayOf<String>(System.currentTimeMillis().toString())
+            arrayOf<String?>(System.currentTimeMillis().toString())
         )
 
     class SourceCount {

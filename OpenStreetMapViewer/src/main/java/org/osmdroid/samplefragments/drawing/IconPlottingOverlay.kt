@@ -20,9 +20,10 @@ import org.osmdroid.views.overlay.Overlay
  * @since 6.0.0
  */
 class IconPlottingOverlay(var markerIcon: Drawable?) : Overlay() {
-    override fun onLongPress(e: MotionEvent, mapView: MapView): Boolean {
+    override fun onLongPress(e: MotionEvent, mapView: MapView?): Boolean {
+        val map = mapView ?: return false
         if (markerIcon != null) {
-            val pt = mapView.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
+            val pt = map.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
 
             /*
              * <b>Note</b></b: when plotting a point off the map, the conversion from
@@ -34,21 +35,21 @@ class IconPlottingOverlay(var markerIcon: Drawable?) : Overlay() {
              */
 
             //just in case the point is off the map, let's fix the coordinates
-            if (pt.longitude < -180) pt.setLongitude(pt.longitude + 360)
-            if (pt.longitude > 180) pt.setLongitude(pt.longitude - 360)
+            if (pt.longitude < -180) pt.longitude = pt.longitude + 360
+            if (pt.longitude > 180) pt.longitude = pt.longitude - 360
             //latitude is a bit harder. see https://en.wikipedia.org/wiki/Mercator_projection
-            if (pt.latitude > getTileSystem().getMaxLatitude()) pt.setLatitude(getTileSystem().getMaxLatitude())
-            if (pt.latitude < getTileSystem().getMinLatitude()) pt.setLatitude(getTileSystem().getMinLatitude())
+            if (pt.latitude > getTileSystem().maxLatitude) pt.latitude = getTileSystem().maxLatitude
+            if (pt.latitude < getTileSystem().minLatitude) pt.latitude = getTileSystem().minLatitude
 
-            val m = Marker(mapView)
-            m.setPosition(pt)
-            m.setIcon(markerIcon)
-            m.setImage(markerIcon)
+            val m = Marker(map)
+            m.position = pt
+            m.icon = markerIcon
+            m.image = markerIcon
             m.setTitle("A demo title")
             m.setSubDescription("A demo sub description\n" + pt.latitude + "," + pt.longitude)
             m.setSnippet("a snippet of information")
-            mapView.getOverlayManager().add(m)
-            mapView.invalidate()
+            map.getOverlayManager().add(m)
+            map.invalidate()
             return true
         }
         return false

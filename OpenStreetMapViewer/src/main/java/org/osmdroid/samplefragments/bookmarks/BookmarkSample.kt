@@ -63,7 +63,7 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
         //add all our bookmarks to the view
         mMapView!!.getOverlayManager().addAll(datastore!!.getBookmarksAsMarkers(mMapView))
 
-        this.mMyLocationOverlay = MyLocationNewOverlay(mMapView)
+        this.mMyLocationOverlay = MyLocationNewOverlay(mMapView!!)
         mMyLocationOverlay!!.setEnabled(true)
 
 
@@ -126,13 +126,13 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
                 if (!getTileSystem().isValidLongitude(lonD)) valid = false
 
                 if (valid) {
-                    val m = Marker(mMapView)
+                    val m = Marker(mMapView!!)
                     m.setId(UUID.randomUUID().toString())
                     m.setTitle(title.getText().toString())
                     m.setSubDescription(description.getText().toString())
 
-                    m.setPosition(GeoPoint(latD, lonD))
-                    m.setSnippet(m.getPosition().toDoubleString())
+                    m.position = GeoPoint(latD, lonD)
+                    m.setSnippet(m.position.toDoubleString())
                     datastore!!.addBookmark(m)
                     mMapView!!.getOverlayManager().add(m)
                     mMapView!!.invalidate()
@@ -302,7 +302,7 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
         properties.offset = File(DialogConfigs.DEFAULT_DIR)
 
-        val registeredExtensions = ArchiveFileFactory.getRegisteredExtensions()
+        val registeredExtensions = ArchiveFileFactory.registeredExtensions
 
         registeredExtensions.add("csv")
 
@@ -341,8 +341,8 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
             writer.writeNext(headers)
             for (m in markers) {
                 val items = arrayOfNulls<String>(4)
-                items[0] = m.getPosition().latitude.toString() + ""
-                items[1] = m.getPosition().longitude.toString() + ""
+                items[0] = m.position.latitude.toString() + ""
+                items[1] = m.position.longitude.toString() + ""
                 items[2] = m.getSubDescription()
                 items[3] = m.getTitle()
                 writer.writeNext(items)
@@ -386,10 +386,10 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
                     val lon = nextLine[1]
                     val description: String? = nextLine[2]
                     val title: String? = nextLine[3]
-                    val m = Marker(getmMapView())
+                    val m = Marker(getmMapView()!!)
                     m.setTitle(title)
                     m.setSubDescription(description)
-                    m.setPosition(GeoPoint(lat.toDouble(), lon.toDouble()))
+                    m.position = GeoPoint(lat.toDouble(), lon.toDouble())
                     datastore!!.addBookmark(m)
                     getmMapView()!!.getOverlayManager().add(m)
                     imported.getAndIncrement()

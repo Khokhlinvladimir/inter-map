@@ -50,14 +50,14 @@ class SampleShapeFile : SampleMapEventListener() {
             }
 
             MENU_ADD_BOUNDS -> {
-                val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                val pts: MutableList<GeoPoint> = ArrayList()
                 val boundingBox = mMapView!!.getBoundingBox()
-                pts.add(GeoPoint(boundingBox!!.getLatNorth(), boundingBox.getLonEast()))
-                pts.add(GeoPoint(boundingBox.getLatSouth(), boundingBox.getLonEast()))
-                pts.add(GeoPoint(boundingBox.getLatSouth(), boundingBox.getLonWest()))
-                pts.add(GeoPoint(boundingBox.getLatNorth(), boundingBox.getLonWest()))
-                pts.add(GeoPoint(boundingBox.getLatNorth(), boundingBox.getLonEast()))
-                val bounds = Polygon(mMapView)
+                pts.add(GeoPoint(boundingBox!!.latNorth, boundingBox.lonEast))
+                pts.add(GeoPoint(boundingBox.latSouth, boundingBox.lonEast))
+                pts.add(GeoPoint(boundingBox.latSouth, boundingBox.lonWest))
+                pts.add(GeoPoint(boundingBox.latNorth, boundingBox.lonWest))
+                pts.add(GeoPoint(boundingBox.latNorth, boundingBox.lonEast))
+                val bounds = Polygon(mMapView!!)
                 bounds.setPoints(pts)
                 bounds.setSubDescription(boundingBox.toString())
                 // bounds.setStrokeColor(Color.RED);
@@ -83,7 +83,7 @@ class SampleShapeFile : SampleMapEventListener() {
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
         properties.offset = File(DialogConfigs.DEFAULT_DIR)
 
-        val registeredExtensions = ArchiveFileFactory.getRegisteredExtensions()
+        val registeredExtensions = ArchiveFileFactory.registeredExtensions
         registeredExtensions.add("shp")
 
 

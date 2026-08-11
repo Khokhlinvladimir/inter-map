@@ -76,7 +76,7 @@ open class WMSTileSource(aName: String?, aBaseUrl: Array<String?>?, layername: S
     }
 
     override fun getTileURLString(pMapTileIndex: Long): String {
-        var baseUrl = getBaseUrl()
+        var baseUrl = this.baseUrl.orEmpty()
         if (this.isForceHttps) baseUrl = baseUrl.replace("http://", "https://")
         if (this.isForceHttp) baseUrl = baseUrl.replace("https://", "http://")
         val sb = StringBuilder(baseUrl)
@@ -95,10 +95,10 @@ open class WMSTileSource(aName: String?, aBaseUrl: Array<String?>?, layername: S
         } else {
             val boundingBox: BoundingBox =
                 tile2boundingBox(MapTileIndex.getX(pMapTileIndex), MapTileIndex.getY(pMapTileIndex), MapTileIndex.getZoom(pMapTileIndex))
-            sb.append(boundingBox.getLonWest()).append(",")
-            sb.append(boundingBox.getLatSouth()).append(",")
-            sb.append(boundingBox.getLonEast()).append(",")
-            sb.append(boundingBox.getLatNorth())
+            sb.append(boundingBox.lonWest).append(",")
+            sb.append(boundingBox.latSouth).append(",")
+            sb.append(boundingBox.lonEast).append(",")
+            sb.append(boundingBox.latNorth)
         }
         sb.append("&srs=").append(srs)
         sb.append("&format=image/png&transparent=true")

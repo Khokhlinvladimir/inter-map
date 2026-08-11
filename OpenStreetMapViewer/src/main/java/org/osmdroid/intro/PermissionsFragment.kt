@@ -42,7 +42,7 @@ class PermissionsFragment : Fragment(), View.OnClickListener {
         if (Build.VERSION.SDK_INT >= 23) {
             checkPermissions()
         } else {
-            instance!!.load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()))
+            instance!!.load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
         }
     }
 
@@ -118,7 +118,7 @@ class PermissionsFragment : Fragment(), View.OnClickListener {
                                 "\nLocation permission is required to show the user's location on map.", Toast.LENGTH_SHORT
                     ).show()
                 }
-                instance!!.load(getContext(), PreferenceManager.getDefaultSharedPreferences(getContext()))
+                instance!!.load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
             }
 
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)

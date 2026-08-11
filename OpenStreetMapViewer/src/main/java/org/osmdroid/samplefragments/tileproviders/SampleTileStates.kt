@@ -34,17 +34,17 @@ class SampleTileStates : BaseSampleFragment() {
         val root = inflater.inflate(R.layout.map_with_locationbox, container, false)
         mMapView = root.findViewById<MapView?>(R.id.mapview)
         mTextView = root.findViewById<TextView>(R.id.textViewCurrentLocation)
-        mTileStates = mMapView!!.getMapOverlay()!!.getTileStates()
+        mTileStates = mMapView!!.getMapOverlay()!!.tileStates
         return root
     }
 
     override fun addOverlays() {
         super.addOverlays()
 
-        val ok = (getResources().getDrawable(R.drawable.baseline_done_outline_black_36) as BitmapDrawable).getBitmap()
-        val ko = (getResources().getDrawable(R.drawable.twotone_warning_black_36) as BitmapDrawable).getBitmap()
+        val ok = (getResources().getDrawable(R.drawable.baseline_done_outline_black_36) as BitmapDrawable).bitmap
+        val ko = (getResources().getDrawable(R.drawable.twotone_warning_black_36) as BitmapDrawable).bitmap
         mMapView!!.getOverlayManager().add(object : Overlay() {
-            override fun draw(c: Canvas, projection: Projection?) {
+            override fun draw(c: Canvas, projection: Projection) {
                 val bitmap = if (mOk) ok else ko
                 c.drawBitmap(
                     bitmap,
@@ -54,10 +54,10 @@ class SampleTileStates : BaseSampleFragment() {
                 )
             }
         })
-        mMapView!!.getMapOverlay()!!.getTileStates().getRunAfters().add(object : Runnable {
+        mMapView!!.getMapOverlay()!!.tileStates.runAfters.add(object : Runnable {
             override fun run() {
                 mTextView!!.setText(mTileStates.toString())
-                mOk = mTileStates!!.isDone() && mTileStates!!.getTotal() == mTileStates!!.getUpToDate()
+                mOk = mTileStates!!.isDone && mTileStates!!.total == mTileStates!!.upToDate
             }
         })
     }

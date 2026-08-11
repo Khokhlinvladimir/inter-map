@@ -25,7 +25,7 @@ abstract class SampleOfflinePriority : BaseSampleFragment() {
     protected abstract val isOfflineFirst: Boolean
 
     public override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val provider = MapTileProviderBasic(getActivity())
+        val provider = MapTileProviderBasic(requireActivity())
         provider.setOfflineFirst(this.isOfflineFirst)
         mMapView = MapView(inflater.getContext(), provider)
         return mMapView

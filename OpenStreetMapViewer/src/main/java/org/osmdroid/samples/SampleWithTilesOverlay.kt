@@ -51,7 +51,7 @@ class SampleWithTilesOverlay : AppCompatActivity() {
         )
 
         //Copyright overlay
-        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource().copyrightNotice
+        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource()!!.copyrightNotice
         val copyrightOverlay = CopyrightOverlay(this)
         copyrightOverlay.setCopyrightNotice(copyrightNotice)
         mMapView!!.getOverlays()!!.add(copyrightOverlay)
@@ -64,7 +64,7 @@ class SampleWithTilesOverlay : AppCompatActivity() {
         val provider = MapTileProviderBasic(getApplicationContext())
         provider.setTileSource(TileSourceFactory.PUBLIC_TRANSPORT)
         val tilesOverlay = TilesOverlay(provider, this.getBaseContext())
-        tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT)
+        tilesOverlay.loadingBackgroundColor = Color.TRANSPARENT
         mMapView!!.getOverlays()!!.add(tilesOverlay)
     }
 

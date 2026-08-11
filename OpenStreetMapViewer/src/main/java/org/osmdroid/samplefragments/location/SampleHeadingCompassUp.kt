@@ -53,8 +53,8 @@ class SampleHeadingCompassUp : BaseSampleFragment(), LocationListener, IOrientat
         get() = "Heading/Compass Up"
 
     public override fun addOverlays() {
-        overlay = MyLocationNewOverlay(mMapView)
-        overlay!!.setEnableAutoStop(false)
+        overlay = MyLocationNewOverlay(mMapView!!)
+        overlay!!.enableAutoStop = false
         overlay!!.enableFollowLocation()
         overlay!!.enableMyLocation()
         this.mMapView!!.getOverlayManager().add(overlay)
@@ -111,7 +111,7 @@ class SampleHeadingCompassUp : BaseSampleFragment(), LocationListener, IOrientat
             //java.lang.IllegalArgumentException: provider doesn't exist: network
             ex.printStackTrace()
         }
-        if (compass == null) compass = InternalCompassOrientationProvider(getActivity())
+        if (compass == null) compass = InternalCompassOrientationProvider(requireActivity())
         compass!!.startOrientationProvider(this)
         mMapView!!.controller!!.zoomTo(16)
     }

@@ -13,7 +13,7 @@ class DefaultShapeMetaSetter : ShapeMetaSetter {
         if (metadata != null) {
             metadata.setStringCharset(Charset.defaultCharset())
             marker.setSnippet(metadata.toMap().toString())
-            marker.setTitle(getSensibleTitle(marker.getSnippet()))
+            marker.setTitle(getSensibleTitle(requireNotNull(marker.getSnippet())))
         }
     }
 
@@ -22,7 +22,7 @@ class DefaultShapeMetaSetter : ShapeMetaSetter {
         if (metadata != null) {
             metadata.setStringCharset(Charset.defaultCharset())
             polygon.setSnippet(metadata.toMap().toString())
-            polygon.setTitle(getSensibleTitle(polygon.getSnippet()))
+            polygon.setTitle(getSensibleTitle(requireNotNull(polygon.getSnippet())))
         }
         val boundingBox = polygon.getBounds()
         polygon.setSubDescription(boundingBox.toString())
@@ -33,7 +33,7 @@ class DefaultShapeMetaSetter : ShapeMetaSetter {
         if (metadata != null) {
             metadata.setStringCharset(Charset.defaultCharset())
             polyline.setSnippet(metadata.toMap().toString())
-            polyline.setTitle(getSensibleTitle(polyline.getSnippet()))
+            polyline.setTitle(getSensibleTitle(requireNotNull(polyline.getSnippet())))
         }
     }
 

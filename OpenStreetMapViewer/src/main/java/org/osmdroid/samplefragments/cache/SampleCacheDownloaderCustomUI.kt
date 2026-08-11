@@ -61,7 +61,7 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
         (root.findViewById<View?>(R.id.mapview) as LinearLayout).addView(mMapView)
         btnCache = root.findViewById<Button>(R.id.btnCache)
         btnCache!!.setOnClickListener(this)
-        mgr = CacheManager(mMapView)
+        mgr = CacheManager(mMapView!!)
         return root
     }
 
@@ -105,7 +105,7 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
                             Toast.makeText(getActivity(), "Jobs Canceled", Toast.LENGTH_LONG).show()
                         }
 
-                        3 -> Toast.makeText(getActivity(), "Pending Jobs: " + mgr!!.getPendingJobs(), Toast.LENGTH_LONG).show()
+                        3 -> Toast.makeText(getActivity(), "Pending Jobs: " + mgr!!.pendingJobs, Toast.LENGTH_LONG).show()
                     }
                     dialog.dismiss()
                 }
@@ -120,7 +120,7 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
         alertDialog.show()
 
 
-        //mgr.possibleTilesInArea(mMapView.getBoundingBox(), 0, 18);
+        //mgr.possibleTilesInArea(mMapView.boundingBox, 0, 18);
         // mgr.
     }
 
@@ -130,7 +130,7 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
 
         val view = View.inflate(getActivity(), R.layout.sample_cachemgr_input, null)
 
-        val boundingBox = mMapView!!.getBoundingBox()
+        val boundingBox = mMapView!!.getBoundingBox()!!
         zoom_max = view.findViewById<SeekBar?>(R.id.slider_zoom_max)
         zoom_max!!.setMax(mMapView!!.maxZoomLevel.toInt())
         zoom_max!!.setOnSeekBarChangeListener(this@SampleCacheDownloaderCustomUI)
@@ -141,13 +141,13 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
         zoom_min!!.setProgress(mMapView!!.getMinZoomLevel().toInt())
         zoom_min!!.setOnSeekBarChangeListener(this@SampleCacheDownloaderCustomUI)
         cache_east = view.findViewById<EditText?>(R.id.cache_east)
-        cache_east!!.setText(boundingBox!!.getLonEast().toString() + "")
+        cache_east!!.setText(boundingBox!!.lonEast.toString() + "")
         cache_north = view.findViewById<EditText?>(R.id.cache_north)
-        cache_north!!.setText(boundingBox.getLatNorth().toString() + "")
+        cache_north!!.setText(boundingBox.latNorth.toString() + "")
         cache_south = view.findViewById<EditText?>(R.id.cache_south)
-        cache_south!!.setText(boundingBox.getLatSouth().toString() + "")
+        cache_south!!.setText(boundingBox.latSouth.toString() + "")
         cache_west = view.findViewById<EditText?>(R.id.cache_west)
-        cache_west!!.setText(boundingBox.getLonWest().toString() + "")
+        cache_west!!.setText(boundingBox.lonWest.toString() + "")
         cache_estimate = view.findViewById<TextView?>(R.id.cache_estimate)
 
         //change listeners for both validation and to trigger the download estimation
@@ -211,11 +211,11 @@ class SampleCacheDownloaderCustomUI : BaseSampleFragment(), View.OnClickListener
                         override fun onDismiss(dialog: DialogInterface?) {
                             //cancel the job wit the dialog is closed
                             downloadingTask!!.cancel(true)
-                            println("Pending jobs " + mgr!!.getPendingJobs())
+                            println("Pending jobs " + mgr!!.pendingJobs)
                         }
                     })
                     //this triggers the download
-                    downloadingTask = mgr!!.downloadAreaAsyncNoUI(getActivity(), bb, zoommin, zoommax, this@SampleCacheDownloaderCustomUI)
+                    downloadingTask = mgr!!.downloadAreaAsyncNoUI(requireActivity(), bb, zoommin, zoommax, this@SampleCacheDownloaderCustomUI)
                 }
             }
         } catch (ex: Exception) {

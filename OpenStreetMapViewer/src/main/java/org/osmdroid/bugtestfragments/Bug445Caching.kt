@@ -141,7 +141,7 @@ class Bug445Caching : BaseSampleFragment() {
         Log.i(TAG, "width " + width)
         val height = mMapView!!.getHeight()
         Log.i(TAG, "height " + height)
-        val tileSize = TileSystem.getTileSize()
+        val tileSize = TileSystem.tileSize
         Log.i(TAG, "tile size " + tileSize)
         val minCols = getMinNumberExpected(tileSize, width, maxPerZoom)
         Log.i(TAG, "min cols " + minCols)
@@ -159,7 +159,7 @@ class Bug445Caching : BaseSampleFragment() {
         val maxPerZoom = 1 shl pZoomLevel
         val width = mMapView!!.getWidth()
         val height = mMapView!!.getHeight()
-        val tileSize = TileSystem.getTileSize()
+        val tileSize = TileSystem.tileSize
         val minCols = getMaxNumberExpected(tileSize, width, maxPerZoom)
         val minRows = getMaxNumberExpected(tileSize, height, maxPerZoom)
         return minCols * minRows
@@ -184,7 +184,7 @@ class Bug445Caching : BaseSampleFragment() {
          * @since 6.0.0
          */
         get() {
-            val count = writer!!.getRowCount(mMapView!!.getTileProvider()!!.getTileSource().name())
+            val count = writer!!.getRowCount(mMapView!!.getTileProvider()!!.getTileSource()!!.name())
             Log.i(TAG, "downloaded " + count + " tiles so far")
             return count
         }

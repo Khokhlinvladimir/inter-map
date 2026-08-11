@@ -12,6 +12,6 @@ class SampleMapQuest : BaseSampleFragment() {
 
     public override fun addOverlays() {
         super.addOverlays()
-        mMapView!!.setTileSource(MapQuestTileSource(getContext()))
+        mMapView!!.setTileSource(MapQuestTileSource(requireContext()))
     }
 }

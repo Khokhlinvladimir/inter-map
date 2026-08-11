@@ -155,8 +155,8 @@ class AsyncTaskDemoFragment : BaseSampleFragment() {
         Log.d(TAG, "reloadMarker " + latLonArea + ", zoom " + zoom)
         this.mCurrentBackgroundMarkerLoaderTask = BackgroundMarkerLoaderTask()
         this.mCurrentBackgroundMarkerLoaderTask!!.execute(
-            latLonArea.getLatSouth(), latLonArea.getLatNorth(),
-            latLonArea.getLonEast(), latLonArea.getLonWest(), zoom
+            latLonArea.latSouth, latLonArea.latNorth,
+            latLonArea.lonEast, latLonArea.lonWest, zoom
         )
     }
 
@@ -240,7 +240,7 @@ class AsyncTaskDemoFragment : BaseSampleFragment() {
             }
 
             if (!isCancelled()) {
-                Log.d(TAG, "doInBackground result " + result.getItems().size)
+                Log.d(TAG, "doInBackground result " + result.items!!.size)
                 return result
             }
             Log.d(TAG, "doInBackground cancelled")
@@ -272,7 +272,7 @@ class AsyncTaskDemoFragment : BaseSampleFragment() {
     private fun showMarker(newMarker: FolderOverlay?) {
         var modified = false
         if (this.mCurrentBackgroundContentFolder != null) {
-            Log.d(TAG, "showMarker remove old " + this.mCurrentBackgroundContentFolder!!.getItems().size)
+            Log.d(TAG, "showMarker remove old " + this.mCurrentBackgroundContentFolder!!.items!!.size)
             this.mMapView!!.getOverlays()!!.remove(this.mCurrentBackgroundContentFolder)
             this.mCurrentBackgroundContentFolder!!.onDetach(mMapView)
             this.mCurrentBackgroundContentFolder = null
@@ -281,7 +281,7 @@ class AsyncTaskDemoFragment : BaseSampleFragment() {
 
         if (newMarker != null) {
             this.mCurrentBackgroundContentFolder = newMarker
-            Log.d(TAG, "showMarker add new " + this.mCurrentBackgroundContentFolder!!.getItems().size + ", isAnimating=" + mMapView!!.isAnimating())
+            Log.d(TAG, "showMarker add new " + this.mCurrentBackgroundContentFolder!!.items!!.size + ", isAnimating=" + mMapView!!.isAnimating())
             mMapView!!.getOverlays()!!.add(newMarker)
             modified = true
         }

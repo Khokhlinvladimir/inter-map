@@ -60,7 +60,7 @@ class SampleMilestonesNonRepetitive : SampleMapEventListener() {
             throw IllegalArgumentException(e)
         }
         val polyline = Polyline()
-        val capitals: MutableList<GeoPoint?> = ArrayList<GeoPoint?>(mOrder.size)
+        val capitals: MutableList<GeoPoint> = ArrayList(mOrder.size)
         val distances: DoubleArray? = DoubleArray(mOrder.size)
         var distancesIndex = 0
         var distance1 = 0.0
@@ -79,7 +79,7 @@ class SampleMilestonesNonRepetitive : SampleMapEventListener() {
         val boundingBox = BoundingBox.fromGeoPoints(capitals)
         polyline.setPoints(capitals)
         polyline.getOutlinePaint().setColor(Color.TRANSPARENT)
-        val managers: MutableList<MilestoneManager?> = ArrayList<MilestoneManager?>()
+        val managers: MutableList<MilestoneManager> = ArrayList()
         val slicerForPath = MilestoneMeterDistanceSliceLister()
         managers.add(getAnimatedPathManager(slicerForPath))
 

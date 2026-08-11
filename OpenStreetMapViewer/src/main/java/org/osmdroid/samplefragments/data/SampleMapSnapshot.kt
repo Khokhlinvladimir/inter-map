@@ -108,16 +108,17 @@ class SampleMapSnapshot : BaseSampleFragment() {
                 return  // pending
             }
             val zoom = mTileSystem.getBoundingBoxZoom(
-                pDataRegion.box, mMapSize - 2 * mBorderSize, mMapSize - 2 * mBorderSize
+                requireNotNull(pDataRegion.box), mMapSize - 2 * mBorderSize, mMapSize - 2 * mBorderSize
             )
-            val mapTileProvider: MapTileProviderBase = MapTileProviderBasic(getActivity())
+            val mapTileProvider: MapTileProviderBase = MapTileProviderBasic(requireActivity())
             val mapSnapshot = MapSnapshot(
                 object : MapSnapshotable {
-                    override fun callback(pMapSnapshot: MapSnapshot) {
-                        if (pMapSnapshot.getStatus() != MapSnapshot.Status.CANVAS_OK) {
+                    override fun callback(pMapSnapshot: MapSnapshot?) {
+                        pMapSnapshot ?: return
+                        if (pMapSnapshot.status != MapSnapshot.Status.CANVAS_OK) {
                             return
                         }
-                        val bitmap = Bitmap.createBitmap(pMapSnapshot.getBitmap())
+                        val bitmap = Bitmap.createBitmap(requireNotNull(pMapSnapshot.bitmap))
                         mBitmaps.put(key, bitmap)
                         mMapSnapshots.get(key)!!.onDetach()
                         mMapSnapshots.remove(key)
@@ -131,7 +132,7 @@ class SampleMapSnapshot : BaseSampleFragment() {
                         })
                     }
                 }, MapSnapshot.INCLUDE_FLAG_UPTODATE, mapTileProvider, mOverlays,
-                Projection(zoom, mMapSize, mMapSize, pDataRegion.box!!.getCenterWithDateLine(), 0f, true, true, 0, 0)
+                Projection(zoom, mMapSize, mMapSize, pDataRegion.box!!.centerWithDateLine, 0f, true, true, 0, 0)
             )
             mMapSnapshots.put(key, mapSnapshot)
             Thread(mapSnapshot).start() // TODO use AsyncTask, Executors instead?

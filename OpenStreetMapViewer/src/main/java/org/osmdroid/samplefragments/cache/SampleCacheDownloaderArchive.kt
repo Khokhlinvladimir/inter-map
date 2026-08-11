@@ -106,7 +106,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
                     when (which) {
                         0 -> {
                             try {
-                                mgr = CacheManager(mMapView)
+                                mgr = CacheManager(mMapView!!)
                             } catch (e: TileSourcePolicyException) {
                                 Log.e(TAG, e.message!!)
                                 dialog.dismiss()
@@ -134,7 +134,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
         alertDialog!!.show()
 
 
-        //mgr.possibleTilesInArea(mMapView.getBoundingBox(), 0, 18);
+        //mgr.possibleTilesInArea(mMapView.boundingBox, 0, 18);
         // mgr.
     }
 
@@ -145,7 +145,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
         val view = View.inflate(getActivity(), R.layout.sample_cachemgr_input, null)
         view.findViewById<View?>(R.id.cache_archival_section).setVisibility(View.VISIBLE)
 
-        val boundingBox = mMapView!!.getBoundingBox()
+        val boundingBox = mMapView!!.getBoundingBox()!!
         zoom_max = view.findViewById<SeekBar?>(R.id.slider_zoom_max)
         zoom_max!!.setMax(mMapView!!.maxZoomLevel.toInt())
         zoom_max!!.setOnSeekBarChangeListener(this@SampleCacheDownloaderArchive)
@@ -156,13 +156,13 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
         zoom_min!!.setProgress(mMapView!!.getMinZoomLevel().toInt())
         zoom_min!!.setOnSeekBarChangeListener(this@SampleCacheDownloaderArchive)
         cache_east = view.findViewById<EditText?>(R.id.cache_east)
-        cache_east!!.setText(boundingBox!!.getLonEast().toString() + "")
+        cache_east!!.setText(boundingBox!!.lonEast.toString() + "")
         cache_north = view.findViewById<EditText?>(R.id.cache_north)
-        cache_north!!.setText(boundingBox.getLatNorth().toString() + "")
+        cache_north!!.setText(boundingBox.latNorth.toString() + "")
         cache_south = view.findViewById<EditText?>(R.id.cache_south)
-        cache_south!!.setText(boundingBox.getLatSouth().toString() + "")
+        cache_south!!.setText(boundingBox.latSouth.toString() + "")
         cache_west = view.findViewById<EditText?>(R.id.cache_west)
-        cache_west!!.setText(boundingBox.getLonWest().toString() + "")
+        cache_west!!.setText(boundingBox.lonWest.toString() + "")
         cache_estimate = view.findViewById<TextView?>(R.id.cache_estimate)
         cache_output = view.findViewById<EditText?>(R.id.cache_output)
 
@@ -208,7 +208,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
                         .getAbsolutePath() + File.separator + "osmdroid" + File.separator + cache_output!!.getText().toString()
                     writer = SqliteArchiveTileWriter(outputName)
                     try {
-                        mgr = CacheManager(mMapView, writer)
+                        mgr = CacheManager(mMapView!!, writer!!)
                     } catch (ex: TileSourcePolicyException) {
                         Log.e(TAG, ex.message!!)
                         return
@@ -216,7 +216,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
                 } else {
                     if (mgr == null) {
                         try {
-                            mgr = CacheManager(mMapView)
+                            mgr = CacheManager(mMapView!!)
                         } catch (ex: TileSourcePolicyException) {
                             Log.e(TAG, ex.message!!)
                             return
@@ -236,7 +236,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
                     }
 
                     //this triggers the download
-                    mgr!!.downloadAreaAsync(getActivity(), bb, zoommin, zoommax, object : CacheManagerCallback {
+                    mgr!!.downloadAreaAsync(requireActivity(), bb, zoommin, zoommax, object : CacheManagerCallback {
                         override fun onTaskComplete() {
                             Toast.makeText(getActivity(), "Download complete!", Toast.LENGTH_LONG).show()
                             if (writer != null) writer!!.onDetach()

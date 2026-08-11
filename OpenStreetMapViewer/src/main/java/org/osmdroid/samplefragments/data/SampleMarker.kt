@@ -90,54 +90,58 @@ class SampleMarker : BaseSampleFragment() {
         scaleDiskOverlayWashington.setDisplaySizeMin(100)
         scaleDiskOverlayWashington.setDisplaySizeMax(800)
         mMapView!!.getOverlays()!!.add(scaleDiskOverlayWashington)
-        mMapView!!.getOverlays()!!.add(ScaleBarOverlay(mMapView))
+        mMapView!!.getOverlays()!!.add(ScaleBarOverlay(mMapView!!))
 
         val points = ArrayList<GeoPoint>()
         val drawable: Drawable = resources.getDrawable(R.drawable.marker_default)
 
         var startPoint = GeoPoint(whiteHouse)
         points.add(startPoint)
-        var startMarker = Marker(mMapView).apply {
+        var startMarker = Marker(mMapView!!).apply {
             position = startPoint
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             icon = drawable
-            title = "White House"
-            snippet = "The White House is the official residence and principal workplace of the President of the United States."
-            subDescription = "1600 Pennsylvania Ave NW, Washington, DC 20500"
+            setTitle("White House")
+            setSnippet("The White House is the official residence and principal workplace of the President of the United States.")
+            setSubDescription("1600 Pennsylvania Ave NW, Washington, DC 20500")
         }
         mMapView!!.getOverlays()!!.add(startMarker)
 
         startPoint = GeoPoint(pentagon)
         points.add(startPoint)
-        startMarker = Marker(mMapView).apply {
+        startMarker = Marker(mMapView!!).apply {
             position = startPoint
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             icon = drawable
-            title = "Pentagon"
-            snippet = "The Pentagon."
-            subDescription = "The Pentagon is the headquarters of the United States Department of Defense."
-            setOnMarkerClickListener { marker, _ ->
-                marker.showInfoWindow()
-                true
-            }
+            setTitle("Pentagon")
+            setSnippet("The Pentagon.")
+            setSubDescription("The Pentagon is the headquarters of the United States Department of Defense.")
+            setOnMarkerClickListener(object : Marker.OnMarkerClickListener {
+                override fun onMarkerClick(marker: Marker?, mapView: org.osmdroid.views.MapView?): Boolean {
+                    marker!!.showInfoWindow()
+                    return true
+                }
+            })
         }
         mMapView!!.getOverlays()!!.add(startMarker)
 
         startPoint = GeoPoint(washington)
         points.add(startPoint)
-        startMarker = Marker(mMapView).apply {
+        startMarker = Marker(mMapView!!).apply {
             position = startPoint
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             icon = drawable
-            title = "Washington Monument"
-            snippet = "Washington Monument."
-            subDescription = "Washington Monument."
+            setTitle("Washington Monument")
+            setSnippet("Washington Monument.")
+            setSubDescription("Washington Monument.")
             rotation = 45f
-            setOnMarkerClickListener { marker, _ ->
-                Toast.makeText(requireContext(), "${marker.title} was clicked", Toast.LENGTH_LONG).show()
-                marker.showInfoWindow()
-                true
-            }
+            setOnMarkerClickListener(object : Marker.OnMarkerClickListener {
+                override fun onMarkerClick(marker: Marker?, mapView: org.osmdroid.views.MapView?): Boolean {
+                    Toast.makeText(requireContext(), "${marker!!.getTitle()} was clicked", Toast.LENGTH_LONG).show()
+                    marker.showInfoWindow()
+                    return true
+                }
+            })
         }
         mMapView!!.getOverlays()!!.add(startMarker)
 

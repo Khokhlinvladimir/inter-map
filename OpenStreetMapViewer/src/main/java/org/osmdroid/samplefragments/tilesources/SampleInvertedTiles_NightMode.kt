@@ -15,8 +15,9 @@ class SampleInvertedTiles_NightMode : BaseSampleFragment() {
         get() = "Inverted Tiles"
 
     public override fun addOverlays() {
-        this.mMapView!!.getOverlayManager().getTilesOverlay().setColorFilter(TilesOverlay.INVERT_COLORS)
-        this.mMapView!!.getOverlayManager().getTilesOverlay().setLoadingBackgroundColor(R.color.black)
-        this.mMapView!!.getOverlayManager().getTilesOverlay().setLoadingLineColor(Color.argb(255, 0, 255, 0))
+        val tilesOverlay = this.mMapView!!.getOverlayManager().getTilesOverlay()!!
+        tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS)
+        tilesOverlay.loadingBackgroundColor = R.color.black
+        tilesOverlay.loadingLineColor = Color.argb(255, 0, 255, 0)
     }
 }

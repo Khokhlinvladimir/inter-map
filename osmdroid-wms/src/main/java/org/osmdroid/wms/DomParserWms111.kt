@@ -162,10 +162,10 @@ object DomParserWms111 {
             } else if (name.contains("LatLonBoundingBox")) {
                 //TODO need some handling for crs here
                 south = (e.getAttributes().getNamedItem("miny").getNodeValue().toDouble())
-                if (south < tileSystem.getMinLatitude()) south = tileSystem.getMinLatitude()
+                if (south < tileSystem.minLatitude) south = tileSystem.minLatitude
                 north = (e.getAttributes().getNamedItem("maxy").getNodeValue().toDouble())
 
-                if (north > tileSystem.getMaxLatitude()) north = tileSystem.getMaxLatitude()
+                if (north > tileSystem.maxLatitude) north = tileSystem.maxLatitude
                 west = (e.getAttributes().getNamedItem("maxx").getNodeValue().toDouble())
                 east = (e.getAttributes().getNamedItem("minx").getNodeValue().toDouble())
                 ret.bbox = BoundingBox(north, east, south, west)

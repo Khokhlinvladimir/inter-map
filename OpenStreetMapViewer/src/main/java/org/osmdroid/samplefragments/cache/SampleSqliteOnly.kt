@@ -55,7 +55,7 @@ class SampleSqliteOnly : BaseSampleFragment() {
 
                             val tileProvider = OfflineTileProvider(
                                 SimpleRegisterReceiver(getActivity()),
-                                arrayOf<File?>(list[i])
+                                arrayOf(list[i]!!)
                             )
                             //tell osmdroid to use that provider instead of the default rig which is (asserts, cache, files/archives, online
                             mMapView!!.setTileProvider(tileProvider)
@@ -63,7 +63,7 @@ class SampleSqliteOnly : BaseSampleFragment() {
                             //this bit enables us to find out what tiles sources are available. note, that this action may take some time to run
                             //and should be ran asynchronously. we've put it inline for simplicity
                             var source = ""
-                            val archives = tileProvider.getArchives()
+                            val archives = tileProvider.archives
                             if (archives.size > 0) {
                                 //cheating a bit here, get the first archive file and ask for the tile sources names it contains
                                 val tileSources: Set<String?> = requireNotNull(archives[0]!!.tileSources)

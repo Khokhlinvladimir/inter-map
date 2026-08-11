@@ -42,7 +42,7 @@ class SampleSplitScreen : BaseSampleFragment(), MapListener {
         mMapView!!.setMapListener(this)
         //hey, check out the other constructors for mapbox, there's a few options to load up your
         //access token and tile set preferences
-        mMapView2!!.setTileSource(MapBoxTileSource(getContext()))
+        mMapView2!!.setTileSource(MapBoxTileSource(requireContext()))
         mMapView2!!.setMapListener(this)
 
         mMapView2!!.setMultiTouchControls(true)

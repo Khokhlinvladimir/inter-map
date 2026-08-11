@@ -24,7 +24,7 @@ class SampleAssetsOnly : BaseSampleFragment() {
             MapTileProviderArray(
                 TileSourceFactory.MAPNIK,
                 SimpleRegisterReceiver(getContext()),
-                arrayOf<MapTileModuleProviderBase>(prov)
+                arrayOf<MapTileModuleProviderBase?>(prov)
             )
         )
     }

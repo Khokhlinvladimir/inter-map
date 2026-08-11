@@ -62,7 +62,7 @@ class LayerManager : BaseSampleFragment() {
                 val overlay = adapter.getItem(position)
                 if (overlay is Marker) {
                     overlay.showInfoWindow()
-                    mMapView!!.controller!!.animateTo(overlay.getPosition())
+                    mMapView!!.controller!!.animateTo(overlay.position)
                 } else if (overlay is Polygon) {
                     overlay.showInfoWindow()
                     mMapView!!.controller!!.animateTo(overlay.getInfoWindowLocation())
@@ -71,9 +71,9 @@ class LayerManager : BaseSampleFragment() {
                     mMapView!!.controller!!.animateTo(overlay.getInfoWindowLocation())
                 } else {
                     val bounds = overlay!!.getBounds()
-                    mMapView!!.controller!!.animateTo(GeoPoint(bounds.getCenterLatitude(), bounds.getCenterLongitude()))
+                    mMapView!!.controller!!.animateTo(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
 
-                    //mMapView.getController().zoomToSpan(bounds.getLatitudeSpan(), bounds.getLongitudeSpan());
+                    //mMapView.getController().zoomToSpan(bounds.latitudeSpan, bounds.longitudeSpan);
                 }
                 //TODO center map on location
             }
@@ -112,26 +112,26 @@ class LayerManager : BaseSampleFragment() {
 
         //add some simple markers, lines and polygons just to have something to populate the list
         var startPoint = GeoPoint(38.8977, -77.0365) //white house
-        var startMarker = Marker(mMapView)
-        startMarker.setPosition(startPoint)
+        var startMarker = Marker(mMapView!!)
+        startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        startMarker.setIcon(getResources().getDrawable(R.drawable.icon))
+        startMarker.icon = getResources().getDrawable(R.drawable.icon)
         startMarker.setTitle("White House")
         startMarker.setSnippet("The White House is the official residence and principal workplace of the President of the United States.")
         startMarker.setSubDescription("1600 Pennsylvania Ave NW, Washington, DC 20500")
         mMapView!!.getOverlays()!!.add(startMarker)
 
         startPoint = GeoPoint(38.8719, -77.0563)
-        startMarker = Marker(mMapView)
-        startMarker.setPosition(startPoint)
+        startMarker = Marker(mMapView!!)
+        startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        startMarker.setIcon(getResources().getDrawable(R.drawable.icon))
+        startMarker.icon = getResources().getDrawable(R.drawable.icon)
         startMarker.setTitle("Pentagon")
         startMarker.setSnippet("The Pentagon.")
         startMarker.setSubDescription("The Pentagon is the headquarters of the United States Department of Defense.")
         startMarker.setOnMarkerClickListener(object : OnMarkerClickListener {
-            override fun onMarkerClick(marker: Marker, mapView: MapView?): Boolean {
-                marker.showInfoWindow()
+            override fun onMarkerClick(marker: Marker?, mapView: MapView?): Boolean {
+                marker!!.showInfoWindow()
                 return true
             }
         })
@@ -139,16 +139,16 @@ class LayerManager : BaseSampleFragment() {
 
 
         startPoint = GeoPoint(38.8895, -77.0353)
-        startMarker = Marker(mMapView)
-        startMarker.setPosition(startPoint)
+        startMarker = Marker(mMapView!!)
+        startMarker.position = startPoint
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        startMarker.setIcon(getResources().getDrawable(R.drawable.icon))
+        startMarker.icon = getResources().getDrawable(R.drawable.icon)
         startMarker.setTitle("Washington Monument")
         startMarker.setSnippet("Washington Monument.")
         startMarker.setSubDescription("Washington Monument.")
         startMarker.setOnMarkerClickListener(object : OnMarkerClickListener {
-            override fun onMarkerClick(marker: Marker, mapView: MapView?): Boolean {
-                Toast.makeText(getContext(), marker.getTitle() + " was clicked", Toast.LENGTH_LONG).show()
+            override fun onMarkerClick(marker: Marker?, mapView: MapView?): Boolean {
+                Toast.makeText(getContext(), marker!!.getTitle() + " was clicked", Toast.LENGTH_LONG).show()
                 marker.showInfoWindow()
                 return true
             }
@@ -161,31 +161,31 @@ class LayerManager : BaseSampleFragment() {
         val mEastPolyline = Polyline()
 
 
-        val list = ArrayList<GeoPoint?>()
+        val list = ArrayList<GeoPoint>()
         val sCentralParkBoundingBox = BoundingBox(
             40.796788,
             -73.949232, 40.768094, -73.981762
         )
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualNorth(), -85.0))
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualNorth(), -65.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualNorth, -85.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualNorth, -65.0))
         mNorthPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mNorthPolyline)
 
         list.clear()
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualSouth(), -85.0))
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualSouth(), -65.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualSouth, -85.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualSouth, -65.0))
         mSouthPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mSouthPolyline)
 
         list.clear()
-        list.add(GeoPoint(45.0, sCentralParkBoundingBox.getLonWest()))
-        list.add(GeoPoint(35.0, sCentralParkBoundingBox.getLonWest()))
+        list.add(GeoPoint(45.0, sCentralParkBoundingBox.lonWest))
+        list.add(GeoPoint(35.0, sCentralParkBoundingBox.lonWest))
         mWestPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mWestPolyline)
 
         list.clear()
-        list.add(GeoPoint(45.0, sCentralParkBoundingBox.getLonEast()))
-        list.add(GeoPoint(35.0, sCentralParkBoundingBox.getLonEast()))
+        list.add(GeoPoint(45.0, sCentralParkBoundingBox.lonEast))
+        list.add(GeoPoint(35.0, sCentralParkBoundingBox.lonEast))
         mEastPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mEastPolyline)
 

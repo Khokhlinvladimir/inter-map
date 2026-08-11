@@ -16,7 +16,7 @@ import org.osmdroid.views.overlay.ItemizedOverlay
 import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.OverlayItem.HotspotPlace
 
-class SampleItemizedOverlay(pDefaultMarker: Drawable?, pContext: Context?) : ItemizedOverlay<SampleOverlayItem?>(pDefaultMarker),
+class SampleItemizedOverlay(pDefaultMarker: Drawable?, pContext: Context?) : ItemizedOverlay<SampleOverlayItem?>(pDefaultMarker!!),
     ItemizedOverlay.OnFocusChangeListener {
     private var mFocusChanged = false
     private var mPopupView: View? = null
@@ -48,19 +48,19 @@ class SampleItemizedOverlay(pDefaultMarker: Drawable?, pContext: Context?) : Ite
     }
 
     override fun onTap(index: Int): Boolean {
-        setFocus(getItem(index))
+        focus = getItem(index)
         return true
     }
 
 
-    override fun draw(c: Canvas?, mapView: MapView, shadow: Boolean) {
+    override fun draw(c: Canvas, mapView: MapView, shadow: Boolean) {
         if (mFocusChanged) {
             mFocusChanged = false
 
             // Remove any current focus
             if (mPopupView != null) mapView.removeView(mPopupView)
 
-            val item = this.getFocus()
+            val item = this.focus
             if (item != null) {
                 mPopupView = getPopupView(mapView.getContext(), item)
                 val lp = MapView.LayoutParams(
@@ -74,7 +74,7 @@ class SampleItemizedOverlay(pDefaultMarker: Drawable?, pContext: Context?) : Ite
         super.draw(c, mapView, shadow)
     }
 
-    protected fun getPopupView(context: Context?, item: SampleOverlayItem): View {
+    protected fun getPopupView(context: Context, item: SampleOverlayItem): View {
         val tv = TextView(context)
         tv.setText(item.getTitle())
         tv.setBackgroundColor(Color.BLACK)
@@ -85,7 +85,7 @@ class SampleItemizedOverlay(pDefaultMarker: Drawable?, pContext: Context?) : Ite
         return 2
     }
 
-    override fun onSnapToItem(arg0: Int, arg1: Int, arg2: Point?, arg3: IMapView?): Boolean {
+    override fun onSnapToItem(arg0: Int, arg1: Int, arg2: Point, arg3: IMapView?): Boolean {
         return false
     }
 }

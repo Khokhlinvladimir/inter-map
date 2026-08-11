@@ -22,7 +22,7 @@ import org.osmdroid.views.overlay.Marker
 object MarkerAnimation {
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     fun animateMarkerToGB(map: MapView, marker: Marker, finalPosition: GeoPoint, GeoPointInterpolator: GeoPointInterpolator) {
-        val startPosition = marker.getPosition()
+        val startPosition = marker.position
         val handler = Handler()
         val start = SystemClock.uptimeMillis()
         val interpolator: Interpolator = AccelerateDecelerateInterpolator()
@@ -39,7 +39,7 @@ object MarkerAnimation {
                 t = elapsed / durationInMs
                 v = interpolator.getInterpolation(t)
 
-                marker.setPosition(GeoPointInterpolator.interpolate(v, startPosition, finalPosition))
+                marker.position = GeoPointInterpolator.interpolate(v, startPosition, finalPosition)
                 map.invalidate()
                 // Repeat till progress is complete.
                 if (t < 1) {
@@ -52,14 +52,14 @@ object MarkerAnimation {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     fun animateMarkerToHC(map: MapView, marker: Marker, finalPosition: GeoPoint, GeoPointInterpolator: GeoPointInterpolator): ValueAnimator {
-        val startPosition = marker.getPosition()
+        val startPosition = marker.position
 
         val valueAnimator = ValueAnimator()
         valueAnimator.addUpdateListener(object : AnimatorUpdateListener {
             override fun onAnimationUpdate(animation: ValueAnimator) {
                 val v = animation.getAnimatedFraction()
                 val newPosition = GeoPointInterpolator.interpolate(v, startPosition, finalPosition)
-                marker.setPosition(newPosition)
+                marker.position = newPosition
                 map.invalidate()
             }
         })

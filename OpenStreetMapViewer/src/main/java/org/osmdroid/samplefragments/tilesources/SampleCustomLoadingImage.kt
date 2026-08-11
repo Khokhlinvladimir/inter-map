@@ -15,6 +15,6 @@ class SampleCustomLoadingImage : BaseSampleFragment() {
 
     override fun addOverlays() {
         super.addOverlays()
-        mMapView!!.getOverlayManager().getTilesOverlay().setLoadingDrawable(getResources().getDrawable(R.drawable.loading))
+        mMapView!!.getOverlayManager().getTilesOverlay()!!.setLoadingDrawable(getResources().getDrawable(R.drawable.loading))
     }
 }

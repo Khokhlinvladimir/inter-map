@@ -23,23 +23,23 @@ class MarkerDrag : BaseSampleFragment() {
     public override fun addOverlays() {
         super.addOverlays()
         //0. Using the Marker overlay
-        val startMarker = Marker(mMapView)
-        startMarker.setPosition(GeoPoint(0.0, 0.0))
+        val startMarker = Marker(mMapView!!)
+        startMarker.position = GeoPoint(0.0, 0.0)
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         startMarker.setTitle("Start point")
-        startMarker.setDraggable(true)
+        startMarker.isDraggable = true
         startMarker.setOnMarkerDragListener(OnMarkerDragListenerDrawer())
         mMapView!!.getOverlays()!!.add(startMarker)
     }
 
     //0. Using the Marker and Polyline overlays - advanced options
     internal inner class OnMarkerDragListenerDrawer : OnMarkerDragListener {
-        var mTrace: ArrayList<GeoPoint?>
+        var mTrace: ArrayList<GeoPoint>
         var mPolyline: Polyline
 
         init {
-            mTrace = ArrayList<GeoPoint?>(100)
-            mPolyline = Polyline(mMapView)
+            mTrace = ArrayList<GeoPoint>(100)
+            mPolyline = Polyline(mMapView!!)
             mPolyline.getOutlinePaint().setColor(-0x55ffff01)
             mPolyline.getOutlinePaint().setStrokeWidth(2.0f)
             mPolyline.setGeodesic(true)
@@ -47,17 +47,17 @@ class MarkerDrag : BaseSampleFragment() {
         }
 
         override fun onMarkerDrag(marker: Marker?) {
-            //mTrace.add(marker.getPosition());
+            //mTrace.add(marker.position);
         }
 
-        override fun onMarkerDragEnd(marker: Marker) {
-            mTrace.add(marker.getPosition())
+        override fun onMarkerDragEnd(marker: Marker?) {
+            mTrace.add(marker!!.position)
             mPolyline.setPoints(mTrace)
             mMapView!!.invalidate()
         }
 
         override fun onMarkerDragStart(marker: Marker?) {
-            //mTrace.add(marker.getPosition());
+            //mTrace.add(marker.position);
         }
     }
 }

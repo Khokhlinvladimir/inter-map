@@ -147,10 +147,10 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
         Log.i(TAG, "heatmap builder " + view)
 
         //populate the cells
-        var lat = view.getLatNorth()
-        while (lat >= view.getLatSouth()) {
-            var lon = view.getLonEast()
-            while (lon >= view.getLonWest()) {
+        var lat = view.latNorth
+        while (lat >= view.latSouth) {
+            var lon = view.lonEast
+            while (lon >= view.lonWest) {
                 //Log.i(TAG,"heatmap builder " + lat + "," + lon);
                 heatmap.put(BoundingBox(lat, lon, lat - yCellSizeLatitude, lon - xCellSizeLongitude), 0)
                 lon = lon - xCellSizeLongitude
@@ -221,8 +221,8 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
         for (i in 0..9999) {
             pts.add(
                 GeoPoint(
-                    (Math.random() * view.getLatitudeSpan()) + view.getLatSouth(),
-                    (Math.random() * view.getLongitudeSpan()) + view.getLonWest()
+                    (Math.random() * view.latitudeSpan) + view.latSouth,
+                    (Math.random() * view.longitudeSpan) + view.lonWest
                 )
             )
         }
@@ -282,22 +282,22 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
      */
     private fun createPolygon(key: BoundingBox, value: Int, redthreshold: Int, orangethreshold: Int): Overlay {
         val polygon = Polygon(mMapView)
-        if (value < orangethreshold) polygon.getFillPaint().setColor(Color.parseColor(alpha + yellow))
-        else if (value < redthreshold) polygon.getFillPaint().setColor(Color.parseColor(alpha + orange))
-        else if (value >= redthreshold) polygon.getFillPaint().setColor(Color.parseColor(alpha + red))
+        if (value < orangethreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + yellow))
+        else if (value < redthreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + orange))
+        else if (value >= redthreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + red))
         else {
             //no polygon
         }
-        polygon.getOutlinePaint().setColor(polygon.getFillPaint().getColor())
+        polygon.getOutlinePaint().setColor(polygon.getFillPaint()!!.getColor())
 
         //if you set this to something like 20f and have a low alpha setting,
         // you'll end with a gaussian blur like effect
         polygon.getOutlinePaint().setStrokeWidth(0f)
-        val pts: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
-        pts.add(GeoPoint(key.getLatNorth(), key.getLonWest()))
-        pts.add(GeoPoint(key.getLatNorth(), key.getLonEast()))
-        pts.add(GeoPoint(key.getLatSouth(), key.getLonEast()))
-        pts.add(GeoPoint(key.getLatSouth(), key.getLonWest()))
+        val pts: MutableList<GeoPoint> = ArrayList()
+        pts.add(GeoPoint(key.latNorth, key.lonWest))
+        pts.add(GeoPoint(key.latNorth, key.lonEast))
+        pts.add(GeoPoint(key.latSouth, key.lonEast))
+        pts.add(GeoPoint(key.latSouth, key.lonWest))
         polygon.setPoints(pts)
         return polygon
     }

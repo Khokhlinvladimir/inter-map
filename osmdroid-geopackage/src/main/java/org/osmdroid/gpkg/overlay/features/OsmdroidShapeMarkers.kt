@@ -232,19 +232,19 @@ class OsmdroidShapeMarkers {
          * @param markers
          */
         fun addMarkerAsPolygon(marker: Marker, markers: MutableList<Marker>) {
-            val position: IGeoPoint = marker.getPosition()!!
+            val position: IGeoPoint = marker.position
             var insertLocation = markers.size
             if (markers.size > 2) {
                 val distances = DoubleArray(markers.size)
                 insertLocation = 0
                 distances[0] = SphericalUtil.computeDistanceBetween(
                     position,
-                    markers.get(0)!!.getPosition()
+                    markers[0].position
                 )
                 for (i in 1 until markers.size) {
                     distances[i] = SphericalUtil.computeDistanceBetween(
                         position,
-                        markers.get(i)!!.getPosition()
+                        markers[i].position
                     )
                     if (distances[i] < distances[insertLocation]) {
                         insertLocation = i
@@ -275,19 +275,19 @@ class OsmdroidShapeMarkers {
          * @param markers
          */
         fun addMarkerAsPolyline(marker: Marker, markers: MutableList<Marker>) {
-            val position = marker.getPosition()!!
+            val position = marker.position
             var insertLocation = markers.size
             if (markers.size > 1) {
                 val distances = DoubleArray(markers.size)
                 insertLocation = 0
                 distances[0] = SphericalUtil.computeDistanceBetween(
                     position,
-                    markers.get(0)!!.getPosition()
+                    markers[0].position
                 )
                 for (i in 1 until markers.size) {
                     distances[i] = SphericalUtil.computeDistanceBetween(
                         position,
-                        markers.get(i)!!.getPosition()
+                        markers[i].position
                     )
                     if (distances[i] < distances[insertLocation]) {
                         insertLocation = i
@@ -310,9 +310,8 @@ class OsmdroidShapeMarkers {
                 } else if (beforeLocation != null) {
                     if (distances[beforeLocation] >= SphericalUtil
                             .computeDistanceBetween(
-                                markers.get(beforeLocation)!!
-                                    .getPosition(), markers.get(insertLocation)!!
-                                    .getPosition()
+                                markers[beforeLocation].position,
+                                markers[insertLocation].position
                             )
                     ) {
                         insertLocation++
@@ -320,9 +319,8 @@ class OsmdroidShapeMarkers {
                 } else {
                     if (distances[afterLocation!!] < SphericalUtil
                             .computeDistanceBetween(
-                                markers.get(afterLocation)!!
-                                    .getPosition(), markers.get(insertLocation)!!
-                                    .getPosition()
+                                markers[afterLocation].position,
+                                markers[insertLocation].position
                             )
                     ) {
                         insertLocation++

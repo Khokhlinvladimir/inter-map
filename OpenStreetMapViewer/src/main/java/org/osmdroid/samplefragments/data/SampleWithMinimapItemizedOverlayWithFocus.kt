@@ -35,7 +35,7 @@ class SampleWithMinimapItemizedOverlayWithFocus : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val context: Context? = getActivity()
+        val context: Context = requireActivity()
 
         /* Itemized Overlay */
         val mMyLocationOverlay: ItemizedOverlayWithFocus<OverlayItem?>
@@ -123,7 +123,7 @@ class SampleWithMinimapItemizedOverlayWithFocus : BaseSampleFragment() {
 
         // Zoom and center on the focused item.
         mMapView!!.controller!!.setZoom(5.0)
-        val geoPoint = mMyLocationOverlay.getFocusedItem()!!.getPoint()
+        val geoPoint = mMyLocationOverlay.focusedItem!!.getPoint()
         mMapView!!.controller!!.animateTo(geoPoint)
 
         setHasOptionsMenu(true)

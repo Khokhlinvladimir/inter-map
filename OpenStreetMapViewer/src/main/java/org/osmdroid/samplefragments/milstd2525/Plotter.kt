@@ -262,16 +262,16 @@ class Plotter : SampleGridlines(), View.OnClickListener, TextWatcher, ListPicker
                 attr.put(MilStdAttributes.PixelSize, size.toString() + "")
 
                 val ii = mir!!.RenderIcon(code, SparseArray<String?>(), attr)
-                val m = Marker(mMapView)
-                m.setPosition(mMapView!!.mapCenter as GeoPoint?)
+                val m = Marker(mMapView!!)
+                m.position = mMapView!!.mapCenter as GeoPoint
                 m.setTitle(code)
                 if (def != null) {
                     m.setSubDescription(def.getFullPath())
                     m.setSnippet(def.getDescription() + "\n" + def.getHierarchy())
                 }
                 val d: Drawable = BitmapDrawable(ii.getImage())
-                m.setImage(d)
-                m.setIcon(d)
+                m.image = d
+                m.icon = d
                 val centerX = ii.getCenterPoint().x //pixel center position
                 //calculate what percentage of the center this value is
                 val realCenterX = centerX.toFloat() / ii.getImage().getWidth().toFloat()

@@ -30,7 +30,7 @@ class SampleAnimateTo : SampleMapEventListener() {
         super.addOverlays()
 
         val dm = getActivity()!!.getResources().getDisplayMetrics()
-        mScaleBarOverlay = ScaleBarOverlay(mMapView)
+        mScaleBarOverlay = ScaleBarOverlay(mMapView!!)
         mScaleBarOverlay!!.setCentred(true)
         mScaleBarOverlay!!.setScaleBarOffset(dm.widthPixels / 2, 10)
         mMapView!!.getOverlays()!!.add(mScaleBarOverlay)
@@ -49,7 +49,7 @@ class SampleAnimateTo : SampleMapEventListener() {
         mList.add(
             DataRegion(
                 "dummy2", "Manhattan - single latitude",
-                BoundingBox(manhattanCenter.latitude, manhattanBoundingBox.getLonEast(), manhattanCenter.latitude, manhattanBoundingBox.getLonWest())
+                BoundingBox(manhattanCenter.latitude, manhattanBoundingBox.lonEast, manhattanCenter.latitude, manhattanBoundingBox.lonWest)
             )
         )
         // testing a "single longitude bounding box"
@@ -57,9 +57,9 @@ class SampleAnimateTo : SampleMapEventListener() {
             DataRegion(
                 "dummy3", "Manhattan - single longitude",
                 BoundingBox(
-                    manhattanBoundingBox.getLatNorth(),
+                    manhattanBoundingBox.latNorth,
                     manhattanCenter.longitude,
-                    manhattanBoundingBox.getLatSouth(),
+                    manhattanBoundingBox.latSouth,
                     manhattanCenter.longitude
                 )
             )

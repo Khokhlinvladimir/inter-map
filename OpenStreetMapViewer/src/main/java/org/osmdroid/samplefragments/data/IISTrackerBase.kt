@@ -54,9 +54,9 @@ abstract class IISTrackerBase : SampleGridlines() {
 
         //icon_old=getResources().getDrawable(R.drawable.sfppt_small);
         //icon_old.setAlpha(77);
-        marker = Marker(mMapView)
-        marker!!.setImage(image)
-        marker!!.setIcon(icon)
+        marker = Marker(mMapView!!)
+        marker!!.image = image
+        marker!!.icon = icon
         marker!!.setTitle("International Space Station")
     }
 
@@ -80,7 +80,7 @@ abstract class IISTrackerBase : SampleGridlines() {
                                         //only keep an icon on the map every 30 iterations
                                         //only keep a max of 500 icons on the map
                                         var wasOpen = false
-                                        if (marker != null && marker!!.isInfoWindowShown()) {
+                                        if (marker != null && marker!!.isInfoWindowShown) {
                                             marker!!.closeInfoWindow()
                                             wasOpen = true
                                         }
@@ -91,15 +91,15 @@ abstract class IISTrackerBase : SampleGridlines() {
                                             marker!!.onDetach(mMapView)
                                         } else {
                                             //change the icon to something that makes it obvious that it's an old location
-                                            marker!!.setAlpha(0.3f)
+                                            marker!!.alpha = 0.3f
                                             motionTrailCounter = 0
                                         }
 
-                                        marker = Marker(mMapView)
-                                        marker!!.setImage(image)
-                                        marker!!.setIcon(icon)
+                                        marker = Marker(mMapView!!)
+                                        marker!!.image = image
+                                        marker!!.icon = icon
                                         marker!!.setTitle("International Space Station")
-                                        marker!!.setPosition(location)
+                                        marker!!.position = location
                                         mMapView!!.controller!!.setCenter(location)
                                         marker!!.setSnippet(nf.format(location.latitude) + "," + nf.format(location.longitude))
                                         //only add it once
@@ -116,10 +116,10 @@ abstract class IISTrackerBase : SampleGridlines() {
                                     } else {
                                         //motion trails are disabled
                                         //basically, we only want 1 icon on the map for the space station
-                                        marker!!.setPosition(location)
+                                        marker!!.position = location
                                         mMapView!!.controller!!.setCenter(location)
                                         marker!!.setSnippet(nf.format(location.latitude) + "," + nf.format(location.longitude))
-                                        if (marker!!.isInfoWindowShown()) {
+                                        if (marker!!.isInfoWindowShown) {
                                             marker!!.closeInfoWindow()
                                             marker!!.showInfoWindow()
                                         }

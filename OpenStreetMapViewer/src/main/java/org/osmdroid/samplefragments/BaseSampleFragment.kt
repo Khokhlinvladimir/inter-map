@@ -99,7 +99,7 @@ abstract class BaseSampleFragment : Fragment() {
             val context: Context? = this.getActivity()
             val dm = context!!.getResources().getDisplayMetrics()
 
-            val copyrightOverlay = CopyrightOverlay(getActivity())
+            val copyrightOverlay = CopyrightOverlay(requireActivity())
             copyrightOverlay.setTextSize(10)
 
             mMapView!!.getOverlays()!!.add(copyrightOverlay)

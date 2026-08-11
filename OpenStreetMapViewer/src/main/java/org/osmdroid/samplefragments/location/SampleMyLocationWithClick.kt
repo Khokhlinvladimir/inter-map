@@ -19,7 +19,7 @@ class SampleMyLocationWithClick : BaseSampleFragment() {
     public override fun addOverlays() {
         super.addOverlays()
 
-        val overlay = MyLocationOverlayWithClick(mMapView)
+        val overlay = MyLocationOverlayWithClick(mMapView!!)
         overlay.enableFollowLocation()
         overlay.enableMyLocation()
         overlay.runOnFirstFix(object : Runnable {
@@ -28,7 +28,7 @@ class SampleMyLocationWithClick : BaseSampleFragment() {
                 val activity = this@SampleMyLocationWithClick.getActivity()
                 if (activity != null) activity.runOnUiThread(object : Runnable {
                     override fun run() {
-                        val myLocation = overlay.getMyLocation()
+                        val myLocation = overlay.myLocation
                         if (myLocation != null) Toast.makeText(
                             this@SampleMyLocationWithClick.getContext(),
                             "GPS fix acquired at " + myLocation.toDoubleString(),
@@ -42,11 +42,12 @@ class SampleMyLocationWithClick : BaseSampleFragment() {
         mMapView!!.getOverlayManager().add(overlay)
     }
 
-    class MyLocationOverlayWithClick(mapView: MapView?) : MyLocationNewOverlay(mapView) {
-        override fun onSingleTapConfirmed(e: MotionEvent?, map: MapView): Boolean {
-            if (getLastFix() != null) Toast.makeText(
-                map.getContext(),
-                "Tap! I am at " + getLastFix().getLatitude() + "," + getLastFix().getLongitude(),
+    class MyLocationOverlayWithClick(mapView: MapView) : MyLocationNewOverlay(mapView) {
+        override fun onSingleTapConfirmed(e: MotionEvent, map: MapView?): Boolean {
+            val fix = lastFix
+            if (fix != null) Toast.makeText(
+                map!!.getContext(),
+                "Tap! I am at " + fix.getLatitude() + "," + fix.getLongitude(),
                 Toast.LENGTH_LONG
             ).show()
             return true

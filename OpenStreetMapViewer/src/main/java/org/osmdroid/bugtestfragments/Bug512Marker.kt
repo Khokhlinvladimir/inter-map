@@ -17,10 +17,10 @@ class Bug512Marker : BaseSampleFragment() {
 
     public override fun addOverlays() {
         super.addOverlays()
-        marker = Marker(mMapView)
+        marker = Marker(mMapView!!)
         marker!!.setSnippet("Hello world, bug 512 part 1")
-        marker!!.setPosition(GeoPoint(-40.0, -74.0))
-        mMapView!!.controller!!.setCenter(marker!!.getPosition())
+        marker!!.position = GeoPoint(-40.0, -74.0)
+        mMapView!!.controller!!.setCenter(marker!!.position)
         mMapView!!.getOverlayManager().add(marker)
     }
 
@@ -42,10 +42,10 @@ class Bug512Marker : BaseSampleFragment() {
                 mMapView!!.getOverlayManager().remove(marker)
                 marker!!.onDetach(mMapView)
 
-                marker = Marker(mMapView)
+                marker = Marker(mMapView!!)
                 marker!!.setSnippet("Hello world, bug 512 part 2")
-                marker!!.setPosition(GeoPoint(-40.0, -74.0))
-                mMapView!!.controller!!.setCenter(marker!!.getPosition())
+                marker!!.position = GeoPoint(-40.0, -74.0)
+                mMapView!!.controller!!.setCenter(marker!!.position)
                 mMapView!!.getOverlayManager().add(marker)
             }
         })

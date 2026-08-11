@@ -19,8 +19,8 @@ class SampleSnappable : BaseSampleFragment() {
         get() = "Snappable"
 
     internal inner class MyOverlay : Overlay(), Snappable {
-        override fun onSnapToItem(x: Int, y: Int, snapPoint: Point?, mapView: IMapView): Boolean {
-            val projection = mapView.projection
+        override fun onSnapToItem(x: Int, y: Int, snapPoint: Point, mapView: IMapView?): Boolean {
+            val projection = mapView!!.projection
             projection!!.toPixels(MAP_CENTER, snapPoint)
             return true
         }

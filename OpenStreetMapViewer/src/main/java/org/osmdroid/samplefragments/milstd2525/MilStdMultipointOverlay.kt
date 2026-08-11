@@ -30,13 +30,13 @@ import sec.web.render.SECWebRenderer
  *
  * @author Alex O'Ree
  */
-class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: ArrayList<GeoPoint?>) : Overlay() {
+class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: ArrayList<GeoPoint>) : Overlay() {
     private val mCurrentMapRotation = 0f
     private val mCurrentMapZoom = 0.0
     private val mCurrentCenter: IGeoPoint? = null
     protected var lastOverlay: FolderOverlay? = null
 
-    override fun draw(c: Canvas?, map: MapView, shadow: Boolean) {
+    override fun draw(c: Canvas, map: MapView, shadow: Boolean) {
         if (shadow) return
         //prevent looping forever for rendering
         //get the bounds,zoom, and rotation. if it's different, proceed
@@ -58,8 +58,8 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
 
         //Log.d(IMapView.LOGTAG, "point size before " + inputGeoPoints.size());
         //get the screen bounds
-        val boundingBox = map.getBoundingBox()
-        val latSpanDegrees = boundingBox!!.getLatitudeSpan()
+        val boundingBox = requireNotNull(map.getBoundingBox())
+        val latSpanDegrees = boundingBox.latitudeSpan
         //get the degree difference, divide by dpi
         val tolerance = latSpanDegrees / densityDpi
 
@@ -87,10 +87,10 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
         //the ground scale
         val scale = TileSystem.GroundResolution(map.mapCenter!!.latitude, map.zoomLevelDouble)
         //"lowerLeftX,lowerLeftY,upperRightX,upperRightY."
-        val bbox = boundingBox.getLonWest().toString() + "," +
-                boundingBox.getLatSouth() + "," +
-                boundingBox.getLonEast() + "," +
-                boundingBox.getLatNorth()
+        val bbox = boundingBox.lonWest.toString() + "," +
+                boundingBox.latSouth + "," +
+                boundingBox.lonEast + "," +
+                boundingBox.latNorth
 
 
         val modifiers = symbol.modifiers
@@ -137,26 +137,26 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
                     val polylines = info.getPolylines()
                     if (polylines != null) for (list in polylines) {
                         val line = Polygon(map)
-                        val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                        val geoPoints: MutableList<GeoPoint> = ArrayList()
                         for (p in list) {
                             geoPoints.add(GeoPoint(p!!.getY(), p.getX()))
                         }
                         line.setPoints(geoPoints)
                         if (info.getLineColor() != null) line.getOutlinePaint().setColor(info.getLineColor().toInt())
-                        if (info.getFillColor() != null) line.getFillPaint().setColor(info.getFillColor().toInt())
+                        if (info.getFillColor() != null) line.getFillPaint()!!.setColor(info.getFillColor().toInt())
                         line.getOutlinePaint().setStrokeWidth(flot.getLineWidth().toFloat())
                         line.setId(id)
                         line.setTitle(name)
                         line.setSubDescription(description)
                         line.setSnippet(symbolCode)
                         line.setVisible(true)
-                        lastOverlay!!.getItems().add(line)
+                        lastOverlay!!.items!!.add(line)
                     }
                 } else {
                     val polylines = info.getPolylines()
                     if (polylines != null) for (list in polylines) {
                         val line = Polyline(map)
-                        val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                        val geoPoints: MutableList<GeoPoint> = ArrayList()
                         for (p in list) {
                             geoPoints.add(GeoPoint(p!!.getY(), p.getX()))
                         }
@@ -169,7 +169,7 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
                         line.setSubDescription(description)
                         line.setSnippet(symbolCode)
                         line.setVisible(true)
-                        lastOverlay!!.getItems().add(line)
+                        lastOverlay!!.items!!.add(line)
                     }
                 }
             }
@@ -182,26 +182,26 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
                     if (info.getFillColor() != null) {
                         for (list in polylines) {
                             val line = Polygon(map)
-                            val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                            val geoPoints: MutableList<GeoPoint> = ArrayList()
                             for (p in list) {
                                 geoPoints.add(GeoPoint(p!!.getY(), p.getX()))
                             }
                             line.setPoints(geoPoints)
                             if (info.getLineColor() != null) line.getOutlinePaint().setColor(info.getLineColor().toInt())
-                            if (info.getFillColor() != null) line.getFillPaint().setColor(info.getFillColor().toInt())
+                            if (info.getFillColor() != null) line.getFillPaint()!!.setColor(info.getFillColor().toInt())
                             line.setId(id)
                             line.setTitle(name)
                             line.getOutlinePaint().setStrokeWidth(flot.getLineWidth().toFloat())
                             line.setSubDescription(description)
                             line.setSnippet(symbolCode)
                             line.setVisible(true)
-                            lastOverlay!!.getItems().add(line)
+                            lastOverlay!!.items!!.add(line)
                         }
                     } else {
                         //it's a line
                         for (list in polylines) {
                             val line = Polyline(map)
-                            val geoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+                            val geoPoints: MutableList<GeoPoint> = ArrayList()
                             for (p in list) {
                                 geoPoints.add(GeoPoint(p!!.getY(), p.getX()))
                             }
@@ -210,20 +210,20 @@ class MilStdMultipointOverlay(var symbol: SimpleSymbol, var inputGeoPoints: Arra
                             if (info.getLineColor() != null) line.getOutlinePaint().setColor(info.getLineColor().toInt())
                             line.setGeodesic(true)
                             line.setVisible(true)
-                            lastOverlay!!.getItems().add(line)
+                            lastOverlay!!.items!!.add(line)
                         }
                     }
                 } else {
                     //not a line or a polygon
                     val m = Marker(map)
-                    m.setTextLabelBackgroundColor(Color.WHITE.toInt())
-                    m.setTextLabelFontSize(14)
-                    m.setTextLabelForegroundColor(Color.BLACK.toInt())
+                    m.textLabelBackgroundColor = Color.WHITE.toInt()
+                    m.textLabelFontSize = 14
+                    m.textLabelForegroundColor = Color.BLACK.toInt()
                     m.setTitle(info.getModifierString())
-                    m.setRotation(info.getModifierStringAngle().toFloat())
+                    m.rotation = info.getModifierStringAngle().toFloat()
                     m.setTextIcon(info.getModifierString())
-                    m.setPosition(GeoPoint(info.getModifierStringPosition().getY(), info.getModifierStringPosition().getX()))
-                    lastOverlay!!.getItems().add(m)
+                    m.position = GeoPoint(info.getModifierStringPosition().getY(), info.getModifierStringPosition().getX())
+                    lastOverlay!!.items!!.add(m)
                 }
             }
         }

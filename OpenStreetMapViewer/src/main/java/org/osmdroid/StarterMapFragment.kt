@@ -94,23 +94,23 @@ class StarterMapFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val context: Context? = this.getActivity()
-        val dm = context!!.getResources().getDisplayMetrics()
+        val context: Context = requireContext()
+        val dm = context.resources.displayMetrics
 
         mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
 
         //My Location
         //note you have handle the permissions yourself, the overlay did not do it for you
-        mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), mMapView)
+        mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), mMapView!!)
         mLocationOverlay!!.enableMyLocation()
         mMapView!!.getOverlays()!!.add(this.mLocationOverlay)
 
 
         //Mini map
         mMinimapOverlay = MinimapOverlay(context, mMapView!!.getTileRequestCompleteHandler())
-        mMinimapOverlay!!.setWidth(dm.widthPixels / 5)
-        mMinimapOverlay!!.setHeight(dm.heightPixels / 5)
+        mMinimapOverlay!!.width = dm.widthPixels / 5
+        mMinimapOverlay!!.height = dm.heightPixels / 5
         mMapView!!.getOverlays()!!.add(this.mMinimapOverlay)
 
 
@@ -131,7 +131,7 @@ class StarterMapFragment : Fragment() {
 
 
         //map scale
-        mScaleBarOverlay = ScaleBarOverlay(mMapView)
+        mScaleBarOverlay = ScaleBarOverlay(mMapView!!)
         mScaleBarOverlay!!.setCentred(true)
         mScaleBarOverlay!!.setScaleBarOffset(dm.widthPixels / 2, 10)
         mMapView!!.getOverlays()!!.add(this.mScaleBarOverlay)
@@ -169,7 +169,7 @@ class StarterMapFragment : Fragment() {
     override fun onPause() {
         //save the current location
         val edit = mPrefs!!.edit()
-        edit.putString(PREFS_TILE_SOURCE, mMapView!!.getTileProvider()!!.getTileSource().name())
+        edit.putString(PREFS_TILE_SOURCE, mMapView!!.getTileProvider()!!.getTileSource()!!.name())
         edit.putFloat(PREFS_ORIENTATION, mMapView!!.getMapOrientation())
         edit.putString(PREFS_LATITUDE_STRING, mMapView!!.mapCenter!!.latitude.toString())
         edit.putString(PREFS_LONGITUDE_STRING, mMapView!!.mapCenter!!.longitude.toString())

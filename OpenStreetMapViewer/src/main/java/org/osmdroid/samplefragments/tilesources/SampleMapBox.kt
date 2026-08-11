@@ -72,7 +72,7 @@ class SampleMapBox : BaseSampleFragment() {
 
                         val b = MapBoxTileSource("MapBox", 0, 19, 256, ".png")
                         b.setMapboxMapid(userInputBoxId.getText().toString())
-                        b.setAccessToken(userInputToken.getText().toString())
+                        b.accessToken = userInputToken.getText().toString()
                         mMapView!!.setTileSource(b)
                     }
                 })

@@ -46,7 +46,7 @@ class SampleCustomIconDirectedLocationOverlay : BaseSampleFragment(), LocationLi
 
     override fun addOverlays() {
         super.addOverlays()
-        overlay = DirectedLocationOverlay(getActivity())
+        overlay = DirectedLocationOverlay(requireActivity())
         overlay!!.setShowAccuracy(true)
         Toast.makeText(getActivity(), "Requires location services turned on", Toast.LENGTH_LONG).show()
         mMapView!!.getOverlays()!!.add(overlay)
@@ -63,7 +63,7 @@ class SampleCustomIconDirectedLocationOverlay : BaseSampleFragment(), LocationLi
                         override fun run() {
                             try {
                                 val drawable = getResources().getDrawable(R.drawable.sfgpuci) as BitmapDrawable
-                                overlay!!.setDirectionArrow(drawable.getBitmap())
+                                overlay!!.setDirectionArrow(drawable.bitmap)
                             } catch (t: Throwable) {
                                 //insultates against crashing when the user rapidly switches fragments/activities
                             }
@@ -77,7 +77,7 @@ class SampleCustomIconDirectedLocationOverlay : BaseSampleFragment(), LocationLi
         hasFix = true
         overlay!!.setBearing(location.getBearing())
         overlay!!.setAccuracy(location.getAccuracy().toInt())
-        overlay!!.setLocation(GeoPoint(location.getLatitude(), location.getLongitude()))
+        overlay!!.location = GeoPoint(location.getLatitude(), location.getLongitude())
         mMapView!!.invalidate()
     }
 

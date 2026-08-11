@@ -34,7 +34,7 @@ class SampleAnimatedZoomToLocation : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val context: Context? = getActivity()
+        val context: Context = requireActivity()
         Toast.makeText(getActivity(), "Make sure location services are enabled!", Toast.LENGTH_LONG).show()
         mGpsMyLocationProvider = GpsMyLocationProvider(context)
         mGpsMyLocationProvider!!.startLocationProvider(object : IMyLocationConsumer {
@@ -71,7 +71,7 @@ class SampleAnimatedZoomToLocation : BaseSampleFragment() {
                     mMapView!!.getOverlays()!!.add(mMyLocationOverlay)
 
                     mMapView!!.controller!!.setZoom(10)
-                    val geoPoint = mMyLocationOverlay!!.getFocusedItem()!!.getPoint()
+                    val geoPoint = mMyLocationOverlay!!.focusedItem!!.getPoint()
                     mMapView!!.controller!!.animateTo(geoPoint)
                 }
             }

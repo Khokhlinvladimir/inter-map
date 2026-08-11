@@ -28,13 +28,13 @@ class SampleItemizedOverlayMultiClick : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val context: Context? = getActivity()
+        val context: Context = requireActivity()
 
         val datas: MutableList<DataContainer> = data
         val items: MutableList<OverlayItem?> = ArrayList<OverlayItem?>()
-        val geoPoints: MutableList<IGeoPoint?> = ArrayList<IGeoPoint?>()
+        val geoPoints: MutableList<IGeoPoint> = ArrayList()
         for (data in datas) {
-            geoPoints.add(data.geoPoint)
+            geoPoints.add(requireNotNull(data.geoPoint))
             items.add(OverlayItem(data.title, data.snippet, data.geoPoint))
         }
         val box = BoundingBox.fromGeoPoints(geoPoints)

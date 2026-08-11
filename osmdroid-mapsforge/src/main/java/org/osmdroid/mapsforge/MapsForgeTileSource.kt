@@ -127,8 +127,8 @@ open class MapsForgeTileSource protected constructor(
     open val boundsOsmdroid: org.osmdroid.util.BoundingBox
         get() {
             val boundingBox = mapDatabase!!.boundingBox()
-            val latNorth = min(getTileSystem().getMaxLatitude(), boundingBox.maxLatitude)
-            val latSouth = max(getTileSystem().getMinLatitude(), boundingBox.minLatitude)
+            val latNorth = min(getTileSystem().maxLatitude, boundingBox.maxLatitude)
+            val latSouth = max(getTileSystem().minLatitude, boundingBox.minLatitude)
             return org.osmdroid.util.BoundingBox(
                 latNorth, boundingBox.maxLongitude,
                 latSouth, boundingBox.minLongitude

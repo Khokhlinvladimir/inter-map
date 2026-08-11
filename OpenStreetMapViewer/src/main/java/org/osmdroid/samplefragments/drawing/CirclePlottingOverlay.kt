@@ -15,11 +15,12 @@ import org.osmdroid.views.overlay.Polygon
  * @author Alex O'Ree
  */
 class CirclePlottingOverlay(var distanceKm: Float) : Overlay() {
-    override fun onLongPress(e: MotionEvent, mapView: MapView): Boolean {
+    override fun onLongPress(e: MotionEvent, mapView: MapView?): Boolean {
+        val map = mapView ?: return false
         if (instance!!.isDebugMapView) {
             Log.d(IMapView.LOGTAG, "CirclePlottingOverlay onLongPress")
         }
-        val pt = mapView.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
+        val pt = map.projection.fromPixels(e.getX().toInt(), e.getY().toInt(), null) as GeoPoint
 
         /*
          * <b>Note</b></b: when plotting a point off the map, the conversion from
@@ -31,18 +32,18 @@ class CirclePlottingOverlay(var distanceKm: Float) : Overlay() {
          */
 
         //just in case the point is off the map, let's fix the coordinates
-        if (pt.longitude < -180) pt.setLongitude(pt.longitude + 360)
-        if (pt.longitude > 180) pt.setLongitude(pt.longitude - 360)
+        if (pt.longitude < -180) pt.longitude = pt.longitude + 360
+        if (pt.longitude > 180) pt.longitude = pt.longitude - 360
         //latitude is a bit harder. see https://en.wikipedia.org/wiki/Mercator_projection
-        if (pt.latitude > 85.05112877980659) pt.setLatitude(85.05112877980659)
-        if (pt.latitude < -85.05112877980659) pt.setLatitude(-85.05112877980659)
+        if (pt.latitude > 85.05112877980659) pt.latitude = 85.05112877980659
+        if (pt.latitude < -85.05112877980659) pt.latitude = -85.05112877980659
 
-        val circle: MutableList<GeoPoint?> = Polygon.pointsAsCircle(pt, distanceKm.toDouble())
-        val p = Polygon(mapView)
+        val circle: List<GeoPoint> = Polygon.pointsAsCircle(pt, distanceKm.toDouble()).filterNotNull()
+        val p = Polygon(map)
         p.setPoints(circle)
         p.setTitle("A circle")
-        mapView.getOverlayManager().add(p)
-        mapView.invalidate()
+        map.getOverlayManager().add(p)
+        map.invalidate()
         return true
     }
 }

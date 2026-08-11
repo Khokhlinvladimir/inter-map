@@ -63,14 +63,14 @@ class SampleMarkerMultiClick : BaseSampleFragment() {
         }))
 
         val datas = data
-        val geoPoints: MutableList<IGeoPoint?> = ArrayList<IGeoPoint?>()
+        val geoPoints: MutableList<IGeoPoint> = ArrayList()
         val drawable = getResources().getDrawable(R.drawable.icon)
         for (data in datas) {
-            geoPoints.add(data.geoPoint)
-            val marker: Marker = MyMarker(mMapView)
-            marker.setPosition(GeoPoint(data.geoPoint))
+            geoPoints.add(requireNotNull(data.geoPoint))
+            val marker: Marker = MyMarker(mMapView!!)
+            marker.position = GeoPoint(requireNotNull(data.geoPoint))
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-            marker.setIcon(drawable)
+            marker.icon = drawable
             marker.setTitle(data.title)
             marker.setSnippet(data.snippet)
             marker.setOnMarkerClickListener(object : OnMarkerClickListener {
@@ -91,11 +91,11 @@ class SampleMarkerMultiClick : BaseSampleFragment() {
     }
 
     private fun message(pMarker: Marker) {
-        (pMarker as MyMarker).onMarkerClickDefault(pMarker, mMapView)
+        (pMarker as MyMarker).onMarkerClickDefault(pMarker, mMapView!!)
     }
 
-    private class MyMarker(mapView: MapView?) : Marker(mapView) {
-        public override fun onMarkerClickDefault(marker: Marker, mapView: MapView?): Boolean { // made public
+    private class MyMarker(mapView: MapView) : Marker(mapView) {
+        public override fun onMarkerClickDefault(marker: Marker, mapView: MapView): Boolean { // made public
             return super.onMarkerClickDefault(marker, mapView)
         }
     }

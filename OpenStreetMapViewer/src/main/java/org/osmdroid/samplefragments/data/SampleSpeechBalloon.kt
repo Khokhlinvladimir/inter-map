@@ -18,7 +18,7 @@ import org.osmdroid.views.overlay.SpeechBalloonOverlay
  * @since 6.1.1
  */
 class SampleSpeechBalloon : BaseSampleFragment() {
-    private val mGeoPoints: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+    private val mGeoPoints: MutableList<GeoPoint> = ArrayList()
     private val mBackground = Paint()
     private val mForeground = Paint()
     private val mDragBackground = Paint()
@@ -99,10 +99,10 @@ class SampleSpeechBalloon : BaseSampleFragment() {
     }
 
     private fun addToDisplay(pPOI: POI) {
-        val marker = Marker(mMapView)
+        val marker = Marker(mMapView!!)
         marker.setTitle(pPOI.mTitle)
-        marker.setPosition(pPOI.mGeoPoint)
-        marker.setIcon(mBitmapDrawable)
+        marker.position = pPOI.mGeoPoint
+        marker.icon = mBitmapDrawable
         mMapView!!.getOverlays()!!.add(marker)
         if (pPOI.mSpeechBalloon) {
             val speechBalloonOverlay = SpeechBalloonOverlay()

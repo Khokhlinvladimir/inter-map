@@ -112,7 +112,7 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
         title: String?, description: String?,
         mapping: ColorMapping?, gradient: Boolean,
         borderColor: Int?, pClosePath: Boolean,
-        points: MutableList<GeoPoint?>, pScalars: MutableList<Float?>?
+        points: MutableList<GeoPoint>, pScalars: MutableList<Float?>?
     ) {
         var polyline: Polyline
             private set
@@ -120,7 +120,7 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
 
         init {
             // setup polyline
-            this.polyline = Polyline(mMapView, false, pClosePath)
+            this.polyline = Polyline(mMapView!!, false, pClosePath)
 
             if (borderColor != null) {
                 val paint = Paint()
@@ -150,7 +150,7 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
             paint.setStrokeJoin(Paint.Join.ROUND)
             paint.setStrokeCap(Paint.Cap.ROUND)
             paint.setAntiAlias(true)
-            polyline.getOutlinePaintLists().add(PolychromaticPaintList(paint, mapping, gradient))
+            polyline.getOutlinePaintLists().add(PolychromaticPaintList(paint, requireNotNull(mapping), gradient))
 
             // set a bounding box from points, plus 1.2f scaled
             mBoundingBox = BoundingBox.fromGeoPoints(points).increaseByScale(1.2f)
@@ -168,7 +168,7 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
      */
     internal inner class InfoWindowExample(layoutResId: Int, mapView: MapView) : InfoWindow(layoutResId, mapView) {
         init {
-            mView.setOnClickListener(object : View.OnClickListener {
+            mView!!.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
                     close()
                 }
@@ -176,8 +176,8 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
         }
 
         fun setText(title: String?, description: String?) {
-            (getView().findViewById<View?>(R.id.bubble_title) as TextView).setText(title)
-            (getView().findViewById<View?>(R.id.bubble_description) as TextView).setText(description)
+            (getView()!!.findViewById<View?>(R.id.bubble_title) as TextView).setText(title)
+            (getView()!!.findViewById<View?>(R.id.bubble_description) as TextView).setText(description)
         }
 
         override fun onOpen(item: Any?) {
@@ -269,7 +269,7 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
         )
 
         // Loop example
-        val hexagon: MutableList<GeoPoint?> = ArrayList<GeoPoint?>()
+        val hexagon: MutableList<GeoPoint> = ArrayList()
         hexagon.add(GeoPoint(51.038333, 2.377500)) // Dunkerque
         hexagon.add(GeoPoint(48.573333, 7.752200)) // Strasbourg
         hexagon.add(GeoPoint(43.695833, 7.271389)) // Nice
@@ -318,8 +318,8 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
         }
     }
 
-    private fun getPoints(identifier: String): ArrayList<GeoPoint?> {
-        val points = ArrayList<GeoPoint?>()
+    private fun getPoints(identifier: String): ArrayList<GeoPoint> {
+        val points = ArrayList<GeoPoint>()
         try {
             val example = mData!!.get(identifier) as JSONObject
             val array = example.getJSONArray("geopoints")

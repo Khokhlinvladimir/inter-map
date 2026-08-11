@@ -48,12 +48,12 @@ class BookmarkDatastore {
             //TODO order by title
             val cur = mDatabase!!.rawQuery("SELECT * FROM " + TABLE, null)
             while (cur.moveToNext()) {
-                val m = Marker(view)
+                val m = Marker(view!!)
                 m.setId(cur.getString(cur.getColumnIndex(COLUMN_ID)))
                 m.setTitle(cur.getString(cur.getColumnIndex(COLUMN_TITLE)))
                 m.setSubDescription(cur.getString(cur.getColumnIndex(COLUMN_DESC)))
-                m.setPosition(GeoPoint(cur.getDouble(cur.getColumnIndex(COLUMN_LAT)), cur.getDouble(cur.getColumnIndex(COLUMN_LON))))
-                m.setSnippet(m.getPosition().toDoubleString())
+                m.position = GeoPoint(cur.getDouble(cur.getColumnIndex(COLUMN_LAT)), cur.getDouble(cur.getColumnIndex(COLUMN_LON)))
+                m.setSnippet(m.position.toDoubleString())
 
                 markers.add(m)
             }
@@ -68,8 +68,8 @@ class BookmarkDatastore {
     fun addBookmark(bookmark: Marker) {
         addBookmark(
             bookmark.getId(),
-            bookmark.getPosition().latitude,
-            bookmark.getPosition().longitude,
+            bookmark.position.latitude,
+            bookmark.position.longitude,
             bookmark.getTitle(),
             bookmark.getSubDescription()
         )

@@ -15,7 +15,7 @@ class SampleBingRoad : BaseSampleFragment() {
     public override fun addOverlays() {
         super.addOverlays()
         //this gets the key from the manifest
-        BingMapTileSource.retrieveBingKey(this.getContext())
+        BingMapTileSource.retrieveBingKey(requireContext())
         val source = BingMapTileSource(null)
         Thread(object : Runnable {
             override fun run() {

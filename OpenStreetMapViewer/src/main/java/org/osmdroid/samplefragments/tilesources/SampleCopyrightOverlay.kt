@@ -21,7 +21,7 @@ class SampleCopyrightOverlay : BaseSampleFragment() {
         Log.d(TAG, "onActivityCreated")
 
         mMapView!!.getOverlays()!!.clear()
-        val copyrightOverlay = CopyrightOverlay(getActivity())
+        val copyrightOverlay = CopyrightOverlay(requireActivity())
         copyrightOverlay.setTextColor(Color.GREEN)
         copyrightOverlay.setTextSize(20)
         copyrightOverlay.setAlignBottom(true)

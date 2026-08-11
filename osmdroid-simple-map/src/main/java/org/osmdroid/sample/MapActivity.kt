@@ -54,30 +54,32 @@ class MapActivity : AppCompatActivity() {
         }
 
         val mRotationGestureOverlay = RotationGestureOverlay(mapView)
-        mRotationGestureOverlay.isEnabled = true
+        mRotationGestureOverlay.setEnabled(true)
         mapView!!.getOverlays()!!.add(mRotationGestureOverlay)
 
         //support for one finger zoom
         val mOneFingerZoomOverlay = OneFingerZoomOverlay()
         mapView!!.getOverlays()!!.add(mOneFingerZoomOverlay)
 
-        val mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), mapView)
+        val mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), mapView!!)
         mLocationOverlay.enableMyLocation()
         mapView!!.getOverlays()!!.add(mLocationOverlay)
 
         // Создание маркера
-        val marker = Marker(mapView)
+        val marker = Marker(mapView!!)
         marker.position = GeoPoint(36.49012395408768, 30.523714151400714) // Задайте широту и долготу
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         marker.icon = ResourcesCompat.getDrawable(resources, R.drawable.marker_default, null)
-        marker.title = "Название места"
-        marker.snippet = "Дополнительная информация"
+        marker.setTitle("Название места")
+        marker.setSnippet("Дополнительная информация")
 
-        marker.setOnMarkerClickListener { marker, mapView -> // Добавление обьекта нарисованного на Canvas
-            mapView!!.getOverlays()!!.add(CustomOverlay(mapView = mapView))
-
-            true
-        }
+        marker.setOnMarkerClickListener(object : Marker.OnMarkerClickListener {
+            override fun onMarkerClick(marker: Marker?, mapView: MapView?): Boolean {
+                val clickedMap = requireNotNull(mapView)
+                clickedMap.getOverlays()!!.add(CustomOverlay(mapView = clickedMap))
+                return true
+            }
+        })
 
         // Добавление маркера на карту
         mapView!!.getOverlays()!!.add(marker)

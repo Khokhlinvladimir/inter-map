@@ -25,7 +25,7 @@ class SampleVeryHighZoomLevel : BaseSampleFragment() {
     public override fun addOverlays() {
         mMapView!!.setUseDataConnection(false)
 
-        val scaleBarOverlay = ScaleBarOverlay(mMapView)
+        val scaleBarOverlay = ScaleBarOverlay(mMapView!!)
         scaleBarOverlay.setCentred(true)
         scaleBarOverlay.setScaleBarOffset(200, 10)
         mMapView!!.getOverlays()!!.add(scaleBarOverlay)
@@ -42,7 +42,7 @@ class SampleVeryHighZoomLevel : BaseSampleFragment() {
 
         val array = MapTileProviderArray(
             tileSource, SimpleRegisterReceiver(getContext()),
-            arrayOf<MapTileModuleProviderBase>(assetsProvider, approximationProvider)
+            arrayOf<MapTileModuleProviderBase?>(assetsProvider, approximationProvider)
         )
 
         mMapView!!.setTileProvider(array)

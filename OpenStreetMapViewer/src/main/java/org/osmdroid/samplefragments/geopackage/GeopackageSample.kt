@@ -145,7 +145,7 @@ class GeopackageSample : BaseSampleFragment() {
             if (!sourceSet) {
                 Toast.makeText(getContext(), "No tile source is available, get your geopackages for 'tiles' tables", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(getContext(), "Tile source set to " + mMapView!!.getTileProvider()!!.getTileSource().name(), Toast.LENGTH_LONG).show()
+                Toast.makeText(getContext(), "Tile source set to " + mMapView!!.getTileProvider()!!.getTileSource()!!.name(), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -197,7 +197,7 @@ class GeopackageSample : BaseSampleFragment() {
 
         if (currentSource != null) {
             sb.append("\n")
-            sb.append(currentSource!!.name() + "," + currentSource!!.getBaseUrl())
+            sb.append(currentSource!!.name() + "," + currentSource!!.baseUrl)
         }
 
 

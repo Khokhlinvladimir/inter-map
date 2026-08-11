@@ -111,12 +111,12 @@ class SampleMilitaryIconsMarker : BaseSampleFragment() {
         for (i in 0 until count) {
             val random_lon = getTileSystem().getRandomLongitude(mRandom.nextDouble())
             val random_lat = getTileSystem().getRandomLatitude(mRandom.nextDouble())
-            val m = Marker(mMapView)
-            m.setPosition(GeoPoint(random_lat, random_lon))
+            val m = Marker(mMapView!!)
+            m.position = GeoPoint(random_lat, random_lon)
             val index = mRandom.nextInt(icons.size)
             m.setSnippet("A random point")
             m.setSubDescription("location: " + random_lat + "," + random_lon)
-            m.setIcon(icons.get(index))
+            m.icon = icons.get(index)
             mMapView!!.getOverlayManager().add(m)
         }
 

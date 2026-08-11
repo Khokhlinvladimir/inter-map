@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
          * @return current cache size in bytes
          */
         @JvmStatic
-        fun updateStoragePreferences(ctx: Context?): Long {
+        fun updateStoragePreferences(ctx: Context): Long {
             //loads the osmdroid config from the shared preferences object.
             //if this is the first time launching this app, all settings are set defaults with one exception,
             //the tile cache. the default is the largest write storage partition, which could end up being

@@ -53,14 +53,14 @@ class SampleFollowMe : BaseSampleFragment(), LocationListener {
 
         this.mCompassOverlay = CompassOverlay(
             context, InternalCompassOrientationProvider(context),
-            mMapView
+            mMapView!!
         )
         this.mLocationOverlay = MyLocationNewOverlay(
             GpsMyLocationProvider(context),
-            mMapView
+            mMapView!!
         )
 
-        mScaleBarOverlay = ScaleBarOverlay(mMapView)
+        mScaleBarOverlay = ScaleBarOverlay(mMapView!!)
         mScaleBarOverlay!!.setCentred(true)
         mScaleBarOverlay!!.setScaleBarOffset(dm.widthPixels / 2, 10)
 
@@ -97,7 +97,7 @@ class SampleFollowMe : BaseSampleFragment(), LocationListener {
         btFollowMe!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 Log.i(TAG, "btFollowMe clicked ")
-                if (!mLocationOverlay!!.isFollowLocationEnabled()) {
+                if (!mLocationOverlay!!.isFollowLocationEnabled) {
                     mLocationOverlay!!.enableFollowLocation()
                     btFollowMe!!.setImageResource(R.drawable.ic_follow_me_on)
                 } else {

@@ -90,7 +90,7 @@ class OfflinePickerSample : BaseSampleFragment(), View.OnClickListener {
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
         properties.offset = File(DialogConfigs.DEFAULT_DIR)
 
-        val registeredExtensions = ArchiveFileFactory.getRegisteredExtensions()
+        val registeredExtensions = ArchiveFileFactory.registeredExtensions
         //api check
         if (Build.VERSION.SDK_INT >= 14) registeredExtensions.add("gpkg")
         registeredExtensions.add("map")
@@ -131,7 +131,7 @@ class OfflinePickerSample : BaseSampleFragment(), View.OnClickListener {
         val archives: MutableList<IArchiveFile?> = ArrayList<IArchiveFile?>()
         //this part seperates the geopackage and maps forge stuff since they are handled differently
         for (i in files.indices) {
-            val archive = File(files[i])
+            val archive = File(requireNotNull(files[i]))
             if (archive.getName().endsWith("gpkg")) {
                 geopackages.add(archive)
             } else if (archive.getName().endsWith("map")) {
@@ -142,7 +142,8 @@ class OfflinePickerSample : BaseSampleFragment(), View.OnClickListener {
                     val tileSources: Set<String?> = temp.tileSources ?: emptySet()
                     val iterator = tileSources.iterator()
                     while (iterator.hasNext()) {
-                        this.tileSources.add(FileBasedTileSource.getSource(iterator.next()))
+                        val sourceName = iterator.next() ?: continue
+                        this.tileSources.add(FileBasedTileSource.getSource(sourceName))
                         archives.add(temp)
                     }
                 }

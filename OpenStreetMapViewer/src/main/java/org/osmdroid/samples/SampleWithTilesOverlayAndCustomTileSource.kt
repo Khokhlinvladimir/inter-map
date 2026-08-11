@@ -43,7 +43,7 @@ class SampleWithTilesOverlayAndCustomTileSource : AppCompatActivity() {
         mMapView!!.setTilesScaledToDpi(true)
 
         //Copyright overlay
-        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource().copyrightNotice
+        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource()!!.copyrightNotice
         val copyrightOverlay = CopyrightOverlay(this)
         copyrightOverlay.setCopyrightNotice(copyrightNotice)
         mMapView!!.getOverlays()!!.add(copyrightOverlay)
@@ -69,9 +69,9 @@ class SampleWithTilesOverlayAndCustomTileSource : AppCompatActivity() {
             arrayOf<String>("http://overlay.openstreetmap.nl/openfietskaart-rcn/")
         )
         tileProvider.setTileSource(tileSource)
-        tileProvider.getTileRequestCompleteHandlers().add(mMapView!!.getTileRequestCompleteHandler())
+        tileProvider.tileRequestCompleteHandlers.add(mMapView!!.getTileRequestCompleteHandler())
         val tilesOverlay = TilesOverlay(tileProvider, this.getBaseContext())
-        tilesOverlay.setLoadingBackgroundColor(Color.TRANSPARENT)
+        tilesOverlay.loadingBackgroundColor = Color.TRANSPARENT
         mMapView!!.getOverlays()!!.add(tilesOverlay)
     }
 

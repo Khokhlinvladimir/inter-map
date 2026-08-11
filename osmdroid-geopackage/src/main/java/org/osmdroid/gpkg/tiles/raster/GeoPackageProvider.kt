@@ -29,7 +29,7 @@ class GeoPackageProvider(
     pRegisterReceiver: IRegisterReceiver?,
     aNetworkAvailablityCheck: INetworkAvailablityCheck?, pTileSource: ITileSource?,
     pContext: Context?, cacheWriter: IFilesystemCache?, databases: Array<File?>
-) : MapTileProviderArray(pTileSource, pRegisterReceiver), IMapTileProviderCallback {
+) : MapTileProviderArray(pTileSource, requireNotNull(pRegisterReceiver)), IMapTileProviderCallback {
     protected var geopackage: GeoPackageMapTileModuleProvider
     @JvmField
     protected var tileWriter: IFilesystemCache? = null
@@ -53,7 +53,7 @@ class GeoPackageProvider(
             }
         }
 
-        mTileProviderList.add(MapTileProviderBasic.getMapTileFileStorageProviderBase(pRegisterReceiver, pTileSource, tileWriter))
+        mTileProviderList.add(MapTileProviderBasic.getMapTileFileStorageProviderBase(requireNotNull(pRegisterReceiver), pTileSource, tileWriter))
         geopackage = GeoPackageMapTileModuleProvider(databases, pContext, tileWriter)
         mTileProviderList.add(geopackage)
     }

@@ -125,9 +125,9 @@ class GeoPackageMapTileModuleProvider(
                 )
                 val boundingBox = BoundingBox(transformed[0], transformed[1], transformed[2], transformed[3])
                 val bounds = org.osmdroid.util.BoundingBox(
-                    min(tileSystem.getMaxLatitude(), boundingBox.getMaxLatitude()),
+                    min(tileSystem.maxLatitude, boundingBox.getMaxLatitude()),
                     boundingBox.getMaxLongitude(),
-                    max(tileSystem.getMinLatitude(), boundingBox.getMinLatitude()),
+                    max(tileSystem.minLatitude, boundingBox.getMinLatitude()),
                     boundingBox.getMinLongitude()
                 )
 
@@ -170,9 +170,9 @@ class GeoPackageMapTileModuleProvider(
             )
             val boundingBox = BoundingBox(transformed[0], transformed[1], transformed[2], transformed[3])
             val bounds = org.osmdroid.util.BoundingBox(
-                min(tileSystem.getMaxLatitude(), boundingBox.getMaxLatitude()),
+                min(tileSystem.maxLatitude, boundingBox.getMaxLatitude()),
                 boundingBox.getMaxLongitude(),
-                max(tileSystem.getMinLatitude(), boundingBox.getMinLatitude()),
+                max(tileSystem.minLatitude, boundingBox.getMinLatitude()),
                 boundingBox.getMinLongitude()
             )
             srcs.add(GeopackageRasterTileSource(database, tileTables.get(k), tileDao.getMinZoom().toInt(), tileDao.getMaxZoom().toInt(), bounds))

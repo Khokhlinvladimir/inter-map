@@ -31,9 +31,9 @@ class SampleCustomMyLocation : BaseSampleFragment(), LocationListener {
 
     public override fun addOverlays() {
         super.addOverlays()
-        myLocation = Marker(mMapView)
-        myLocation!!.setIcon(getResources().getDrawable(R.drawable.icon))
-        myLocation!!.setImage(getResources().getDrawable(R.drawable.icon))
+        myLocation = Marker(mMapView!!)
+        myLocation!!.icon = getResources().getDrawable(R.drawable.icon)
+        myLocation!!.image = getResources().getDrawable(R.drawable.icon)
     }
 
     public override fun onResume() {
@@ -86,13 +86,13 @@ class SampleCustomMyLocation : BaseSampleFragment(), LocationListener {
 
 
     override fun onLocationChanged(location: Location) {
-        myLocation!!.setPosition(GeoPoint(location.getLatitude(), location.getLongitude()))
+        myLocation!!.position = GeoPoint(location.getLatitude(), location.getLongitude())
         if (!added) {
             mMapView!!.getOverlayManager().add(myLocation)
             added = true
         }
         if (followme) {
-            mMapView!!.controller!!.animateTo(myLocation!!.getPosition())
+            mMapView!!.controller!!.animateTo(myLocation!!.position)
         }
     }
 

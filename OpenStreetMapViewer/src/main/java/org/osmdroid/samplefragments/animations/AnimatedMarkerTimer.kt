@@ -41,8 +41,8 @@ class AnimatedMarkerTimer : BaseSampleFragment(), MapListener {
         mMapView!!.setMapListener(this)
         mMapView!!.controller!!.setZoom(3)
 
-        marker = Marker(mMapView)
-        marker!!.setPosition(GeoPoint(45.0, -74.0))
+        marker = Marker(mMapView!!)
+        marker!!.position = GeoPoint(45.0, -74.0)
 
         val grids = LatLonGridlineOverlay2()
 
@@ -71,7 +71,7 @@ class AnimatedMarkerTimer : BaseSampleFragment(), MapListener {
     private fun startTask() {
         task = object : TimerTask() {
             override fun run() {
-                var current = marker!!.getPosition()
+                var current = marker!!.position
                 if (current == null) current = GeoPoint(45.0, -74.0)
                 val location = GeoPoint(current.latitude, current.longitude + 0.0003)
                 if (location != null) {
@@ -80,10 +80,10 @@ class AnimatedMarkerTimer : BaseSampleFragment(), MapListener {
                         activity.runOnUiThread(object : Runnable {
                             override fun run() {
                                 try {
-                                    marker!!.setPosition(location)
+                                    marker!!.position = location
                                     mMapView!!.controller!!.setCenter(location)
 
-                                    if (marker!!.isInfoWindowShown()) {
+                                    if (marker!!.isInfoWindowShown) {
                                         marker!!.closeInfoWindow()
                                         marker!!.showInfoWindow()
                                     }

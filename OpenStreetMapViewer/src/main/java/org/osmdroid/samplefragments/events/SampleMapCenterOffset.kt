@@ -38,10 +38,10 @@ class SampleMapCenterOffset : SampleMapEventListener() {
         mList.add(GeoPoint(38.8895, -77.0353)) // washington monument
 
         for (geoPoint in mList) {
-            val startMarker = Marker(mMapView)
-            startMarker.setPosition(geoPoint)
+            val startMarker = Marker(mMapView!!)
+            startMarker.position = geoPoint
             startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-            startMarker.setIcon(drawable)
+            startMarker.icon = drawable
             mMapView!!.getOverlays()!!.add(startMarker)
         }
 
@@ -49,7 +49,7 @@ class SampleMapCenterOffset : SampleMapEventListener() {
         mPaint.setStrokeWidth(5f)
 
         mMapView!!.getOverlays()!!.add(object : Overlay() {
-            override fun draw(pCanvas: Canvas, pProjection: Projection?) {
+            override fun draw(pCanvas: Canvas, pProjection: Projection) {
                 mMapView!!.projection.save(pCanvas, false, true)
                 val centerX = pCanvas.getWidth() / 2f
                 val centerY = pCanvas.getHeight() / 2f

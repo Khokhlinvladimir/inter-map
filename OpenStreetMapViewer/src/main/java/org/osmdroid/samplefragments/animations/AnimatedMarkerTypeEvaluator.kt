@@ -36,9 +36,9 @@ class AnimatedMarkerTypeEvaluator : BaseSampleFragment(), View.OnClickListener {
         btnCache!!.setOnClickListener(this)
         btnCache!!.setText("Start/Stop Animation")
 
-        marker = Marker(mMapView)
+        marker = Marker(mMapView!!)
         marker!!.setTitle("An animated marker")
-        marker!!.setPosition(GeoPoint(0.0, 0.0))
+        marker!!.position = GeoPoint(0.0, 0.0)
         mMapView!!.getOverlayManager().add(marker)
 
 
@@ -60,7 +60,7 @@ class AnimatedMarkerTypeEvaluator : BaseSampleFragment(), View.OnClickListener {
             R.id.btnCache -> {
                 if (valueAnimator != null && valueAnimator!!.isRunning()) valueAnimator!!.cancel()
                 val random = GeoPoint((Math.random() * 180) - 90, (Math.random() * 360) - 180)
-                valueAnimator = MarkerAnimation.animateMarkerToICS(mMapView, marker, random, Spherical())
+                valueAnimator = MarkerAnimation.animateMarkerToICS(mMapView!!, marker!!, random, Spherical())
             }
         }
     }

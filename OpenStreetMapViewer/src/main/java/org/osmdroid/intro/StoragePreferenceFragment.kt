@@ -57,7 +57,7 @@ class StoragePreferenceFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        updateStorage(getContext())
+        updateStorage(requireContext())
 
         textViewCacheDirectory!!.setText(instance!!.osmdroidTileCache.toString())
         textViewCacheMaxSize!!.setText(readableFileSize(instance!!.tileFileSystemCacheMaxBytes))
@@ -72,7 +72,7 @@ class StoragePreferenceFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    fun updateStorage(ctx: Context?) {
+    fun updateStorage(ctx: Context) {
         //only needed for api23+ since we "should" have had permissions granted by now
         instance!!.load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
     }

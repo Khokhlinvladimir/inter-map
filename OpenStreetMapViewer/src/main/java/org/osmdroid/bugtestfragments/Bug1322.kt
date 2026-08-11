@@ -63,7 +63,7 @@ class Bug1322 : BaseSampleFragment() {
                 override fun onItemLongPress(index: Int, item: OverlayItem?): Boolean {
                     return false
                 }
-            }, getContext()
+            }, requireContext()
         )
         mOverlay.setFocusItemsOnTap(true)
         mMapView!!.getOverlays()!!.add(mOverlay)

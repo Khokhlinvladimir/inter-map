@@ -36,7 +36,7 @@ class SampleMilitaryIconsItemizedIcons : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val context: Context? = getActivity()
+        val context: Context = requireActivity()
 
 
         icons.add(getResources().getDrawable(R.drawable.sfgpuci))
@@ -88,7 +88,7 @@ class SampleMilitaryIconsItemizedIcons : BaseSampleFragment() {
 
         // Zoom and center on the focused item.
         mMapView!!.controller!!.setZoom(3.0)
-        val geoPoint = itemOverlay!!.getFocusedItem()!!.getPoint()
+        val geoPoint = itemOverlay!!.focusedItem!!.getPoint()
         mMapView!!.controller!!.animateTo(geoPoint)
 
         setHasOptionsMenu(true)

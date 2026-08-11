@@ -53,7 +53,7 @@ class SampleWithMinimapItemizedoverlay : AppCompatActivity() {
         )
 
         //Copyright overlay
-        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource().copyrightNotice
+        val copyrightNotice = mMapView!!.getTileProvider()!!.getTileSource()!!.copyrightNotice
         val copyrightOverlay = CopyrightOverlay(this)
         copyrightOverlay.setCopyrightNotice(copyrightNotice)
         mMapView!!.getOverlays()!!.add(copyrightOverlay)
@@ -136,7 +136,7 @@ class SampleWithMinimapItemizedoverlay : AppCompatActivity() {
                 }
 
                 override fun longPressHelper(p: GeoPoint?): Boolean {
-                    val displayed = mMyLocationOverlay!!.getDisplayedItems()
+                    val displayed = mMyLocationOverlay!!.displayedItems
                     val buffer = StringBuilder()
                     var sep = ""
                     for (item in displayed) {

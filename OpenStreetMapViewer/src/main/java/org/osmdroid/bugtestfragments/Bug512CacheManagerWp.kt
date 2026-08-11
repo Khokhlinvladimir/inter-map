@@ -59,8 +59,8 @@ class Bug512CacheManagerWp : BaseSampleFragment(), CacheManagerCallback, View.On
 
     @Throws(Exception::class)
     override fun runTestProcedures() {
-        val mgr = CacheManager(mMapView)
-        val pts = ArrayList<GeoPoint?>()
+        val mgr = CacheManager(mMapView!!)
+        val pts = ArrayList<GeoPoint>()
         pts.add(GeoPoint(38.89775, -77.03690))
         pts.add(GeoPoint(38.87101, -77.05641))
         taskRunning = true

@@ -40,29 +40,29 @@ class SampleLimitedScrollArea : BaseSampleFragment() {
     override fun addOverlays() {
         super.addOverlays()
 
-        val list = ArrayList<GeoPoint?>()
+        val list = ArrayList<GeoPoint>()
 
         list.clear()
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualNorth(), -85.0))
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualNorth(), -65.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualNorth, -85.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualNorth, -65.0))
         mNorthPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mNorthPolyline)
 
         list.clear()
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualSouth(), -85.0))
-        list.add(GeoPoint(sCentralParkBoundingBox.getActualSouth(), -65.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualSouth, -85.0))
+        list.add(GeoPoint(sCentralParkBoundingBox.actualSouth, -65.0))
         mSouthPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mSouthPolyline)
 
         list.clear()
-        list.add(GeoPoint(45.0, sCentralParkBoundingBox.getLonWest()))
-        list.add(GeoPoint(35.0, sCentralParkBoundingBox.getLonWest()))
+        list.add(GeoPoint(45.0, sCentralParkBoundingBox.lonWest))
+        list.add(GeoPoint(35.0, sCentralParkBoundingBox.lonWest))
         mWestPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mWestPolyline)
 
         list.clear()
-        list.add(GeoPoint(45.0, sCentralParkBoundingBox.getLonEast()))
-        list.add(GeoPoint(35.0, sCentralParkBoundingBox.getLonEast()))
+        list.add(GeoPoint(45.0, sCentralParkBoundingBox.lonEast))
+        list.add(GeoPoint(35.0, sCentralParkBoundingBox.lonEast))
         mEastPolyline.setPoints(list)
         mMapView!!.getOverlays()!!.add(mEastPolyline)
 
@@ -87,11 +87,11 @@ class SampleLimitedScrollArea : BaseSampleFragment() {
         mMapView!!.getOverlays()!!.remove(mSouthPolyline)
         if (pLimitScrolling) {
             mMapView!!.setScrollableAreaLimitLatitude(
-                sCentralParkBoundingBox.getActualNorth(),
-                sCentralParkBoundingBox.getActualSouth(),
+                sCentralParkBoundingBox.actualNorth,
+                sCentralParkBoundingBox.actualSouth,
                 mMapView!!.getHeight() / 2
             )
-            mMapView!!.setExpectedCenter(sCentralParkBoundingBox.getCenterWithDateLine())
+            mMapView!!.setExpectedCenter(sCentralParkBoundingBox.centerWithDateLine)
             mMapView!!.getOverlays()!!.add(mNorthPolyline)
             mMapView!!.getOverlays()!!.add(mSouthPolyline)
         } else {
@@ -108,11 +108,11 @@ class SampleLimitedScrollArea : BaseSampleFragment() {
         mMapView!!.getOverlays()!!.remove(mEastPolyline)
         if (pLimitScrolling) {
             mMapView!!.setScrollableAreaLimitLongitude(
-                sCentralParkBoundingBox.getLonWest(),
-                sCentralParkBoundingBox.getLonEast(),
+                sCentralParkBoundingBox.lonWest,
+                sCentralParkBoundingBox.lonEast,
                 mMapView!!.getWidth() / 2
             )
-            mMapView!!.setExpectedCenter(sCentralParkBoundingBox.getCenterWithDateLine())
+            mMapView!!.setExpectedCenter(sCentralParkBoundingBox.centerWithDateLine)
             mMapView!!.getOverlays()!!.add(mWestPolyline)
             mMapView!!.getOverlays()!!.add(mEastPolyline)
         } else {

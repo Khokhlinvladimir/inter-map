@@ -59,7 +59,7 @@ class SampleLieFi : BaseSampleFragment() {
     }
 
     private inner class MapTileProviderLieFi(
-        pRegisterReceiver: IRegisterReceiver?,
+        pRegisterReceiver: IRegisterReceiver,
         private val mNetworkAvailabilityCheck: INetworkAvailablityCheck?, pTileSource: ITileSource?,
         pContext: Context, cacheWriter: IFilesystemCache?
     ) : MapTileProviderArray(pTileSource, pRegisterReceiver), IMapTileProviderCallback {
@@ -102,7 +102,7 @@ class SampleLieFi : BaseSampleFragment() {
             )
             mTileProviderList.add(downloaderProvider)
 
-            getTileCache().getProtectedTileContainers().add(this)
+            tileCache.protectedTileContainers.add(this)
         }
 
         override fun getTileWriter(): IFilesystemCache? {

@@ -53,8 +53,8 @@ class SampleAssetsOnlyRepetitionModes : BaseSampleFragment() {
                 if (isChecked) {
                     mMapView!!.setScrollableAreaLimitDouble(
                         BoundingBox(
-                            getTileSystem().getMaxLatitude(), getTileSystem().getMaxLongitude(),
-                            getTileSystem().getMinLatitude(), getTileSystem().getMinLongitude()
+                            getTileSystem().maxLatitude, getTileSystem().maxLongitude,
+                            getTileSystem().minLatitude, getTileSystem().minLongitude
                         )
                     )
                 } else {

@@ -26,6 +26,6 @@ class SepiaToneTiles : BaseSampleFragment() {
 
         val filter = ColorMatrixColorFilter(matrixA)
 
-        mMapView!!.getOverlayManager().getTilesOverlay().setColorFilter(filter)
+        mMapView!!.getOverlayManager().getTilesOverlay()!!.setColorFilter(filter)
     }
 }

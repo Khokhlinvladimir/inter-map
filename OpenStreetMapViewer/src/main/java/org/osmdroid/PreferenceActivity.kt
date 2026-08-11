@@ -400,7 +400,7 @@ class PreferenceActivity : AppCompatActivity(), View.OnClickListener {
 
 
     companion object {
-        fun resetSettings(ctx: Context?) {
+        fun resetSettings(ctx: Context) {
             //delete all preference keys, if you're using this for your own application
             //you may want to consider some additional logic here (only clear osmdroid settings or
             //use something other than the default shared preferences map

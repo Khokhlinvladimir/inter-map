@@ -37,7 +37,7 @@ class StorageAdapter(context: Context, var data: MutableList<StorageUtils.Storag
             val drive = itemView.findViewById<TextView>(R.id.storageName)
             val frespace = itemView.findViewById<TextView>(R.id.storageFreespace)
             val path = itemView.findViewById<TextView>(R.id.storagePath)
-            drive.setText(info.getDisplayName())
+            drive.setText(info.displayName)
             frespace.setText("Free space: " + readableFileSize(info.freeSpace))
             path.setText(info.path)
         }

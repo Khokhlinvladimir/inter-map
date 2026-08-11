@@ -95,11 +95,11 @@ class MilStdCustomPaintingSurface(context: Context?, attrs: AttributeSet?) : Vie
 
 
             if (symbol != null && symbol!!.minPoints <= pts.size) {
-                val inputGeoPoints = ArrayList<GeoPoint?>()
+                val inputGeoPoints = ArrayList<GeoPoint>()
                 val unrotatedPoint = Point()
                 for (i in pts.indices) {
                     projection.unrotateAndScalePoint(pts.get(i)!!.x, pts.get(i)!!.y, unrotatedPoint)
-                    val iGeoPoint = projection.fromPixels(unrotatedPoint.x, unrotatedPoint.y) as GeoPoint?
+                    val iGeoPoint = projection.fromPixels(unrotatedPoint.x, unrotatedPoint.y) as GeoPoint
                     inputGeoPoints.add(iGeoPoint)
                 }
 

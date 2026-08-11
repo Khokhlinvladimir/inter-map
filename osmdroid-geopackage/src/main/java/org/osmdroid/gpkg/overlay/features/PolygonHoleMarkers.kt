@@ -84,8 +84,7 @@ class PolygonHoleMarkers
      */
     override fun setVisibleMarkers(visible: Boolean) {
         for (marker in markers) {
-            if (visible) marker.setAlpha(1f)
-            else marker.setAlpha(0f)
+            marker.alpha = if (visible) 1f else 0f
         }
     }
 
