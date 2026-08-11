@@ -224,7 +224,8 @@ class CustomZoomButtonsDisplay(private val mMapView: MapView) {
     }
 
     fun isTouched(pMotionEvent: MotionEvent, pInOrOut: Boolean): Boolean {
-        return if (pMotionEvent.action == MotionEvent.ACTION_UP) {
+        return if (pMotionEvent.action == MotionEvent.ACTION_DOWN ||
+                pMotionEvent.action == MotionEvent.ACTION_UP) {
             isTouched(pMotionEvent.x.toInt(), pMotionEvent.y.toInt(), pInOrOut)
         } else {
             false

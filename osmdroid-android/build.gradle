@@ -41,11 +41,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    gradle.projectsEvaluated {
+        preBuild.dependsOn(copyFiles)
+    }
 }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
-    testImplementation "junit:junit:${project.property('junit.version')}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
     testImplementation "org.robolectric:robolectric:${project.property('robolectric.version')}"
 
     // Dependencies for Compose
@@ -56,6 +59,9 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
 }
 
+task cleanCustomFiles(type: Delete) {
+    delete file('src/main/java/org/osmdroid/OsmdroidBuildInfo.java')
+}
 import org.apache.tools.ant.filters.*
 
 task copyFiles(type: Copy) {
@@ -102,5 +108,6 @@ task androidSourcesJar(type: Jar) {
 artifacts {
     archives androidSourcesJar
 }
-
-preBuild.dependsOn(copyFiles)
+clean.dependsOn(copyFiles)
+build.dependsOn(copyFiles)
+copyFiles.dependsOn(cleanCustomFiles)

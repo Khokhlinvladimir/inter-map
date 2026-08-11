@@ -37,7 +37,7 @@ dependencies {
     //
     api  project(':osmdroid-android')
     implementation 'androidx.core:core-ktx:1.12.0'
-    testImplementation "junit:junit:${project.property('junit.version')}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
 }
 
 
@@ -80,5 +80,3 @@ artifacts {
     archives androidSourcesJar
 
 }
-
-

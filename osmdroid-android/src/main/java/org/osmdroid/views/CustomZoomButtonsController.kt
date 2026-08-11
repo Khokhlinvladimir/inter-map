@@ -169,14 +169,15 @@ class CustomZoomButtonsController(private val mMapView: MapView) {
         if (checkJustActivated()) {
             return false
         }
+        val canExecute = mListener != null && pMotionEvent.action == MotionEvent.ACTION_UP
         if (display.isTouched(pMotionEvent, true)) {
-            if (mZoomInEnabled && mListener != null) {
+            if (canExecute && mZoomInEnabled) {
                 mListener!!.onZoom(true)
             }
             return true
         }
         if (display.isTouched(pMotionEvent, false)) {
-            if (mZoomOutEnabled && mListener != null) {
+            if (canExecute && mZoomOutEnabled) {
                 mListener!!.onZoom(false)
             }
             return true
