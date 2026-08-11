@@ -5,4 +5,4 @@ package org.osmdroid.events
  *
  * @author Theodore Hong
  */
-interface MapEvent 
+interface MapEvent

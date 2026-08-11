@@ -273,7 +273,7 @@ interface IConfigurationProvider {
      * @param ctx
      * @param preferences
      */
-    fun load(ctx: Context?, preferences: SharedPreferences?)
+    fun load(ctx: Context, preferences: SharedPreferences)
 
     /**
      * saves the current configuration to the shared preference location
@@ -281,7 +281,7 @@ interface IConfigurationProvider {
      * @param ctx
      * @param preferences
      */
-    fun save(ctx: Context?, preferences: SharedPreferences?)
+    fun save(ctx: Context?, preferences: SharedPreferences)
     /**
      * Returns the amount of time in ms added to server specified tile expiration time
      * Added as part of issue https://github.com/osmdroid/osmdroid/issues/490

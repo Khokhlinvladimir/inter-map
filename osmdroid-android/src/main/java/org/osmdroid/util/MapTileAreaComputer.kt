@@ -5,5 +5,5 @@ package org.osmdroid.util
  */
 
 interface MapTileAreaComputer {
-    fun computeFromSource(pSource: MapTileArea?, pReuse: MapTileArea?): MapTileArea?
+    fun computeFromSource(pSource: MapTileArea, pReuse: MapTileArea?): MapTileArea
 }

@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import org.osmdroid.util.PointAccepter
 
 class MilestoneManager(private val mLister: MilestoneLister, private val mDisplayer: MilestoneDisplayer) : PointAccepter {
-    fun draw(pCanvas: Canvas?) {
+    fun draw(pCanvas: Canvas) {
         mDisplayer.drawBegin(pCanvas)
         for (step in mLister.milestones) {
             mDisplayer.draw(pCanvas, step)
@@ -24,7 +24,7 @@ class MilestoneManager(private val mLister: MilestoneLister, private val mDispla
         mLister.end()
     }
 
-    fun setDistances(pDistances: DoubleArray?) {
+    fun setDistances(pDistances: DoubleArray) {
         mLister.setDistances(pDistances)
     }
 }

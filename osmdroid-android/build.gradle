@@ -60,7 +60,7 @@ dependencies {
 }
 
 task cleanCustomFiles(type: Delete) {
-    delete file('src/main/java/org/osmdroid/OsmdroidBuildInfo.java')
+    delete file('src/main/java/org/osmdroid/OsmdroidBuildInfo.kt')
 }
 import org.apache.tools.ant.filters.*
 

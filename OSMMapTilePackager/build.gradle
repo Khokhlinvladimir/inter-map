@@ -39,17 +39,17 @@ dependencies {
 
 //copy the instrumentation tests from the maven osmdroid-android-it src folder
 task preBuildTask1(type: Copy) {
-    println("copying StreamUtils sources")
-    description 'copy java classes from osmdroid-android.'
-    from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/tileprovider/util/StreamUtils.java")
+    println("copying StreamUtils Kotlin sources")
+    description 'copy Kotlin classes from osmdroid-android.'
+    from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/tileprovider/util/StreamUtils.kt")
     into "src/main/java/org/osmdroid/tileprovider/util/"
 
 }
 
 task preBuildTask2(type: Copy) {
-    println("copying GEMF sources")
-    description 'copy java classes from osmdroid-android.'
-    from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/util/GEMFFile.java")
+    println("copying GEMF Kotlin sources")
+    description 'copy Kotlin classes from osmdroid-android.'
+    from("${rootDir}/osmdroid-android/src/main/java/org/osmdroid/util/GEMFFile.kt")
     into "src/main/java/org/osmdroid/util/"
 
 }
@@ -63,6 +63,10 @@ task preBuildTask3(type: Copy) {
         exclude 'Polyline.java'
         exclude 'Marker.java'
         exclude 'IProjection.java'
+        exclude 'IMyLocationOverlay.kt'
+        exclude 'Polyline.kt'
+        exclude 'Marker.kt'
+        exclude 'IProjection.kt'
     }
     into "src/main/java/org/osmdroid/api/"
 
@@ -76,6 +80,10 @@ task preBuildTask4(type: Delete) {
     delete "${projectDir}/src/main/java/org/osmdroid/api/Polyline.java"
     delete "${projectDir}/src/main/java/org/osmdroid/api/Marker.java"
     delete "${projectDir}/src/main/java/org/osmdroid/api/IProjection.java"
+    delete "${projectDir}/src/main/java/org/osmdroid/api/IMyLocationOverlay.kt"
+    delete "${projectDir}/src/main/java/org/osmdroid/api/Polyline.kt"
+    delete "${projectDir}/src/main/java/org/osmdroid/api/Marker.kt"
+    delete "${projectDir}/src/main/java/org/osmdroid/api/IProjection.kt"
 }
 
 compileJava.dependsOn preBuildTask1
