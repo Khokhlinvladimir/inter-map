@@ -11,9 +11,7 @@ android {
     compileSdk 37
 
     defaultConfig {
-        applicationId project.group + "." +
-                project.name.toString().toLowerCase().replaceAll("[-]", ".")
-                        .replaceAll("[^a-zA-Z0-9\\.]", "")
+        applicationId 'org.osmdroid.osmdroid.simple.map'
         minSdkVersion 24
         multiDexEnabled = true
         targetSdkVersion 36
