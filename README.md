@@ -22,9 +22,9 @@ The library keeps the familiar osmdroid API while adding native grid marker clus
 
 <table>
   <tr>
-    <td align="center"><strong>Modern sample catalog</strong><br><img src="docs/screenshots/home.png" alt="Modern sample catalog" width="260"></td>
-    <td align="center"><strong>Starter map</strong><br><img src="docs/screenshots/starter-map.png" alt="Starter map" width="260"></td>
-    <td align="center"><strong>Marker clustering</strong><br><img src="docs/screenshots/clustering.png" alt="Marker clustering" width="260"></td>
+    <td align="center"><strong>Modern sample catalog</strong><br><img src="docs/screenshots/home.webp" alt="Modern sample catalog" width="260"></td>
+    <td align="center"><strong>Starter map</strong><br><img src="docs/screenshots/starter-map.webp" alt="Starter map" width="260"></td>
+    <td align="center"><strong>Marker clustering</strong><br><img src="docs/screenshots/clustering.webp" alt="Marker clustering" width="260"></td>
   </tr>
 </table>
 
