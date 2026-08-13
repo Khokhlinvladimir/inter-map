@@ -5,7 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Point
-import android.graphics.drawable.BitmapDrawable
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import android.view.MotionEvent
 import org.osmdroid.library.R
 
@@ -119,8 +120,8 @@ class CustomZoomButtonsDisplay(private val mMapView: MapView) {
     }
 
     protected fun getIcon(pInOrOut: Boolean): Bitmap {
-        val resourceId = if (pInOrOut) R.drawable.sharp_add_black_36 else R.drawable.sharp_remove_black_36
-        return (mMapView.resources.getDrawable(resourceId) as BitmapDrawable).bitmap
+        val resourceId = if (pInOrOut) R.drawable.ic_osm_add else R.drawable.ic_osm_remove
+        return requireNotNull(ContextCompat.getDrawable(mMapView.context, resourceId)).toBitmap()
     }
 
     fun draw(pCanvas: Canvas, pAlpha01: Float,

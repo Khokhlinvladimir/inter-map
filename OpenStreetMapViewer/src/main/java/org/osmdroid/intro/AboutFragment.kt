@@ -21,7 +21,7 @@ class AboutFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val v = inflater.inflate(R.layout.intro_about, container, false)
-        v.findViewById<View?>(R.id.introbuttonsite).setOnClickListener(this)
+        v.findViewById<View>(R.id.introbuttonsite).setOnClickListener(this)
         return v
     }
 

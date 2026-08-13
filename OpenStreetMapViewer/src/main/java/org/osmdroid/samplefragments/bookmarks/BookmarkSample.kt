@@ -100,12 +100,12 @@ class BookmarkSample : BaseSampleFragment(), LocationListener {
         val title = view.findViewById<EditText>(R.id.bookmark_title)
         val description = view.findViewById<EditText>(R.id.bookmark_description)
 
-        view.findViewById<View?>(R.id.bookmark_cancel).setOnClickListener(object : View.OnClickListener {
+        view.findViewById<View>(R.id.bookmark_cancel).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 addBookmark!!.dismiss()
             }
         })
-        view.findViewById<View?>(R.id.bookmark_ok).setOnClickListener(object : View.OnClickListener {
+        view.findViewById<View>(R.id.bookmark_ok).setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var valid = true
                 var latD = 0.0

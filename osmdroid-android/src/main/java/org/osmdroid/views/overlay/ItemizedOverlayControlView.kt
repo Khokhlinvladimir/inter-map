@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import org.osmdroid.library.R
 
 
@@ -32,17 +33,22 @@ class ItemizedOverlayControlView(
     init {
         this.mPreviousButton = ImageButton(context)
         this.mPreviousButton
-            .setImageDrawable(context.getResources().getDrawable(R.drawable.previous))
+            .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_osm_arrow_back))
 
         this.mNextButton = ImageButton(context)
-        this.mNextButton.setImageDrawable(context.getResources().getDrawable(R.drawable.next))
+        this.mNextButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_osm_arrow_forward))
 
         this.mCenterToButton = ImageButton(context)
-        this.mCenterToButton.setImageDrawable(context.getResources().getDrawable(R.drawable.center))
+        this.mCenterToButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_osm_center_focus))
 
         this.mNavToButton = ImageButton(context)
         this.mNavToButton
-            .setImageDrawable(context.getResources().getDrawable(R.drawable.navto_small))
+            .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_osm_navigation))
+
+        mPreviousButton.contentDescription = "Previous item"
+        mNextButton.contentDescription = "Next item"
+        mCenterToButton.contentDescription = "Center item on map"
+        mNavToButton.contentDescription = "Navigate to item"
 
         this.addView(
             mPreviousButton, LayoutParams(

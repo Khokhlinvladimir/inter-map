@@ -28,8 +28,8 @@ open class GeoPoint : IGeoPoint, MathConstants, GeoConstants, Parcelable, Serial
     // ===========================================================
     // Fields
     // ===========================================================
-    override var longitude: Double
-    override var latitude: Double
+    override var longitude: Double = 0.0
+    override var latitude: Double = 0.0
     var altitude: Double = 0.0
 
     // ===========================================================

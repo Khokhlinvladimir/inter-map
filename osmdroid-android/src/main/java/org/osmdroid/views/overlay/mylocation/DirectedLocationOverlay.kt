@@ -7,7 +7,8 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Point
-import android.graphics.drawable.BitmapDrawable
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import org.osmdroid.library.R
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -35,9 +36,7 @@ class DirectedLocationOverlay(ctx: Context) : Overlay() {
     private var mShowAccuracy = true
 
     init {
-        val d = ctx.getResources().getDrawable(R.drawable.twotone_navigation_black_48) as BitmapDrawable
-
-        setDirectionArrow(d.getBitmap())
+        setDirectionArrow(requireNotNull(ContextCompat.getDrawable(ctx, R.drawable.ic_osm_navigation)).toBitmap())
 
         this.mAccuracyPaint!!.setStrokeWidth(2f)
         this.mAccuracyPaint!!.setColor(Color.BLUE)

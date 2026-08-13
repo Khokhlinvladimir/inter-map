@@ -19,8 +19,8 @@ abstract class BitmapTileSourceBase @JvmOverloads constructor(
     aZoomMinLevel: Int, aZoomMaxLevel: Int, aTileSizePixels: Int,
     aImageFilenameEnding: String?, aCopyrightNotice: String? = null
 ) : ITileSource {
-    open override val minimumZoomLevel: Int
-    open override val maximumZoomLevel: Int
+    open override val minimumZoomLevel: Int = aZoomMinLevel
+    open override val maximumZoomLevel: Int = aZoomMaxLevel
 
     private val mOrdinal: Int
     protected var mName: String?
@@ -28,7 +28,7 @@ abstract class BitmapTileSourceBase @JvmOverloads constructor(
     protected val mImageFilenameEnding: String?
     protected val random: Random = Random()
 
-    open override val tileSizePixels: Int
+    open override val tileSizePixels: Int = aTileSizePixels
 
     /**
      * Constructor
@@ -52,9 +52,6 @@ abstract class BitmapTileSourceBase @JvmOverloads constructor(
     init {
         mOrdinal = globalOrdinal++
         mName = aName
-        this.minimumZoomLevel = aZoomMinLevel
-        this.maximumZoomLevel = aZoomMaxLevel
-        this.tileSizePixels = aTileSizePixels
         mImageFilenameEnding = aImageFilenameEnding
     }
 

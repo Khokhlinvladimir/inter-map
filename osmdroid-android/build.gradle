@@ -1,20 +1,20 @@
 description = 'An Android library to display OpenStreetMap views.'
 apply plugin: 'com.android.library'
 apply plugin: "maven-publish"
-apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
 
 android {
-    compileSdkVersion 34
+    namespace 'org.osmdroid.library'
+    compileSdk 37
 
     defaultConfig{
         minSdkVersion 24
-        targetSdkVersion  34
+        targetSdkVersion 36
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
@@ -28,15 +28,13 @@ android {
         }
     }
 
-    buildFeatures {
-        compose true
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.1'
-    }
-
-    packagingOptions {
+    packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
@@ -47,16 +45,10 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.core:core-ktx:1.19.0'
     testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
     testImplementation "org.robolectric:robolectric:${project.property('robolectric.version')}"
 
-    // Dependencies for Compose
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
 }
 
 task cleanCustomFiles(type: Delete) {
@@ -78,7 +70,7 @@ afterEvaluate {
 
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.named("release").get()
                 groupId project.property("pom.groupId")
                 artifactId project.name
                 version = project.property("pom.version")

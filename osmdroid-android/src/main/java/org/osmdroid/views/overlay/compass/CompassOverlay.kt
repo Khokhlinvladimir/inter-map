@@ -288,7 +288,7 @@ class CompassOverlay(
             pMapView.getContext().getResources().getString(R.string.compass)
         )
 
-            .setIcon(pMapView.getContext().getResources().getDrawable(R.drawable.ic_menu_compass))
+            .setIcon(pMapView.getContext().getResources().getDrawable(R.drawable.ic_osm_explore))
             .setCheckable(true)
 
         return true

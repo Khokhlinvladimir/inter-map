@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+<resources>
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/on_tertiary</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
     </style>
 
-    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
-        <item name="android:background">?colorPrimary</item>
-        <item name="android:elevation" >4dp</item>
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/surface</item>
+        <item name="titleTextColor">@color/on_surface</item>
+        <item name="subtitleTextColor">@color/on_surface_variant</item>
+        <item name="navigationIconTint">@color/on_surface</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
     </style>
 
+    <style name="ShapeAppearance.InterMap.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerSize">20dp</item>
+    </style>
 </resources>

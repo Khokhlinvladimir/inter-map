@@ -195,12 +195,13 @@ class WeathForceActivity : BaseActivity(), LocationListener, IOrientationConsume
 
 
     var trueNorth: Float = 0f
+    private val orientationLock = Any()
 
     override fun onOrientationChanged(orientationToMagneticNorth: Float, source: IOrientationProvider?) {
         var gf: GeomagneticField? = GeomagneticField(lat, lon, alt, timeOfFix)
         trueNorth = orientationToMagneticNorth + gf!!.getDeclination()
         gf = null
-        synchronized(trueNorth) {
+        synchronized(orientationLock) {
             if (trueNorth > 360.0f) {
                 trueNorth = trueNorth - 360.0f
             }

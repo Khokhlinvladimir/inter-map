@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.CardView.Outlined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_m"
+    android:layout_marginTop="@dimen/space_xs"
+    android:layout_marginEnd="@dimen/space_m"
+    android:layout_marginBottom="@dimen/space_xs"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:strokeColor="@color/outline_variant">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="80dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_m"
+        android:paddingTop="12dp"
+        android:paddingEnd="@dimen/space_m"
+        android:paddingBottom="12dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardBackgroundColor="@color/secondary_container"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/destination_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                app:tint="@color/on_secondary_container" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/destination_title"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/on_surface" />
+
+            <TextView
+                android:id="@+id/destination_subtitle"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:maxLines="2"
+                android:textColor="@color/on_surface_variant" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/space_s"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            app:srcCompat="@drawable/ic_material_chevron_right"
+            app:tint="@color/on_surface_variant" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -21,20 +21,22 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/zoom_in"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_material_add"
+        android:contentDescription="@string/bt_zoom_in_description"
         android:layout_below="@id/textViewCurrentLocation"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:id="@+id/btnRotateLeft"
         />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/zoom_out"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_material_remove"
+        android:contentDescription="@string/bt_zoom_out_description"
         android:layout_below="@id/textViewCurrentLocation"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:id="@+id/btnRotateRight"
         />
 

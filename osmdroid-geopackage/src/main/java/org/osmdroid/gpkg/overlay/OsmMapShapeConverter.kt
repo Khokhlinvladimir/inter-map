@@ -55,7 +55,7 @@ import mil.nga.sf.PolyhedralSurface
 import mil.nga.sf.TIN
 import mil.nga.sf.Triangle
 import org.osmdroid.api.IMapView
-import org.osmdroid.gpkg.R
+import org.osmdroid.library.R as OsmdroidR
 import org.osmdroid.gpkg.overlay.features.MarkerOptions
 import org.osmdroid.gpkg.overlay.features.MultiLatLng
 import org.osmdroid.gpkg.overlay.features.MultiMarker
@@ -746,7 +746,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
                 m.alpha = options.alpha
                 m.setTitle(options.title)
                 m.setSubDescription(options.subdescription)
-                m.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+                m.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
             }
             map.getOverlayManager().add(m)
             return m
@@ -764,7 +764,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             map: MapView,
             polyline: Polyline
         ): Polyline {
-            if (polyline.getInfoWindow() == null) polyline.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+            if (polyline.getInfoWindow() == null) polyline.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
             map.getOverlayManager().add(polyline)
             return polyline
         }
@@ -789,7 +789,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
                 polygon1.getOutlinePaint().setColor(options.strokeColor)
                 polygon1.getOutlinePaint().setStrokeWidth(options.strokeWidth)
                 polygon1.setSubDescription(options.subtitle)
-                polygon1.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+                polygon1.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
             }
 
 
@@ -815,7 +815,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
                 polygon.getOutlinePaint().setColor(options.strokeColor)
                 polygon.getOutlinePaint().setStrokeWidth(options.strokeWidth)
                 polygon.setSubDescription(options.subtitle)
-                polygon.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+                polygon.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
             }
 
 
@@ -854,7 +854,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             val multiPolyline = MultiPolyline()
 
             for (line in polylines) {
-                if (line.getInfoWindow() == null) line.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+                if (line.getInfoWindow() == null) line.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
                 map.getOverlayManager().add(line)
                 multiPolyline.add(line)
             }
@@ -869,7 +869,7 @@ class OsmMapShapeConverter @JvmOverloads constructor(
             for (polygonOption in polygons) {
                 val polygon: Polygon = addPolygonToMap(map, polygonOption.getActualPoints(), polygonOption.holes, opts)
 
-                if (polygon.getInfoWindow() == null) polygon.setInfoWindow(BasicInfoWindow(R.layout.bonuspack_bubble, map))
+                if (polygon.getInfoWindow() == null) polygon.setInfoWindow(BasicInfoWindow(OsmdroidR.layout.bonuspack_bubble, map))
                 multiPolygon.add(polygon)
             }
             return multiPolygon

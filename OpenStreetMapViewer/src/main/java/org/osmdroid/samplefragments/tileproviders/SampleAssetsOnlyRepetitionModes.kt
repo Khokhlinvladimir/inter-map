@@ -37,19 +37,19 @@ class SampleAssetsOnlyRepetitionModes : BaseSampleFragment() {
         limitBoundsCb!!.setChecked(false)
 
         horizontalCb!!.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                 mMapView!!.setHorizontalMapRepetitionEnabled(isChecked)
             }
         })
 
         verticalCb!!.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                 mMapView!!.setVerticalMapRepetitionEnabled(isChecked)
             }
         })
 
         limitBoundsCb!!.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
                 if (isChecked) {
                     mMapView!!.setScrollableAreaLimitDouble(
                         BoundingBox(

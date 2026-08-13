@@ -38,11 +38,11 @@ class DiagnosticsActivity : AppCompatActivity(), View.OnClickListener, LocationL
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
 
-        findViewById<View?>(R.id.diag_location).setOnClickListener(this)
-        findViewById<View?>(R.id.diag_orientation).setOnClickListener(this)
-        findViewById<View?>(R.id.diag_gps).setOnClickListener(this)
-        findViewById<View?>(R.id.diag_permissions).setOnClickListener(this)
-        findViewById<View?>(R.id.diag_storage).setOnClickListener(this)
+        findViewById<View>(R.id.diag_location).setOnClickListener(this)
+        findViewById<View>(R.id.diag_orientation).setOnClickListener(this)
+        findViewById<View>(R.id.diag_gps).setOnClickListener(this)
+        findViewById<View>(R.id.diag_permissions).setOnClickListener(this)
+        findViewById<View>(R.id.diag_storage).setOnClickListener(this)
         output = findViewById<TextView?>(R.id.diag_output)
     }
 

@@ -1,49 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical" >
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        style="@style/ToolbarStyle"/>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_m"
+            android:layout_marginTop="@dimen/space_m"
+            android:layout_marginEnd="@dimen/space_m"
+            app:cardBackgroundColor="@color/primary_container"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_l">
+
+                <TextView
+                    style="@style/TextAppearance.Material3.LabelLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.12"
+                    android:text="@string/home_eyebrow"
+                    android:textColor="@color/on_primary_container" />
+
+                <TextView
+                    style="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:text="@string/home_title"
+                    android:textColor="@color/on_primary_container"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/TextAppearance.Material3.BodyLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:text="@string/home_subtitle"
+                    android:textColor="@color/on_primary_container" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_m"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/sdcardstate_value"
+                            style="@style/Widget.Material3.Chip.Assist.Elevated"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="false"
+                            android:text="@string/home_storage_available"
+                            app:chipIcon="@drawable/ic_material_storage"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/version_text"
+                            style="@style/Widget.Material3.Chip.Assist.Elevated"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_s"
+                            android:checkable="false"
+                            app:chipIcon="@drawable/ic_material_code"
+                            app:chipIconVisible="true" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/sdcardstate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/mainstorageInfo"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:ellipsize="middle"
+                    android:maxLines="2"
+                    android:textColor="@color/on_primary_container" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/sdcardstate"
-            android:layout_width="wrap_content"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sdcardstate"
-            />
+            android:layout_marginStart="@dimen/space_l"
+            android:layout_marginTop="@dimen/space_l"
+            android:layout_marginEnd="@dimen/space_l"
+            android:text="@string/home_explore"
+            android:textColor="@color/on_surface"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/sdcardstate_value"
-            android:layout_width="wrap_content"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginStart="@dimen/space_l"
+            android:layout_marginTop="@dimen/space_xs"
+            android:layout_marginEnd="@dimen/space_l"
+            android:text="@string/home_explore_subtitle"
+            android:textColor="@color/on_surface_variant" />
+
+        <ListView
+            android:id="@+id/activitylist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_s"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:paddingBottom="@dimen/space_l"
+            android:scrollbars="none" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/mainstorageInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <TextView
-        android:id="@+id/version_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <ListView
-        android:id="@+id/activitylist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ListView>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

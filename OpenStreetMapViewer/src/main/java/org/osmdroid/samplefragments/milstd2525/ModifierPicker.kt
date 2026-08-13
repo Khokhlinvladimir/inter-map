@@ -481,23 +481,23 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
 
     private fun applyVisibility(baseCode: String, view: View) {
         if (baseCode.get(0) != 'W') {
-            view.findViewById<View?>(R.id.COUNTRY_CODE).setVisibility(View.VISIBLE)
-            view.findViewById<View?>(R.id.milstdspinner1).setVisibility(View.VISIBLE)
-            view.findViewById<View?>(R.id.milstdspinner2).setVisibility(View.VISIBLE)
+            view.findViewById<View>(R.id.COUNTRY_CODE).setVisibility(View.VISIBLE)
+            view.findViewById<View>(R.id.milstdspinner1).setVisibility(View.VISIBLE)
+            view.findViewById<View>(R.id.milstdspinner2).setVisibility(View.VISIBLE)
         }
         if (baseCode.get(0) == 'G' || baseCode.get(0) == 'W') {
             //SymbolDef symbolDef = SymbolDefTable.getInstance().getSymbolDef(baseCode, RendererSettings.getInstance().getSymbologyStandard());
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.AM_DISTANCE)) {
-                view.findViewById<View?>(R.id.AM_DISTANCE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AM_DISTANCE).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.AN_AZIMUTH, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.AN_AZIMUTH).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AN_AZIMUTH).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.ANGLE, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.ANGLE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.ANGLE).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.C_QUANTITY, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.C_QUANTITY).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.C_QUANTITY).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(
                     baseCode,
@@ -505,7 +505,7 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.H_ADDITIONAL_INFO_1).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H_ADDITIONAL_INFO_1).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(
                     baseCode,
@@ -513,7 +513,7 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.H1_ADDITIONAL_INFO_2).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H1_ADDITIONAL_INFO_2).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canSymbolHaveModifier(
@@ -522,13 +522,13 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.H2_ADDITIONAL_INFO_3).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H2_ADDITIONAL_INFO_3).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.LENGTH, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.LENGTH).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.LENGTH).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.N_HOSTILE, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.N_HOSTILE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.N_HOSTILE).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(
                     baseCode,
@@ -536,10 +536,10 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.Q_DIRECTION_OF_MOVEMENT).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.Q_DIRECTION_OF_MOVEMENT).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.RADIUS, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.RADIUS).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.RADIUS).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(
                     baseCode,
@@ -547,16 +547,16 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.S_OFFSET_INDICATOR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.S_OFFSET_INDICATOR).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.V_EQUIP_TYPE, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.V_EQUIP_TYPE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.V_EQUIP_TYPE).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.W1_DTG_2, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.W1_DTG_2).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.W1_DTG_2).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(baseCode, ModifiersTG.W_DTG_1, RendererSettings.getInstance().getSymbologyStandard())) {
-                view.findViewById<View?>(R.id.W_DTG_1).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.W_DTG_1).setVisibility(View.VISIBLE)
             }
 
 
@@ -566,7 +566,7 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.T1_UNIQUE_DESIGNATION_2).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.T1_UNIQUE_DESIGNATION_2).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canSymbolHaveModifier(
                     baseCode,
@@ -574,7 +574,7 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.T_UNIQUE_DESIGNATION_1).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.T_UNIQUE_DESIGNATION_1).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canSymbolHaveModifier(
@@ -583,138 +583,138 @@ class ModifierPicker : View.OnClickListener, TextWatcher {
                     RendererSettings.getInstance().getSymbologyStandard()
                 )
             ) {
-                view.findViewById<View?>(R.id.X_ALTITUDE_DEPTH).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.X_ALTITUDE_DEPTH).setVisibility(View.VISIBLE)
             }
         } else {
             //UnitDef def = UnitDefTable.getInstance().getUnitDef(baseCode, RendererSettings.getInstance().getSymbologyStandard());
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.C_QUANTITY)) {
-                view.findViewById<View?>(R.id.C_QUANTITY).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.C_QUANTITY).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.D_TASK_FORCE_INDICATOR)) {
-                view.findViewById<View?>(R.id.D_TASK_FORCE_INDICATOR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.D_TASK_FORCE_INDICATOR).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.E_FRAME_SHAPE_MODIFIER)) {
-                view.findViewById<View?>(R.id.E_FRAME_SHAPE_MODIFIER).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.E_FRAME_SHAPE_MODIFIER).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.F_REINFORCED_REDUCED)) {
-                view.findViewById<View?>(R.id.F_REINFORCED_REDUCED).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.F_REINFORCED_REDUCED).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.G_STAFF_COMMENTS)) {
-                view.findViewById<View?>(R.id.G_STAFF_COMMENTS).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.G_STAFF_COMMENTS).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.H_ADDITIONAL_INFO_1)) {
-                view.findViewById<View?>(R.id.H_ADDITIONAL_INFO_1).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H_ADDITIONAL_INFO_1).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.H1_ADDITIONAL_INFO_2)) {
-                view.findViewById<View?>(R.id.H1_ADDITIONAL_INFO_2).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H1_ADDITIONAL_INFO_2).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.H2_ADDITIONAL_INFO_3)) {
-                view.findViewById<View?>(R.id.H2_ADDITIONAL_INFO_3).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.H2_ADDITIONAL_INFO_3).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.J_EVALUATION_RATING)) {
-                view.findViewById<View?>(R.id.J_EVALUATION_RATING).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.J_EVALUATION_RATING).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.K_COMBAT_EFFECTIVENESS)) {
-                view.findViewById<View?>(R.id.K_COMBAT_EFFECTIVENESS).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.K_COMBAT_EFFECTIVENESS).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.L_SIGNATURE_EQUIP)) {
-                view.findViewById<View?>(R.id.L_SIGNATURE_EQUIP).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.L_SIGNATURE_EQUIP).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.M_HIGHER_FORMATION)) {
-                view.findViewById<View?>(R.id.M_HIGHER_FORMATION).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.M_HIGHER_FORMATION).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.N_HOSTILE)) {
-                view.findViewById<View?>(R.id.N_HOSTILE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.N_HOSTILE).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.P_IFF_SIF)) {
-                view.findViewById<View?>(R.id.P_IFF_SIF).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.P_IFF_SIF).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.Q_DIRECTION_OF_MOVEMENT)) {
-                view.findViewById<View?>(R.id.Q_DIRECTION_OF_MOVEMENT).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.Q_DIRECTION_OF_MOVEMENT).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.R2_SIGNIT_MOBILITY_INDICATOR)) {
-                view.findViewById<View?>(R.id.R2_SIGNIT_MOBILITY_INDICATOR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.R2_SIGNIT_MOBILITY_INDICATOR).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.T1_UNIQUE_DESIGNATION_2)) {
-                view.findViewById<View?>(R.id.T1_UNIQUE_DESIGNATION_2).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.T1_UNIQUE_DESIGNATION_2).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.T_UNIQUE_DESIGNATION_1)) {
-                view.findViewById<View?>(R.id.T_UNIQUE_DESIGNATION_1).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.T_UNIQUE_DESIGNATION_1).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.V_EQUIP_TYPE)) {
-                view.findViewById<View?>(R.id.V_EQUIP_TYPE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.V_EQUIP_TYPE).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.X_ALTITUDE_DEPTH)) {
-                view.findViewById<View?>(R.id.X_ALTITUDE_DEPTH).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.X_ALTITUDE_DEPTH).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.Z_SPEED)) {
-                view.findViewById<View?>(R.id.Z_SPEED).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.Z_SPEED).setVisibility(View.VISIBLE)
             }
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AA_SPECIAL_C2_HQ)) {
-                view.findViewById<View?>(R.id.AA_SPECIAL_C2_HQ).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AA_SPECIAL_C2_HQ).setVisibility(View.VISIBLE)
             }
 
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AB_FEINT_DUMMY_INDICATOR)) {
-                view.findViewById<View?>(R.id.AB_FEINT_DUMMY_INDICATOR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AB_FEINT_DUMMY_INDICATOR).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AC_INSTALLATION)) {
-                view.findViewById<View?>(R.id.AC_INSTALLATION).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AC_INSTALLATION).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AD_PLATFORM_TYPE)) {
-                view.findViewById<View?>(R.id.AD_PLATFORM_TYPE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AD_PLATFORM_TYPE).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AE_EQUIPMENT_TEARDOWN_TIME)) {
-                view.findViewById<View?>(R.id.AE_EQUIPMENT_TEARDOWN_TIME).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AE_EQUIPMENT_TEARDOWN_TIME).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AF_COMMON_IDENTIFIER)) {
-                view.findViewById<View?>(R.id.AF_COMMON_IDENTIFIER).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AF_COMMON_IDENTIFIER).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AG_AUX_EQUIP_INDICATOR)) {
-                view.findViewById<View?>(R.id.AG_AUX_EQUIP_INDICATOR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AG_AUX_EQUIP_INDICATOR).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AH_AREA_OF_UNCERTAINTY)) {
-                view.findViewById<View?>(R.id.AH_AREA_OF_UNCERTAINTY).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AH_AREA_OF_UNCERTAINTY).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AI_DEAD_RECKONING_TRAILER)) {
-                view.findViewById<View?>(R.id.AI_DEAD_RECKONING_TRAILER).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AI_DEAD_RECKONING_TRAILER).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AJ_SPEED_LEADER)) {
-                view.findViewById<View?>(R.id.AJ_SPEED_LEADER).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AJ_SPEED_LEADER).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AK_PAIRING_LINE)) {
-                view.findViewById<View?>(R.id.AK_PAIRING_LINE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AK_PAIRING_LINE).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AL_OPERATIONAL_CONDITION)) {
-                view.findViewById<View?>(R.id.AL_OPERATIONAL_CONDITION).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AL_OPERATIONAL_CONDITION).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.AO_ENGAGEMENT_BAR)) {
-                view.findViewById<View?>(R.id.AO_ENGAGEMENT_BAR).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.AO_ENGAGEMENT_BAR).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.SCC_SONAR_CLASSIFICATION_CONFIDENCE)) {
-                view.findViewById<View?>(R.id.SCC_SONAR_CLASSIFICATION_CONFIDENCE).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.SCC_SONAR_CLASSIFICATION_CONFIDENCE).setVisibility(View.VISIBLE)
             }
 
             if (SymbolUtilities.canUnitHaveModifier(baseCode, ModifiersUnits.CN_CPOF_NAME_LABEL)) {
-                view.findViewById<View?>(R.id.CN_CPOF_NAME_LABEL).setVisibility(View.VISIBLE)
+                view.findViewById<View>(R.id.CN_CPOF_NAME_LABEL).setVisibility(View.VISIBLE)
             }
         }
     }

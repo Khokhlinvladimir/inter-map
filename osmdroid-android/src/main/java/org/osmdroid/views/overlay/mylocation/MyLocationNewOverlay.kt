@@ -13,6 +13,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import org.osmdroid.api.IMapController
 import org.osmdroid.api.IMapView
 import org.osmdroid.config.Configuration.instance
@@ -122,7 +124,7 @@ open class MyLocationNewOverlay(myLocationProvider: IMyLocationProvider, mapView
 
 
         setPersonIcon((mapView.getContext().getResources().getDrawable(R.drawable.person) as BitmapDrawable).getBitmap())
-        setDirectionIcon((mapView.getContext().getResources().getDrawable(R.drawable.round_navigation_white_48) as BitmapDrawable).getBitmap())
+        setDirectionIcon(requireNotNull(ContextCompat.getDrawable(mapView.context, R.drawable.ic_osm_navigation)).toBitmap())
 
         // Calculate position of person icon's feet, scaled to screen density
         mPersonHotspot = PointF()
@@ -311,7 +313,7 @@ open class MyLocationNewOverlay(myLocationProvider: IMyLocationProvider, mapView
             pMapView.getContext().getResources().getString(R.string.my_location)
         )
             .setIcon(
-                pMapView.getContext().getResources().getDrawable(R.drawable.ic_menu_mylocation)
+                ContextCompat.getDrawable(pMapView.context, R.drawable.ic_osm_my_location)
             )
             .setCheckable(true)
 

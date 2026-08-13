@@ -5,8 +5,8 @@ import android.os.Debug
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.util.Log
-import androidx.multidex.MultiDex
-import androidx.multidex.MultiDexApplication
+import android.app.Application
+import com.google.android.material.color.DynamicColors
 import org.acra.ACRA
 import org.acra.annotation.ReportsCrashes
 import org.acra.collector.CrashReportData
@@ -26,9 +26,10 @@ import java.io.PrintWriter
  * Created by alex on 7/4/16.
  */
 @ReportsCrashes(formUri = "")
-class OsmApplication : MultiDexApplication() {
+class OsmApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+        DynamicColors.applyToActivitiesIfAvailable(this)
 
         /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -94,8 +95,6 @@ class OsmApplication : MultiDexApplication() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        MultiDex.install(this)
-
         try {
             // Initialise ACRA
             ACRA.init(this)

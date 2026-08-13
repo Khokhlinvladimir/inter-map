@@ -6,9 +6,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="org.osmdroid.ExtraSamplesActivity">
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/my_toolbar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/menu_samples_title"
         style="@style/ToolbarStyle"/>
 
     <FrameLayout

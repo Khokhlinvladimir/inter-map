@@ -9,7 +9,7 @@
 
 **inter-map** is a Kotlin-first continuation of [osmdroid](https://github.com/osmdroid/osmdroid): an open-source Android `MapView` with online and offline tiles, overlays, location, shapes, WMS, Mapsforge, GeoPackage support, and a large executable sample catalog.
 
-The repository has been synchronized with the final official upstream code and then migrated from Java to Kotlin across the library, applications, tools, tests, and examples. The upstream project is archived; this fork is an independent continuation and is not an official osmdroid release.
+The repository has been synchronized with the final official upstream code and then migrated from Java to Kotlin across the library, applications, tools, tests, and examples. The upstream project is archived; this fork is an independent continuation and is not an official osmdroid release. The sample browser remains View-based and now uses a modern Material 3 shell, Day/Night colors, dynamic color where available, and current Google Material icons.
 
 ## Gallery
 
@@ -37,6 +37,16 @@ The repository has been synchronized with the final official upstream code and t
 - **Native marker clustering** — a reusable grid-based cluster overlay and UI-independent clustering algorithm are included in `osmdroid-android`.
 - **Runtime hardening** — sample lifecycle, asynchronous callback, cache, snapshot, and Android component-export behavior have been tightened for current Android versions.
 - **Executable migration coverage** — unit tests, Android instrumentation, and the complete OpenStreetMapViewer catalog exercise the port rather than only checking compilation.
+
+The current demo also includes refreshed Material navigation, an adaptive launcher icon, accessible map controls, and an updated Android build stack without introducing Compose.
+
+### Modern Android Views UI
+
+- Material 3 Day/Night themes with a stable API 24 fallback palette;
+- Android 12+ dynamic color applied through Material Components;
+- Google Material vector icons for navigation, layers, location, zoom, compass, and offline state;
+- an adaptive and themed launcher icon;
+- 48 dp map controls, content descriptions, RTL-aware arrows, and edge-to-edge insets.
 
 ## Marker clustering
 
@@ -69,8 +79,8 @@ The algorithm is separated from Android UI classes, so its grouping behavior can
 
 Requirements:
 
-- JDK 17 or newer;
-- Android SDK 34;
+- JDK 17;
+- Android SDK 37 for compilation, target SDK 36, and Build Tools 36.0.0;
 - Android API 24+ for Android modules.
 
 The Gradle wrapper is included, so a separate Gradle installation is not required.

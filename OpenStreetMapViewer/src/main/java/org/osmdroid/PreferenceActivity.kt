@@ -126,7 +126,7 @@ class PreferenceActivity : AppCompatActivity(), View.OnClickListener {
         buttonReset = findViewById<Button>(R.id.buttonReset)
         buttonReset!!.setOnClickListener(this)
 
-        findViewById<View?>(R.id.baseDirTitle).setOnClickListener(this)
+        findViewById<View>(R.id.baseDirTitle).setOnClickListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

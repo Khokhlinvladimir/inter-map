@@ -7,7 +7,9 @@ apply plugin: 'maven-publish'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
-mainClassName = "org.osmdroid.mtp.OSMMapTilePackager"
+application {
+    mainClass = "org.osmdroid.mtp.OSMMapTilePackager"
+}
 
 test {
     testLogging {
@@ -30,8 +32,8 @@ tasks.withType(Javadoc) {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'org.apache.httpcomponents:httpmime:4.5.14'
-    implementation 'org.apache.james:apache-mime4j:0.8.11'
-    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+    implementation 'org.apache.james:apache-mime4j:0.8.14'
+    implementation 'org.xerial:sqlite-jdbc:3.53.2.1'
 
 
     testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"

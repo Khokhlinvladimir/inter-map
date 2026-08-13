@@ -23,7 +23,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_rotate_right_white_36"
+        android:src="@drawable/ic_material_rotate_right"
+        android:contentDescription="@string/bt_rotate_right_description"
         android:layout_below="@id/textViewCurrentLocation"
         android:layout_alignParentLeft="true"
         android:id="@+id/btnRotateLeft"
@@ -32,7 +33,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_rotate_left_white_36"
+        android:src="@drawable/ic_material_rotate_left"
+        android:contentDescription="@string/bt_rotate_left_description"
         android:id="@+id/btnRotateRight"
         android:layout_below="@+id/btnRotateLeft"
         android:layout_alignParentLeft="true"
@@ -47,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/enablePanning"
-        android:src="@drawable/ic_menu_mylocation"
+        android:src="@drawable/ic_material_place"
         android:layout_marginRight="13dp"
         android:background="#00ffffff"
         android:contentDescription="@string/bt_center_map_description"

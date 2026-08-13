@@ -5,9 +5,9 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/my_toolbar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.Material3.Light"
         style="@style/ToolbarStyle"/>
 
     <ScrollView

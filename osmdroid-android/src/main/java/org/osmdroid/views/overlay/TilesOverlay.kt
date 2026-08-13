@@ -318,7 +318,7 @@ open class TilesOverlay @JvmOverloads constructor(
         val mapMenu = pMenu.addSubMenu(
             0, Menu.NONE, Menu.NONE,
             R.string.map_mode
-        ).setIcon(R.drawable.ic_menu_mapmode)
+        ).setIcon(R.drawable.ic_osm_layers)
 
         for (a in TileSourceFactory.tileSources.indices) {
             val tileSource = TileSourceFactory.tileSources[a]
@@ -336,7 +336,7 @@ open class TilesOverlay @JvmOverloads constructor(
                 else
                     R.string.set_mode_online
             )
-            val icon = ctx!!.getResources().getDrawable(R.drawable.ic_menu_offline)
+            val icon = ctx!!.getResources().getDrawable(R.drawable.ic_osm_cloud_off)
             pMenu.add(0, MENU_OFFLINE + pMenuIdOffset, Menu.NONE, title).setIcon(icon)
             pMenu.add(0, MENU_SNAPSHOT + pMenuIdOffset, Menu.NONE, R.string.snapshot)
             pMenu.add(0, MENU_STATES + pMenuIdOffset, Menu.NONE, R.string.states)

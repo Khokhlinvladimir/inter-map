@@ -143,7 +143,7 @@ class SampleCacheDownloaderArchive : BaseSampleFragment(), View.OnClickListener,
         val builder = AlertDialog.Builder(getActivity())
 
         val view = View.inflate(getActivity(), R.layout.sample_cachemgr_input, null)
-        view.findViewById<View?>(R.id.cache_archival_section).setVisibility(View.VISIBLE)
+        view.findViewById<View>(R.id.cache_archival_section).setVisibility(View.VISIBLE)
 
         val boundingBox = mMapView!!.getBoundingBox()!!
         zoom_max = view.findViewById<SeekBar?>(R.id.slider_zoom_max)

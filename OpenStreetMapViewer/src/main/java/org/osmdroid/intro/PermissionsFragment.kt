@@ -28,10 +28,10 @@ class PermissionsFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val v = inflater.inflate(R.layout.intro_permissions, container, false)
         if (Build.VERSION.SDK_INT >= 23 && needsPermissions()) {
-            v.findViewById<View?>(R.id.askPermissions).setOnClickListener(this)
-            v.findViewById<View?>(R.id.askPermissions).setVisibility(View.VISIBLE)
+            v.findViewById<View>(R.id.askPermissions).setOnClickListener(this)
+            v.findViewById<View>(R.id.askPermissions).setVisibility(View.VISIBLE)
         } else {
-            v.findViewById<View?>(R.id.askPermissions).setVisibility(View.GONE)
+            v.findViewById<View>(R.id.askPermissions).setVisibility(View.GONE)
         }
 
         return v

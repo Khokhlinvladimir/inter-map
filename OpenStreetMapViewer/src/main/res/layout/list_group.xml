@@ -3,7 +3,13 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="8dp"
+              android:minHeight="56dp"
+              android:background="@color/surface_container"
+              android:gravity="center_vertical"
+              android:paddingStart="24dp"
+              android:paddingTop="12dp"
+              android:paddingEnd="16dp"
+              android:paddingBottom="12dp"
               >
 
 
@@ -11,8 +17,9 @@
         android:id="@+id/lblListHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17dp"
+        android:textColor="@color/on_surface"
+        android:textSize="16sp"
+        android:textStyle="bold"
          />
 
 </LinearLayout>
