@@ -1,0 +1,5 @@
+jdk:
+  - openjdk17
+
+install:
+  - ./gradlew clean build :osmdroid-android:publishReleasePublicationToMavenLocal :osmdroid-mapsforge:publishReleasePublicationToMavenLocal :osmdroid-geopackage:publishReleasePublicationToMavenLocal :osmdroid-wms:publishReleasePublicationToMavenLocal :osmdroid-shape:publishReleasePublicationToMavenLocal -Ppom.version="$VERSION" -Ppom.groupId="$GROUP" --no-daemon --console=plain
