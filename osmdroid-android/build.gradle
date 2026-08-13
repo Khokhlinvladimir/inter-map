@@ -39,9 +39,6 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    gradle.projectsEvaluated {
-        preBuild.dependsOn(copyFiles)
-    }
 }
 
 dependencies {
@@ -51,18 +48,36 @@ dependencies {
 
 }
 
-task cleanCustomFiles(type: Delete) {
-    delete file('src/main/java/org/osmdroid/OsmdroidBuildInfo.kt')
-}
-import org.apache.tools.ant.filters.*
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 
-task copyFiles(type: Copy) {
-    from 'src/main/filtered/org/osmdroid'
-    into 'src/main/java/org/osmdroid'
-    filter(ReplaceTokens, tokens: [
-            "pom.version": project.property("pom.version"),
-            "date": new Date().toString()
-    ])
+abstract class GenerateOsmdroidBuildInfo extends DefaultTask {
+    @Input
+    abstract Property<String> getVersionName()
+
+    @Input
+    abstract Property<String> getBuildDate()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDirectory()
+
+    @TaskAction
+    void generate() {
+        def source = project.file('src/main/filtered/org/osmdroid/OsmdroidBuildInfo.kt')
+        def output = outputDirectory.file('org/osmdroid/OsmdroidBuildInfo.kt').get().asFile
+        output.parentFile.mkdirs()
+        output.setText(source.getText('UTF-8')
+                .replace('@pom.version@', versionName.get())
+                .replace('@date@', buildDate.get()), 'UTF-8')
+    }
+}
+
+def copyFiles = tasks.register('copyFiles', GenerateOsmdroidBuildInfo) {
+    versionName.set(project.property('pom.version').toString())
+    buildDate.set(new Date().toString())
+    outputDirectory.set(layout.buildDirectory.dir('generated/sources/osmdroidBuildInfo/kotlin'))
 }
 
 afterEvaluate {
@@ -95,11 +110,18 @@ afterEvaluate {
 
 task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
+    from copyFiles
 }
 
 artifacts {
     archives androidSourcesJar
 }
-clean.dependsOn(copyFiles)
 build.dependsOn(copyFiles)
-copyFiles.dependsOn(cleanCustomFiles)
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.sources.kotlin.addGeneratedSourceDirectory(copyFiles) {
+            it.outputDirectory
+        }
+    }
+}
