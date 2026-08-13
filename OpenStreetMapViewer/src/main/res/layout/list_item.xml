@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="55dip"
+              android:layout_height="wrap_content"
+              android:minHeight="56dp"
+              android:background="?attr/selectableItemBackground"
               android:orientation="vertical" >
 
     <TextView
         android:id="@+id/lblListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+        android:textColor="@color/on_surface"
+        android:textSize="16sp"
+        android:paddingStart="40dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp" />
 
 </LinearLayout>

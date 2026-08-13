@@ -1,20 +1,20 @@
 description = 'An Android library to display OpenStreetMap views.'
 apply plugin: 'com.android.library'
 apply plugin: "maven-publish"
-apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
 
 android {
-    compileSdkVersion 34
+    namespace 'org.osmdroid.library'
+    compileSdk 37
 
     defaultConfig{
         minSdkVersion 24
-        targetSdkVersion  34
+        targetSdkVersion 36
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
@@ -28,15 +28,14 @@ android {
         }
     }
 
-    buildFeatures {
-        compose true
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.4.1'
-    }
-
-    packagingOptions {
+    packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
@@ -44,27 +43,42 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
-    testImplementation "junit:junit:${project.property('junit.version')}"
+    implementation 'androidx.core:core-ktx:1.19.0'
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
     testImplementation "org.robolectric:robolectric:${project.property('robolectric.version')}"
 
-    // Dependencies for Compose
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
 }
 
-import org.apache.tools.ant.filters.*
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 
-task copyFiles(type: Copy) {
-    from 'src/main/filtered/org/osmdroid'
-    into 'src/main/java/org/osmdroid'
-    filter(ReplaceTokens, tokens: [
-            "pom.version": project.property("pom.version"),
-            "date": new Date().toString()
-    ])
+abstract class GenerateOsmdroidBuildInfo extends DefaultTask {
+    @Input
+    abstract Property<String> getVersionName()
+
+    @Input
+    abstract Property<String> getBuildDate()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDirectory()
+
+    @TaskAction
+    void generate() {
+        def source = project.file('src/main/filtered/org/osmdroid/OsmdroidBuildInfo.kt')
+        def output = outputDirectory.file('org/osmdroid/OsmdroidBuildInfo.kt').get().asFile
+        output.parentFile.mkdirs()
+        output.setText(source.getText('UTF-8')
+                .replace('@pom.version@', versionName.get())
+                .replace('@date@', buildDate.get()), 'UTF-8')
+    }
+}
+
+def copyFiles = tasks.register('copyFiles', GenerateOsmdroidBuildInfo) {
+    versionName.set(project.property('pom.version').toString())
+    buildDate.set(new Date().toString())
+    outputDirectory.set(layout.buildDirectory.dir('generated/sources/osmdroidBuildInfo/kotlin'))
 }
 
 afterEvaluate {
@@ -72,7 +86,7 @@ afterEvaluate {
 
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.named("release").get()
                 groupId project.property("pom.groupId")
                 artifactId project.name
                 version = project.property("pom.version")
@@ -97,10 +111,18 @@ afterEvaluate {
 
 task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
+    from copyFiles
 }
 
 artifacts {
     archives androidSourcesJar
 }
+build.dependsOn(copyFiles)
 
-preBuild.dependsOn(copyFiles)
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.sources.kotlin.addGeneratedSourceDirectory(copyFiles) {
+            it.outputDirectory
+        }
+    }
+}

@@ -2,17 +2,17 @@ description = 'Geopackage support for osmdroid'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version = project.property("pom.version")
 
 android {
-    compileSdkVersion 34
+    namespace 'org.osmdroid.gpkg'
+    compileSdk 37
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 36
     }
     buildTypes {
         release {
@@ -27,22 +27,23 @@ android {
             withJavadocJar()
         }
     }
-    packagingOptions {
-        excludes += "DebugProbesKt.bin"
-        excludes += "com/j256/ormlite/core/LICENSE.txt"
+    packaging {
+        resources {
+            excludes += ["DebugProbesKt.bin", "com/j256/ormlite/core/LICENSE.txt"]
+        }
     }
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.core:core-ktx:1.19.0'
 
     //crash logging
     //implementation 'ch.acra:acra:4.7.0'
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
 
     api  project(':osmdroid-android')
-    api ("mil.nga.geopackage:geopackage-android:6.6.0"){
+    api ("mil.nga.geopackage:geopackage-android:6.7.5"){
         exclude group: 'com.google.android.gms', module:'play-services'
         exclude group: 'com.google.maps.android', module:'android-maps-utils'
         exclude group: 'com.android.support',module: 'support-v13'
@@ -51,10 +52,7 @@ dependencies {
         exclude group: 'com.j256.ormlite'
     }
 
-    api 'mil.nga.geopackage:geopackage-core:6.5.0'
-    api 'ar.com.hjg:pngj:2.1.0'
-    api 'mil.nga:tiff:3.0.0'
-
+    api 'mil.nga.geopackage:geopackage-core:6.6.7'
     api 'ar.com.hjg:pngj:2.1.0'
     api 'mil.nga:tiff:3.0.0'
 }
@@ -74,7 +72,7 @@ afterEvaluate {
 
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.named("release").get()
                 groupId project.property("pom.groupId")
                 artifactId project.name
                 version = project.property("pom.version")

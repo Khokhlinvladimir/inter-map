@@ -1,0 +1,136 @@
+package org.osmdroid.samplefragments.drawing
+
+import android.graphics.Color
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import org.osmdroid.R
+import org.osmdroid.api.IMapView
+import org.osmdroid.events.MapListener
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
+import org.osmdroid.samplefragments.BaseSampleFragment
+import org.osmdroid.samplefragments.events.SampleMapEventListener
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
+
+/**
+ * Drawing a polygon on screen with up to 1 hole
+ * created on 8/26/2017.
+ * Map replication is ON for this sample (only viewable for numerically lower zoom levels (higher altitude))
+ * 
+ * @author Alex O'Ree
+ */
+class DrawPolygonHoles : BaseSampleFragment(), View.OnClickListener {
+    var painting: ImageButton? = null
+    var panning: ImageButton? = null
+    var holes: ImageButton? = null
+
+    var textViewCurrentLocation: TextView? = null
+
+    var btnRotateLeft: ImageButton? = null
+    var btnRotateRight: ImageButton? = null
+    var paint: CustomPaintingSurface? = null
+
+    override val sampleTitle: String?
+        get() = "Draw a polygon with holes on screen"
+
+
+    public override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val v = inflater.inflate(R.layout.layout_drawpolyholes, null)
+        mMapView = v.findViewById<MapView?>(R.id.mapview)
+        btnRotateLeft = v.findViewById<ImageButton>(R.id.btnRotateLeft)
+        btnRotateRight = v.findViewById<ImageButton>(R.id.btnRotateRight)
+        btnRotateRight!!.setOnClickListener(this)
+        btnRotateLeft!!.setOnClickListener(this)
+        textViewCurrentLocation = v.findViewById<TextView>(R.id.textViewCurrentLocation)
+        mMapView = v.findViewById<MapView?>(R.id.mapview)
+        mMapView!!.setMapListener(object : MapListener {
+            override fun onScroll(event: ScrollEvent): Boolean {
+                Log.i(IMapView.LOGTAG, System.currentTimeMillis().toString() + " onScroll " + event.x + "," + event.y)
+                //Toast.makeText(getActivity(), "onScroll", Toast.LENGTH_SHORT).show();
+                updateInfo()
+                return true
+            }
+
+            override fun onZoom(event: ZoomEvent): Boolean {
+                Log.i(IMapView.LOGTAG, System.currentTimeMillis().toString() + " onZoom " + event.zoomLevel)
+                updateInfo()
+                return true
+            }
+        })
+
+        val mRotationGestureOverlay = RotationGestureOverlay(mMapView)
+        mRotationGestureOverlay.setEnabled(true)
+        mMapView!!.setMultiTouchControls(true)
+        mMapView!!.getOverlayManager().add(mRotationGestureOverlay)
+
+        panning = v.findViewById<ImageButton>(R.id.enablePanning)
+        panning!!.setOnClickListener(this)
+        panning!!.setBackgroundColor(Color.BLACK)
+        painting = v.findViewById<ImageButton>(R.id.enablePainting)
+        painting!!.setOnClickListener(this)
+
+        holes = v.findViewById<ImageButton>(R.id.enableHoles)
+        holes!!.setOnClickListener(this)
+
+        paint = v.findViewById<CustomPaintingSurface>(R.id.paintingSurface)
+        paint!!.init(mMapView)
+
+        return v
+    }
+
+    override fun onClick(v: View) {
+        when (v.getId()) {
+            R.id.enablePanning -> {
+                paint!!.setVisibility(View.GONE)
+                panning!!.setBackgroundColor(Color.BLACK)
+                painting!!.setBackgroundColor(Color.TRANSPARENT)
+                holes!!.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            R.id.enablePainting -> {
+                paint!!.setMode(CustomPaintingSurface.Mode.Polygon)
+                paint!!.setVisibility(View.VISIBLE)
+                painting!!.setBackgroundColor(Color.BLACK)
+                panning!!.setBackgroundColor(Color.TRANSPARENT)
+                holes!!.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            R.id.enableHoles -> {
+                paint!!.setMode(CustomPaintingSurface.Mode.PolygonHole)
+                paint!!.setVisibility(View.VISIBLE)
+                holes!!.setBackgroundColor(Color.BLACK)
+                painting!!.setBackgroundColor(Color.TRANSPARENT)
+                panning!!.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            R.id.btnRotateLeft -> {
+                var angle = mMapView!!.getMapOrientation() + 10
+                if (angle > 360) angle = 360 - angle
+                mMapView!!.setMapOrientation(angle)
+                updateInfo()
+            }
+
+            R.id.btnRotateRight -> {
+                var angle = mMapView!!.getMapOrientation() - 10
+                if (angle < 0) angle += 360f
+                mMapView!!.setMapOrientation(angle)
+                updateInfo()
+            }
+        }
+    }
+
+    private fun updateInfo() {
+        val mapCenter = mMapView!!.mapCenter
+        textViewCurrentLocation!!.setText(
+            (SampleMapEventListener.Companion.df.format(mapCenter!!.latitude) + "," +
+                    SampleMapEventListener.Companion.df.format(mapCenter.longitude)
+                    + ",zoom=" + mMapView!!.zoomLevelDouble + ",angle=" + mMapView!!.getMapOrientation())
+        )
+    }
+}

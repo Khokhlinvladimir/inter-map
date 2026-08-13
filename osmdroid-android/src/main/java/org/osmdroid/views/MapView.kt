@@ -53,7 +53,7 @@ open class MapView(
         context: Context,
         tileProvider: MapTileProviderBase?,
         tileRequestCompleteHandler: Handler?, attrs: AttributeSet?, hardwareAccelerated: Boolean
-) : ViewGroup(context, attrs), IMapView, MultiTouchObjectCanvas<Any> {
+) : ViewGroup(context, attrs), IMapView, MultiTouchObjectCanvas<Any?> {
     /**
      * Current zoom level for map tiles.
      */
@@ -168,10 +168,11 @@ open class MapView(
             tilesProvider = MapTileProviderBasic(context.applicationContext, tileSource)
         }
         mTileRequestCompleteHandler = tileRequestCompleteHandler ?: SimpleInvalidationHandler(this)
-        mTileProvider = tilesProvider
-        mTileProvider!!.tileRequestCompleteHandlers.add(mTileRequestCompleteHandler)
-        updateTileSizeForDensity(mTileProvider!!.tileSource)
-        mMapOverlay = TilesOverlay(mTileProvider, context, horizontalMapRepetitionEnabled, verticalMapRepetitionEnabled)
+        val activeTileProvider = requireNotNull(tilesProvider)
+        mTileProvider = activeTileProvider
+        activeTileProvider.tileRequestCompleteHandlers.add(mTileRequestCompleteHandler)
+        updateTileSizeForDensity(requireNotNull(activeTileProvider.getTileSource()))
+        mMapOverlay = TilesOverlay(activeTileProvider, context, horizontalMapRepetitionEnabled, verticalMapRepetitionEnabled)
         mOverlayManager = DefaultOverlayManager(mMapOverlay)
         mZoomController = CustomZoomButtonsController(this)
         mZoomController!!.setOnZoomListener(MapViewZoomListener())
@@ -338,7 +339,7 @@ open class MapView(
      */
     fun setTilesScaledToDpi(tilesScaledToDpi: Boolean) {
         mTilesScaledToDpi = tilesScaledToDpi
-        updateTileSizeForDensity(getTileProvider()!!.tileSource)
+        updateTileSizeForDensity(requireNotNull(getTileProvider()!!.getTileSource()))
     }
 
     fun getTilesScaleFactor(): Float {
@@ -352,12 +353,12 @@ open class MapView(
      */
     fun setTilesScaleFactor(pTilesScaleFactor: Float) {
         mTilesScaleFactor = pTilesScaleFactor
-        updateTileSizeForDensity(getTileProvider()!!.tileSource)
+        updateTileSizeForDensity(requireNotNull(getTileProvider()!!.getTileSource()))
     }
 
     fun resetTilesScaleFactor() {
         mTilesScaleFactor = 1f
-        updateTileSizeForDensity(getTileProvider()!!.tileSource)
+        updateTileSizeForDensity(requireNotNull(getTileProvider()!!.getTileSource()))
     }
 
     private fun updateTileSizeForDensity(aTileSource: ITileSource) {
@@ -365,11 +366,11 @@ open class MapView(
         val density = resources.displayMetrics.density * 256 / tileSize
         val size = (tileSize * if (isTilesScaledToDpi()) density * mTilesScaleFactor else mTilesScaleFactor).toInt()
         if (Configuration.instance!!.isDebugMapView) Log.d(IMapView.LOGTAG, "Scaling tiles to $size")
-        TileSystem.setTileSize(size)
+        TileSystem.tileSize = size
     }
 
     fun setTileSource(aTileSource: ITileSource) {
-        this.mTileProvider!!.tileSource = aTileSource
+        this.mTileProvider!!.setTileSource(aTileSource)
         updateTileSizeForDensity(aTileSource)
         this.checkZoomButtons()
         this.setZoomLevel(mZoomLevel) // revalidate zoom level
@@ -1174,20 +1175,24 @@ open class MapView(
     // ===========================================================
     // Implementation of MultiTouchObjectCanvas
     // ===========================================================
-    override fun getDraggableObjectAtPoint(pt: PointInfo): Any? {
+    override fun getDraggableObjectAtPoint(pt: PointInfo?): Any? {
         return if (isAnimating()) {
             // Zoom animations use the mMultiTouchScale variables to perform their animations so we
             // don't want to step on that.
             null
         } else {
-            setMultiTouchScaleInitPoint(pt.x, pt.y)
+            val touchPoint = requireNotNull(pt)
+            setMultiTouchScaleInitPoint(touchPoint.x, touchPoint.y)
             this
         }
     }
 
-    override fun getPositionAndScale(obj: Any?, objPosAndScaleOut: PositionAndScale) {
+    override fun getPositionAndScale(obj: Any?, objPosAndScaleOut: PositionAndScale?) {
         startAnimation()
-        objPosAndScaleOut[mMultiTouchScaleInitPoint.x, mMultiTouchScaleInitPoint.y, true, 1f, false, 0f, 0f, false] = 0f
+        requireNotNull(objPosAndScaleOut).set(
+            mMultiTouchScaleInitPoint.x, mMultiTouchScaleInitPoint.y,
+            true, 1f, false, 0f, 0f, false, 0f
+        )
     }
 
     override fun selectObject(obj: Any?, pt: PointInfo?) {
@@ -1200,11 +1205,12 @@ open class MapView(
 
     override fun setPositionAndScale(
             obj: Any?,
-            aNewObjPosAndScale: PositionAndScale,
+            aNewObjPosAndScale: PositionAndScale?,
             aTouchPoint: PointInfo?
     ): Boolean {
-        setMultiTouchScaleCurrentPoint(aNewObjPosAndScale.xOff, aNewObjPosAndScale.yOff)
-        setMultiTouchScale(aNewObjPosAndScale.scale)
+        val positionAndScale = requireNotNull(aNewObjPosAndScale)
+        setMultiTouchScaleCurrentPoint(positionAndScale.xOff, positionAndScale.yOff)
+        setMultiTouchScale(positionAndScale.getScale())
         requestLayout() // Allows any views fixed to a Location in the MapView to adjust
         invalidate()
         return true
@@ -1396,7 +1402,7 @@ open class MapView(
         }
 
         override fun onLongPress(e: MotionEvent) {
-            if (mMultiTouchController != null && mMultiTouchController!!.isPinching()) {
+            if (mMultiTouchController != null && mMultiTouchController!!.isPinching) {
                 return
             }
             this@MapView.getOverlayManager().onLongPress(e, this@MapView)
@@ -1587,11 +1593,12 @@ open class MapView(
     fun setTileProvider(base: MapTileProviderBase?) {
         this.mTileProvider!!.detach()
         this.mTileProvider!!.clearTileCache()
-        this.mTileProvider = base
-        this.mTileProvider!!.tileRequestCompleteHandlers.add(mTileRequestCompleteHandler)
-        updateTileSizeForDensity(this.mTileProvider!!.tileSource)
-        mMapOverlay = TilesOverlay(this.mTileProvider, this.context, horizontalMapRepetitionEnabled, verticalMapRepetitionEnabled)
-        mOverlayManager!!.tilesOverlay = mMapOverlay
+        val activeTileProvider = requireNotNull(base)
+        this.mTileProvider = activeTileProvider
+        activeTileProvider.tileRequestCompleteHandlers.add(mTileRequestCompleteHandler)
+        updateTileSizeForDensity(requireNotNull(activeTileProvider.getTileSource()))
+        mMapOverlay = TilesOverlay(activeTileProvider, this.context, horizontalMapRepetitionEnabled, verticalMapRepetitionEnabled)
+        mOverlayManager!!.setTilesOverlay(mMapOverlay)
         invalidate()
     }
 

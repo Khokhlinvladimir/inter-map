@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Open Map</string>
+    <string name="app_name" translatable="false">osmdroid Kotlin</string>
+    <string name="home_eyebrow">OPEN MAPS · KOTLIN</string>
+    <string name="home_title">Maps without limits</string>
+    <string name="home_subtitle">Explore online and offline maps, overlays, clustering, drawing, location and diagnostics.</string>
+    <string name="home_storage_available">Storage ready</string>
+    <string name="home_storage_unavailable">Storage unavailable</string>
+    <string name="home_cache_label">Tile cache</string>
+    <string name="home_version_label">Build</string>
+    <string name="home_explore">Explore the demo</string>
+    <string name="home_explore_subtitle">Choose a focused example or open the complete sample catalogue.</string>
+    <string name="menu_starter_title">Start with a map</string>
+    <string name="menu_starter_subtitle">A clean map with location, compass, scale and gestures</string>
+    <string name="menu_itemized_title">Markers and items</string>
+    <string name="menu_itemized_subtitle">Display interactive objects on the map</string>
+    <string name="menu_tiles_title">Tile overlays</string>
+    <string name="menu_tiles_subtitle">Combine a base map with additional tile layers</string>
+    <string name="menu_custom_tiles_title">Custom tile source</string>
+    <string name="menu_custom_tiles_subtitle">Connect a custom online or offline tile provider</string>
+    <string name="menu_samples_title">All samples</string>
+    <string name="menu_samples_subtitle">Browse 106 runnable View-based examples</string>
+    <string name="menu_report_title">Report an issue</string>
+    <string name="menu_report_subtitle">Open this Kotlin fork on GitHub</string>
+    <string name="menu_settings_title">Settings</string>
+    <string name="menu_settings_subtitle">Tile cache, network and rendering preferences</string>
+    <string name="menu_bugs_title">Regression drivers</string>
+    <string name="menu_bugs_subtitle">Reproduce and verify historic map issues</string>
+    <string name="menu_diagnostics_title">Diagnostics</string>
+    <string name="menu_diagnostics_subtitle">Inspect runtime and device configuration</string>
+    <string name="menu_intro_title">Show introduction</string>
+    <string name="menu_intro_subtitle">Review permissions and first-run guidance</string>
+    <string name="menu_licenses_title">Open-source licenses</string>
+    <string name="menu_licenses_subtitle">Libraries and attribution used by the demo</string>
+    <string name="menu_cache_title">Cache analyzer</string>
+    <string name="menu_cache_subtitle">Inspect local tile database usage</string>
 
     <string name="unknown">Unknown</string>
     <string name="map_mode">Map Source</string>
@@ -36,6 +69,10 @@
 
     <string name="bt_center_map_description">Center on my location</string>
     <string name="bt_follow_me_description">Follow me</string>
+    <string name="bt_zoom_in_description">Zoom in</string>
+    <string name="bt_zoom_out_description">Zoom out</string>
+    <string name="bt_rotate_left_description">Rotate map left</string>
+    <string name="bt_rotate_right_description">Rotate map right</string>
     <string name="debug_mode">Debug Mode</string>
     <string name="tile_provider_debugging">Tile Provider Debugging</string>
     <string name="cache_directory">Cache Directory</string>

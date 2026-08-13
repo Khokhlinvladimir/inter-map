@@ -1,18 +1,18 @@
 description = "An Android library to display OpenStreetMap views using Mapsforge. May use non ASF licensed dependencies"
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
-apply plugin: 'org.jetbrains.kotlin.android'
 
 group = project.property("pom.groupId")
 version =  project.property("pom.version")
 
 android {
-    compileSdkVersion 34
+    namespace 'org.osmdroid.mapsforge'
+    compileSdk 37
 
     defaultConfig {
         // mapsforge 0.8.0 has minSdk 10
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 36
     }
     buildTypes {
         release {
@@ -29,13 +29,13 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.12.0'
-    testImplementation "junit:junit:${project.property('junit.version')}"
+    implementation 'androidx.core:core-ktx:1.19.0'
+    testImplementation "org.junit.vintage:junit-vintage-engine:${project.property('junit.version')}"
 
     //Mapsforge rendering and database support, which is LGPL
-    api 'org.mapsforge:mapsforge-map-android:0.20.0'
-    api 'org.mapsforge:mapsforge-map:0.20.0'
-    api 'org.mapsforge:mapsforge-themes:0.20.0'
+    api 'org.mapsforge:mapsforge-map-android:0.25.0'
+    api 'org.mapsforge:mapsforge-map:0.25.0'
+    api 'org.mapsforge:mapsforge-themes:0.25.0'
 
     //osmdroid which is ASF licensed
     api  project(':osmdroid-android' )
@@ -58,7 +58,7 @@ afterEvaluate {
 
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.named("release").get()
                 groupId project.property("pom.groupId")
                 artifactId project.name
                 version = project.property("pom.version")

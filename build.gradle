@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = '1.8.0'
+        kotlin_version = '2.4.10'
     }
     repositories {
         mavenCentral()
@@ -20,7 +20,7 @@ buildscript {
 
 // Set up the spotbugs plugin so we can apply it in a quality pass if needed
 plugins {
-    id  'com.github.spotbugs' version '5.0.6' apply false
+    id 'com.github.spotbugs' version '6.5.10' apply false
 }
 
 allprojects {

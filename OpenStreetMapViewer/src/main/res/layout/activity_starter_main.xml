@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        style="@style/ToolbarStyle"/>
-
     <FrameLayout
         android:id="@+id/map_container"
-        android:layout_below="@id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-</RelativeLayout>
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/my_toolbar"
+        style="@style/ToolbarStyle"
+        android:layout_marginStart="@dimen/space_m"
+        android:layout_marginTop="@dimen/space_s"
+        android:layout_marginEnd="@dimen/space_m"
+        android:background="@color/surface"
+        android:elevation="6dp"
+        app:title="@string/menu_starter_title" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

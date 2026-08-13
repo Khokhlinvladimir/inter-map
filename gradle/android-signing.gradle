@@ -169,8 +169,6 @@ if (ext.canSign) {
 
 
 
-import groovy.swing.SwingBuilder
-
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -280,20 +278,7 @@ task encryptPassword(description: "Encrypts a password", group: "Gradle Fury Cry
             if (console) {
                 password_input = console.readPassword('> Enter Password: ')
             } else {
-                System.setProperty('java.awt.headless', 'false')
-                new SwingBuilder().edt {
-                    dialog(modal: true, title: 'Enter password_input', alwaysOnTop: true, resizable: false, locationRelativeTo: null, pack: true, show: true) {
-                        vbox { // Put everything below each other
-                            label(text: "Please enter password_input:")
-                            def input1 = passwordField()
-                            button(defaultButton: true, text: 'OK', actionPerformed: {
-                                password_input = new String(input1.getPassword());
-                                //getPassword doesn't return a string
-                                dispose();
-                            })
-                        }
-                    }
-                }
+                throw new GradleException("No interactive console is available. Run encryptPassword with -Ppassword=<value>.")
             }
         }
         cipher = encrypt(password_input, key);
