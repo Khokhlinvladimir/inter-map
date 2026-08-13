@@ -102,6 +102,7 @@ class SamplesMenuFragment : Fragment() {
                     // Replace Fragment with selected sample
                     val frag = o
                     Log.i(TAG, "loading fragment " + frag.sampleTitle + ", " + frag.javaClass.getCanonicalName())
+                    (activity as? ExtraSamplesActivity)?.setSampleTitle(frag.sampleTitle)
                     val fm = getFragmentManager()
                     fm!!.beginTransaction().replace(R.id.samples_container, frag, ExtraSamplesActivity.SAMPLES_FRAGMENT_TAG)
                         .addToBackStack(null).commit()
@@ -201,6 +202,7 @@ class SamplesMenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as? ExtraSamplesActivity)?.setSampleTitle(null)
 
         //FragmentManager fm = getFragmentManager();
         //fm.popBackStack();

@@ -6,15 +6,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="org.osmdroid.ExtraSamplesActivity">
+    <FrameLayout
+        android:id="@+id/samples_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/my_toolbar"
         app:title="@string/menu_samples_title"
-        style="@style/ToolbarStyle"/>
-
-    <FrameLayout
-        android:id="@+id/samples_container"
-        android:layout_below="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        style="@style/ToolbarStyle"
+        android:layout_marginStart="@dimen/space_m"
+        android:layout_marginTop="@dimen/space_s"
+        android:layout_marginEnd="@dimen/space_m"
+        android:elevation="6dp"
+        app:titleCentered="false" />
 
 </RelativeLayout>

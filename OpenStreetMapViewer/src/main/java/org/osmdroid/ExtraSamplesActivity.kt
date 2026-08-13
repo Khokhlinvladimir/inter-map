@@ -31,6 +31,10 @@ class ExtraSamplesActivity : AppCompatActivity() {
         }
     }
 
+    fun setSampleTitle(title: String?) {
+        supportActionBar?.subtitle = title
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

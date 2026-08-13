@@ -22,9 +22,9 @@
 
 <table>
   <tr>
-    <td align="center"><strong>Каталог примеров</strong><br><img src="docs/screenshots/home.png" alt="Современный каталог примеров" width="260"></td>
-    <td align="center"><strong>Стартовая карта</strong><br><img src="docs/screenshots/starter-map.png" alt="Стартовая карта" width="260"></td>
-    <td align="center"><strong>Кластеризация</strong><br><img src="docs/screenshots/clustering.png" alt="Кластеризация маркеров" width="260"></td>
+    <td align="center"><strong>Каталог примеров</strong><br><img src="docs/screenshots/home.webp" alt="Современный каталог примеров" width="260"></td>
+    <td align="center"><strong>Стартовая карта</strong><br><img src="docs/screenshots/starter-map.webp" alt="Стартовая карта" width="260"></td>
+    <td align="center"><strong>Кластеризация</strong><br><img src="docs/screenshots/clustering.webp" alt="Кластеризация маркеров" width="260"></td>
   </tr>
 </table>
 
