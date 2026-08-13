@@ -102,6 +102,10 @@ compileKotlin.dependsOn preBuildTask2
 compileKotlin.dependsOn preBuildTask3
 compileKotlin.dependsOn preBuildTask4
 
+tasks.named('sourcesJar') {
+    dependsOn preBuildTask1, preBuildTask2, preBuildTask3, preBuildTask4
+}
+
 afterEvaluate {
     publishing {
 
