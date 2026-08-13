@@ -8,6 +8,7 @@
 package org.osmdroid.test
 
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import junit.framework.Assert
 import org.junit.Assert.assertNotNull
@@ -22,7 +23,6 @@ import org.osmdroid.samplefragments.BaseSampleFragment
 import org.osmdroid.samplefragments.SampleFactory
 import org.osmdroid.samplefragments.ui.SamplesMenuFragment
 import org.osmdroid.tileprovider.util.Counters
-import java.util.Random
 
 class ExtraSamplesTest {
     @get:Rule
@@ -44,35 +44,37 @@ class ExtraSamplesTest {
         Counters.reset()
         val activity = activityRule.activity
         assertNotNull(activity)
-        val fragmentManager = activity.supportFragmentManager
-        val fragment = fragmentManager.findFragmentByTag(ExtraSamplesActivity.SAMPLES_FRAGMENT_TAG)
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val fragment = activity.supportFragmentManager.findFragmentByTag(ExtraSamplesActivity.SAMPLES_FRAGMENT_TAG)
         assertNotNull(fragment)
         assertTrue(fragment is SamplesMenuFragment)
 
-        val fireOrder = IntArray(sampleFactory.count()) { it }
-        shuffleArray(fireOrder)
+        val arguments = InstrumentationRegistry.getArguments()
+        val startIndex = arguments.getString("sampleStart")?.toIntOrNull()
+            ?.coerceIn(0, sampleFactory.count()) ?: 0
+        val endIndex = arguments.getString("sampleEnd")?.toIntOrNull()
+            ?.coerceIn(startIndex, sampleFactory.count()) ?: sampleFactory.count()
+        val fireOrder = IntArray(endIndex - startIndex) { startIndex + it }
 
         Log.i(
             SamplesMenuFragment.TAG,
             "Memory allocation: INIT Free: ${Runtime.getRuntime().freeMemory()} " +
                 "Total:${Runtime.getRuntime().totalMemory()} Max:${Runtime.getRuntime().maxMemory()}"
         )
-        for (index in fireOrder.indices) {
-            if (index > 60) break
-
+        for (index in fireOrder) {
             for (run in 0 until 1) {
+                val fragmentManager = activity.supportFragmentManager
                 Log.i(
                     SamplesMenuFragment.TAG,
                     "${run}Memory allocation: Before load: Free: ${Runtime.getRuntime().freeMemory()} " +
                         "Total:${Runtime.getRuntime().totalMemory()} Max:${Runtime.getRuntime().maxMemory()}"
                 )
-                val sample = sampleFactory.getSample(fireOrder[index])!!
-                if (sample.skipOnCiTests()) break
+                val sample = sampleFactory.getSample(index)!!
 
                 Log.i(
                     SamplesMenuFragment.TAG,
                     "loading fragment ($index/${sampleFactory.count()}) run $run ${sample.sampleTitle}, " +
-                        fragment!!::class.java.canonicalName
+                        sample::class.java.canonicalName
                 )
                 Counters.printToLogcat()
                 if (Counters.countOOM > 0 || Counters.fileCacheOOM > 0) {
@@ -83,41 +85,36 @@ class ExtraSamplesTest {
                     )
                 }
 
-                activity.runOnUiThread {
-                    try {
+                try {
+                    instrumentation.runOnMainSync {
                         fragmentManager.beginTransaction()
                             .replace(
                                 org.osmdroid.R.id.samples_container,
                                 sample,
                                 ExtraSamplesActivity.SAMPLES_FRAGMENT_TAG
                             )
-                            .addToBackStack(ExtraSamplesActivity.SAMPLES_FRAGMENT_TAG)
-                            .commit()
-                        fragmentManager.executePendingTransactions()
-                    } catch (error: Exception) {
-                        ok = false
-                        error.printStackTrace()
-                        Assert.fail(
-                            "Error popping fragment ${sample.sampleTitle}" +
-                                "${sample::class.java.canonicalName}$error"
-                        )
+                            .commitNowAllowingStateLoss()
                     }
+                    instrumentation.waitForIdleSync()
+                    assertTrue("Fragment was not attached: ${sample::class.java.name}", sample.isAdded)
+                } catch (error: Exception) {
+                    ok = false
+                    error.printStackTrace()
+                    Assert.fail(
+                        "Error loading fragment ${sample.sampleTitle}" +
+                            "${sample::class.java.canonicalName}$error"
+                    )
                 }
 
                 try {
                     Thread.sleep(2000)
                     sample.runTestProcedures()
-                    activity.runOnUiThread {
-                        try {
-                            fragmentManager.popBackStackImmediate()
-                        } catch (_: Exception) {
-                        }
-                    }
+                    instrumentation.waitForIdleSync()
                 } catch (error: Exception) {
                     ok = false
                     error.printStackTrace()
                     Assert.fail(
-                        "Error popping fragment ${sample.sampleTitle}" +
+                        "Error exercising fragment ${sample.sampleTitle}" +
                             "${sample::class.java.canonicalName}$error"
                     )
                 }
@@ -131,17 +128,7 @@ class ExtraSamplesTest {
                 )
             }
         }
+        instrumentation.runOnMainSync { activity.finish() }
     }
 
-    companion object {
-        private fun shuffleArray(array: IntArray) {
-            val random = Random()
-            for (index in array.lastIndex downTo 1) {
-                val swapIndex = random.nextInt(index + 1)
-                val value = array[swapIndex]
-                array[swapIndex] = array[index]
-                array[index] = value
-            }
-        }
-    }
 }

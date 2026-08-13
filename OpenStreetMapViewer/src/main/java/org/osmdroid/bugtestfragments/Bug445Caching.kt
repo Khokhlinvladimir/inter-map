@@ -34,6 +34,11 @@ class Bug445Caching : BaseSampleFragment() {
     @Throws(Exception::class)
     override fun runTestProcedures() {
         if (writer == null) return
+        mMapView!!.setUseDataConnection(false)
+        writer!!.purgeCache()
+        val count = this.dbCount
+        if (count != 0L) throw Exception("purge should remove all tiles, but " + count + " were found")
+
         mMapView!!.setUseDataConnection(true)
         getActivity()!!.runOnUiThread(object : Runnable {
             override fun run() {
@@ -41,10 +46,6 @@ class Bug445Caching : BaseSampleFragment() {
                 setZoomAndCenter(initialZoom)
             }
         })
-
-        writer!!.purgeCache()
-        val count = this.dbCount
-        if (count != 0L) throw Exception("purge should remove all tiles, but " + count + " were found")
 
         var maxTilesNeeded = 0
         for (zoom in minZoom..maxZoom) {

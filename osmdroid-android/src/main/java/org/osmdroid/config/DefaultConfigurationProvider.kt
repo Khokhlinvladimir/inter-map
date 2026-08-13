@@ -50,8 +50,18 @@ class DefaultConfigurationProvider : IConfigurationProvider {
     override var tileFileSystemCacheMaxBytes: Long = 600L * 1024 * 1024
     override var tileFileSystemCacheTrimBytes: Long = 500L * 1024 * 1024
     override var httpHeaderDateTimeFormat: SimpleDateFormat? = SimpleDateFormat(HTTP_EXPIRES_HEADER_FORMAT, Locale.US)
-    override var osmdroidBasePath: File? = null
-    override var osmdroidTileCache: File? = null
+    private var basePath: File? = null
+    override var osmdroidBasePath: File?
+        get() = getOsmdroidBasePath(null)
+        set(value) {
+            basePath = value
+        }
+    private var tileCache: File? = null
+    override var osmdroidTileCache: File?
+        get() = getOsmdroidTileCache(null)
+        set(value) {
+            tileCache = value
+        }
     protected var expirationAdder: Long = 0
     override var expirationOverrideDuration: Long? = null
     override var httpProxy: Proxy? = null
@@ -76,48 +86,49 @@ class DefaultConfigurationProvider : IConfigurationProvider {
 
     override fun getOsmdroidBasePath(context: Context?): File? {
         try {
-            if (osmdroidBasePath == null) {
+            if (basePath == null) {
                 val storageInfo = StorageUtils.getBestWritableStorage(context)
                 if (storageInfo != null) {
                     val pathToStorage = storageInfo.path
-                    osmdroidBasePath = File(pathToStorage, "osmdroid")
-                    osmdroidBasePath!!.mkdirs()
+                    basePath = File(pathToStorage, "osmdroid")
+                    basePath!!.mkdirs()
                 } else {
-                    var osmdroidBasePath: File? = null
+                    var fallbackBasePath: File? = null
                     // FIXME NOT SUPPORTED VERSION FROYO
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-                        osmdroidBasePath = File(
+                        fallbackBasePath = File(
                             context!!.getExternalFilesDir(
                                 Environment.DIRECTORY_PICTURES
                             ), "osmdroid"
                         )
                     }
-                    if (!osmdroidBasePath!!.mkdirs()) {
+                    if (!fallbackBasePath!!.mkdirs()) {
                         Log.e(IMapView.LOGTAG, "Directory not created")
                     }
+                    basePath = fallbackBasePath
                 }
             }
         } catch (ex: Exception) {
-            Log.d(IMapView.LOGTAG, "Unable to create base path at " + osmdroidBasePath, ex)
+            Log.d(IMapView.LOGTAG, "Unable to create base path at " + basePath, ex)
             //IO/permissions issue
             //trap for android studio layout editor and some for certain devices
             //see https://github.com/osmdroid/osmdroid/issues/508
         }
-        if (osmdroidBasePath == null && context != null) osmdroidBasePath = context.getFilesDir()
-        return osmdroidBasePath
+        if (basePath == null && context != null) basePath = context.filesDir
+        return basePath
     }
 
     override fun getOsmdroidTileCache(context: Context?): File? {
-        if (osmdroidTileCache == null) osmdroidTileCache = File(getOsmdroidBasePath(context), "tiles")
+        if (tileCache == null) tileCache = File(getOsmdroidBasePath(context), "tiles")
         try {
-            osmdroidTileCache!!.mkdirs()
+            tileCache!!.mkdirs()
         } catch (ex: Exception) {
-            Log.d(IMapView.LOGTAG, "Unable to create tile cache path at " + osmdroidTileCache, ex)
+            Log.d(IMapView.LOGTAG, "Unable to create tile cache path at " + tileCache, ex)
             //IO/permissions issue
             //trap for android studio layout editor and some for certain devices
             //see https://github.com/osmdroid/osmdroid/issues/508
         }
-        return osmdroidTileCache
+        return tileCache
     }
 
     //</editor-fold>

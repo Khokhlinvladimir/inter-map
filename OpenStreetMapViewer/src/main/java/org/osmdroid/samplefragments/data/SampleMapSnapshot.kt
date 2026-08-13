@@ -26,6 +26,7 @@ import org.osmdroid.views.drawing.MapSnapshot
 import org.osmdroid.views.drawing.MapSnapshot.MapSnapshotable
 import org.osmdroid.views.overlay.Overlay
 import org.osmdroid.views.overlay.ScaleBarOverlay
+import java.util.Collections
 import kotlin.math.min
 
 /**
@@ -36,8 +37,8 @@ import kotlin.math.min
  */
 class SampleMapSnapshot : BaseSampleFragment() {
     private val mTileSystem: TileSystem = TileSystemWebMercator()
-    private val mMapSnapshots: MutableMap<String?, MapSnapshot?> = HashMap<String?, MapSnapshot?>()
-    private val mBitmaps: MutableMap<String?, Bitmap?> = HashMap<String?, Bitmap?>()
+    private val mMapSnapshots: MutableMap<String?, MapSnapshot?> = Collections.synchronizedMap(HashMap())
+    private val mBitmaps: MutableMap<String?, Bitmap?> = Collections.synchronizedMap(HashMap())
 
     private inner class MyAdapter internal constructor(private val mDataSet: MutableList<DataRegion?>) : RecyclerView.Adapter<MyViewHolder>() {
         private val mDefaultBitmap: Bitmap
@@ -115,21 +116,23 @@ class SampleMapSnapshot : BaseSampleFragment() {
                 object : MapSnapshotable {
                     override fun callback(pMapSnapshot: MapSnapshot?) {
                         pMapSnapshot ?: return
+                        val pendingSnapshot = synchronized(mMapSnapshots) { mMapSnapshots.remove(key) } ?: return
                         if (pMapSnapshot.status != MapSnapshot.Status.CANVAS_OK) {
+                            pendingSnapshot.onDetach()
                             return
                         }
-                        val bitmap = Bitmap.createBitmap(requireNotNull(pMapSnapshot.bitmap))
+                        // onDetach recycles and clears the snapshot bitmap, so copy it while this
+                        // callback still owns the snapshot and only then release its resources.
+                        val sourceBitmap = pMapSnapshot.bitmap
+                        if (sourceBitmap == null) {
+                            pendingSnapshot.onDetach()
+                            return
+                        }
+                        val bitmap = Bitmap.createBitmap(sourceBitmap)
+                        pendingSnapshot.onDetach()
                         mBitmaps.put(key, bitmap)
-                        mMapSnapshots.get(key)!!.onDetach()
-                        mMapSnapshots.remove(key)
-                        if (mAdapter == null) {
-                            return
-                        }
-                        getActivity()!!.runOnUiThread(object : Runnable {
-                            override fun run() {
-                                mAdapter!!.notifyDataSetChanged()
-                            }
-                        })
+                        val activity = activity ?: return
+                        activity.runOnUiThread { mAdapter?.notifyDataSetChanged() }
                     }
                 }, MapSnapshot.INCLUDE_FLAG_UPTODATE, mapTileProvider, mOverlays,
                 Projection(zoom, mMapSize, mMapSize, pDataRegion.box!!.centerWithDateLine, 0f, true, true, 0, 0)
@@ -175,14 +178,11 @@ class SampleMapSnapshot : BaseSampleFragment() {
 
     override fun onDetach() {
         mAdapter = null
-        mScaleBarOverlay!!.onDetach(null)
-        for (key in mMapSnapshots.keys) {
-            val mapSnapshot = mMapSnapshots.get(key)
-            if (mapSnapshot != null) {
-                mapSnapshot.onDetach()
-            }
+        mScaleBarOverlay?.onDetach(null)
+        val pendingSnapshots = synchronized(mMapSnapshots) {
+            mMapSnapshots.values.filterNotNull().also { mMapSnapshots.clear() }
         }
-        mMapSnapshots.clear()
+        pendingSnapshots.forEach { it.onDetach() }
         super.onDetach()
     }
 }

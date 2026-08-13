@@ -67,7 +67,7 @@ class Bug512CacheManagerWp : BaseSampleFragment(), CacheManagerCallback, View.On
 
         getActivity()!!.runOnUiThread(object : Runnable {
             override fun run() {
-                downloadingTask = mgr.downloadAreaAsyncNoUI(mMapView!!.getContext(), pts, 0, 4, this@Bug512CacheManagerWp)
+                downloadingTask = mgr.downloadAreaAsyncNoUI(mMapView!!.getContext(), pts, 1, 4, this@Bug512CacheManagerWp)
             }
         })
         //downloadingTask = mgr.downloadAreaAsync(mMapView.getContext(), pts, 0, 5, this);
@@ -93,7 +93,7 @@ class Bug512CacheManagerWp : BaseSampleFragment(), CacheManagerCallback, View.On
 
     override fun onTaskComplete() {
         Log.i(IMapView.LOGTAG, "download job complete no errors")
-        taskRunning = true
+        taskRunning = false
         success = true
     }
 

@@ -92,8 +92,8 @@ class WeatherGroundOverlaySample : BaseSampleFragment(), Runnable {
             if (act != null) {
                 act.runOnUiThread(object : Runnable {
                     override fun run() {
-                        Toast.makeText(getActivity(), "Weather image downloaded!", Toast.LENGTH_SHORT).show()
-                        mMapView!!.invalidate()
+                        Toast.makeText(act, "Weather image downloaded!", Toast.LENGTH_SHORT).show()
+                        mMapView?.invalidate()
                     }
                 })
             }

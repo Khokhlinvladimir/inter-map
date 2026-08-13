@@ -27,6 +27,7 @@ import org.osmdroid.samplefragments.data.SampleIISTrackerMotionTrails
 import org.osmdroid.samplefragments.data.SampleItemizedOverlayMultiClick
 import org.osmdroid.samplefragments.data.SampleMapSnapshot
 import org.osmdroid.samplefragments.data.SampleMarker
+import org.osmdroid.samplefragments.data.SampleMarkerClustering
 import org.osmdroid.samplefragments.data.SampleMarkerMultiClick
 import org.osmdroid.samplefragments.data.SampleMilestonesNonRepetitive
 import org.osmdroid.samplefragments.data.SampleMilitaryIconsItemizedIcons
@@ -203,6 +204,7 @@ class SampleFactory private constructor() : ISampleFactory {
         mSamples.add(SampleOpenSeaMap::class.java)
         //40
         mSamples.add(SampleMarker::class.java)
+        mSamples.add(SampleMarkerClustering::class.java)
         //41
         mSamples.add(SampleRotation::class.java)
         //42

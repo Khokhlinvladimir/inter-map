@@ -119,18 +119,23 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
         if (renderJobActive) return
         renderJobActive = true
 
+        val mapView = mMapView ?: run {
+            renderJobActive = false
+            return
+        }
+
 
         val densityDpi = (dm!!.density * cellSizeInDp).toInt()
 
         //10 dpi sized cells
-        val iGeoPoint = mMapView!!.projection.fromPixels(0, 0)
-        val iGeoPoint2 = mMapView!!.projection.fromPixels(densityDpi, densityDpi)
+        val iGeoPoint = mapView.projection.fromPixels(0, 0)
+        val iGeoPoint2 = mapView.projection.fromPixels(densityDpi, densityDpi)
         //delta is the size of our cell in lat,lon
         //since this is zoom dependent, rerun the calculations on zoom changes
         val xCellSizeLongitude = abs(iGeoPoint!!.longitude - iGeoPoint2!!.longitude)
         val yCellSizeLatitude = abs(iGeoPoint.latitude - iGeoPoint2.latitude)
 
-        val view = mMapView!!.getBoundingBox()
+        val view = mapView.getBoundingBox()
         //a set of a GeoPoints representing what we want a heat map of.
         val pts = loadPoints(view!!)
 
@@ -192,17 +197,21 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
             }
         }
         Log.i(TAG, "render done , done " + (System.currentTimeMillis() - now))
-        if (getActivity() == null)  //java.lang.IllegalStateException: Fragment HeatMap{44f341d0} not attached to Activity
+        if (getActivity() == null || mMapView !== mapView) {
+            renderJobActive = false
             return
-        if (mMapView == null)  //java.lang.IllegalStateException: Fragment HeatMap{44f341d0} not attached to Activity
-            return
-        mMapView!!.post(object : Runnable {
+        }
+        mapView.post(object : Runnable {
             override fun run() {
-                if (heatmapOverlay != null) mMapView!!.getOverlayManager().remove(heatmapOverlay)
-                mMapView!!.getOverlayManager().add(group)
+                if (mMapView !== mapView) {
+                    renderJobActive = false
+                    return
+                }
+                if (heatmapOverlay != null) mapView.getOverlayManager().remove(heatmapOverlay)
+                mapView.getOverlayManager().add(group)
                 heatmapOverlay = group
 
-                mMapView!!.invalidate()
+                mapView.invalidate()
                 renderJobActive = false
             }
         })
@@ -281,7 +290,9 @@ class HeatMap : BaseSampleFragment(), MapListener, Runnable {
      * @return
      */
     private fun createPolygon(key: BoundingBox, value: Int, redthreshold: Int, orangethreshold: Int): Overlay {
-        val polygon = Polygon(mMapView)
+        // Heat-map cells have no info windows. Keeping them independent of the MapView also
+        // prevents a background render from touching a repository that has already detached.
+        val polygon = Polygon()
         if (value < orangethreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + yellow))
         else if (value < redthreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + orange))
         else if (value >= redthreshold) polygon.getFillPaint()!!.setColor(Color.parseColor(alpha + red))

@@ -31,6 +31,7 @@ import org.osmdroid.views.overlay.milestones.MilestoneMeterDistanceSliceLister
 class SampleMilestonesNonRepetitive : SampleMapEventListener() {
     private var mAnimatedMetersSoFar = 0.0
     private var mAnimationEnded = false
+    private var mPercentageCompletion: ValueAnimator? = null
     private val mOrder: Array<String?> = arrayOf<String?>( // arbitrary order
         "FRA", "LUX", "BEL", "NLD",
         "GBR", "IRL",
@@ -125,6 +126,7 @@ class SampleMilestonesNonRepetitive : SampleMapEventListener() {
         val distance = polyline.getDistance().toFloat()
         val fraction = 1f / 10 // fraction of the polyline to be displayed
         val percentageCompletion = ValueAnimator.ofFloat(0f, distance)
+        mPercentageCompletion = percentageCompletion
         percentageCompletion.setDuration(5000) // 5 seconds
         percentageCompletion.setStartDelay(500) // .5 second
         percentageCompletion.addUpdateListener(object : AnimatorUpdateListener {
@@ -137,13 +139,13 @@ class SampleMilestonesNonRepetitive : SampleMapEventListener() {
                 } else {
                     slicerForPath.setMeterDistanceSlice(mAnimatedMetersSoFar - distance * fraction, mAnimatedMetersSoFar)
                 }
-                mMapView!!.invalidate()
+                mMapView?.invalidate()
             }
         })
         percentageCompletion.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 mAnimationEnded = true
-                mMapView!!.invalidate()
+                mMapView?.invalidate()
             }
         })
         percentageCompletion.start()
@@ -153,6 +155,12 @@ class SampleMilestonesNonRepetitive : SampleMapEventListener() {
                 mMapView!!.zoomToBoundingBox(boundingBox, false, 30)
             }
         })
+    }
+
+    override fun onDestroyView() {
+        mPercentageCompletion?.cancel()
+        mPercentageCompletion = null
+        super.onDestroyView()
     }
 
     private fun getAnimatedPathManager(pMilestoneLister: MilestoneLister): MilestoneManager {

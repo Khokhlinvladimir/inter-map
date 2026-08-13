@@ -3,6 +3,7 @@ package org.osmdroid
 import android.content.Context
 import android.os.Debug
 import android.os.Environment
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
@@ -50,6 +51,7 @@ class OsmApplication : MultiDexApplication() {
         //super important. Many tile servers, including open street maps, will BAN applications by user
         //agent. Do not use the sample application's user agent for your app! Use your own setting, such
         //as the app id.
+        instance!!.load(this, PreferenceManager.getDefaultSharedPreferences(this))
         instance!!.userAgentValue = getPackageName()
 
 

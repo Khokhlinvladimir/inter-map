@@ -20,6 +20,9 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.infowindow.BasicInfoWindow
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
 /**
  * An example using osmbonuspacks polyline class for a simple box on around centra park, nyc
@@ -186,38 +189,40 @@ class SampleOsmPath : BaseSampleFragment(), MapListener {
 
     public override fun runTestProcedures() {
         val geoPoint = GeoPoint(40.886788, -73.959232)
-        while (mMapView!!.zoomLevelDouble < mMapView!!.maxZoomLevel) {
-            getActivity()!!.runOnUiThread(object : Runnable {
-                override fun run() {
-                    mMapView!!.controller!!.animateTo(geoPoint)
-                    mMapView!!.controller!!.zoomIn()
-                }
-            })
-            try {
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
+        var steps = 0
+        while (mMapView!!.zoomLevelDouble < mMapView!!.maxZoomLevel && steps < MAX_TEST_ZOOM_STEPS) {
+            val nextZoom = min(mMapView!!.maxZoomLevel, mMapView!!.zoomLevelDouble + 1.0)
+            runOnUiThreadAndWait {
+                mMapView!!.controller!!.animateTo(geoPoint)
+                mMapView!!.controller!!.setZoom(nextZoom)
             }
+            steps++
         }
-
+        check(mMapView!!.zoomLevelDouble >= mMapView!!.maxZoomLevel) {
+            "Map did not reach its maximum zoom after $steps steps"
+        }
 
         val geoPoint2 = GeoPoint(40.796788, -73.949232)
-        while (mMapView!!.zoomLevelDouble < mMapView!!.maxZoomLevel) {
-            getActivity()!!.runOnUiThread(object : Runnable {
-                override fun run() {
-                    mMapView!!.controller!!.animateTo(geoPoint2)
-                    mMapView!!.controller!!.zoomIn()
-                }
-            })
+        runOnUiThreadAndWait {
+            mMapView!!.controller!!.animateTo(geoPoint2)
+        }
+    }
+
+    private fun runOnUiThreadAndWait(action: () -> Unit) {
+        val latch = CountDownLatch(1)
+        requireActivity().runOnUiThread {
             try {
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
+                action()
+            } finally {
+                latch.countDown()
             }
         }
+        check(latch.await(TEST_UI_TIMEOUT_SECONDS, TimeUnit.SECONDS)) { "Map UI operation timed out" }
     }
 
     companion object {
         private const val SAMPLE_TITLE: String = "OsmPath drawing"
+        private const val MAX_TEST_ZOOM_STEPS = 32
+        private const val TEST_UI_TIMEOUT_SECONDS = 5L
     }
 }

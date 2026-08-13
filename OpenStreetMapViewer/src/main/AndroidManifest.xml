@@ -41,6 +41,9 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+        <activity-alias
+            android:name="leakcanary.internal.activity.LeakLauncherActivity"
+            android:exported="false" />
         <activity
             android:name=".Bug1783Activity"
             android:exported="false" />

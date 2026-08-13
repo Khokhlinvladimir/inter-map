@@ -86,13 +86,15 @@ class SampleCustomMyLocation : BaseSampleFragment(), LocationListener {
 
 
     override fun onLocationChanged(location: Location) {
-        myLocation!!.position = GeoPoint(location.getLatitude(), location.getLongitude())
+        val marker = myLocation ?: return
+        val mapView = mMapView ?: return
+        marker.position = GeoPoint(location.getLatitude(), location.getLongitude())
         if (!added) {
-            mMapView!!.getOverlayManager().add(myLocation)
+            mapView.getOverlayManager().add(marker)
             added = true
         }
         if (followme) {
-            mMapView!!.controller!!.animateTo(myLocation!!.position)
+            mapView.controller!!.animateTo(marker.position)
         }
     }
 

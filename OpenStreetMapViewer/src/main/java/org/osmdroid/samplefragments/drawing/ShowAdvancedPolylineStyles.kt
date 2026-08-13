@@ -176,8 +176,8 @@ class ShowAdvancedPolylineStyles : BaseSampleFragment(), View.OnClickListener {
         }
 
         fun setText(title: String?, description: String?) {
-            (getView()!!.findViewById<View?>(R.id.bubble_title) as TextView).setText(title)
-            (getView()!!.findViewById<View?>(R.id.bubble_description) as TextView).setText(description)
+            view!!.findViewById<TextView>(R.id.bubble_title).text = title
+            view!!.findViewById<TextView>(R.id.bubble_description).text = description
         }
 
         override fun onOpen(item: Any?) {
